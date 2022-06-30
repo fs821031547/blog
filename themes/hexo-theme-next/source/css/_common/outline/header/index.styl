@@ -1,0 +1,45 @@
+// Header Section
+// --------------------------------------------------
+.headband {
+    background:url(/images/banner.jpg);
+    background-repeat: no-repeat;
+    background-attachment:fixed;
+    background-position:center center;
+    background-size: 100% 100%;
+    // background-size: cover;
+    height: 255px;
+    position: absolute;
+    z-index: -100;
+    width: 100%;
+  +tablet-mobile() {
+    display: none;
+  }
+}
+
+// Fix issue #521
+header.header {
+  background: $head-bg;
+}
+
+.header-inner {
+  main-container();
+}
+
+.site-brand-container {
+  display: flex;
+  flex-shrink: 0;
+  padding: 0 10px;
+}
+
+.use-motion {
+  header.header, .site-brand-container .toggle {
+    opacity: 0;
+  }
+}
+
+@import 'site-meta';
+@import 'site-nav';
+@import 'menu';
+
+@import 'bookmark';
+@import 'github-banner';
