@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.12.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="1. 引言本周的精读是有感而发。 笔者接触前端已有七年，观察了不少前端大牛的发展路径，发现成功的人都具有相似的经历： 初期技术热情极大 -&gt; 大量标志性技术项目 -&gt; 转向综合性思考 -&gt; 带团队&#x2F;关注方法论 也就是专家们变得越来越不关心技术细节。需要说明是的，这里说的专家不再关心细节，不代表成为专家后学不会细节，也不代表专家不了解细节。 早期挺难理解这种转变的，笔者在">
+<meta property="og:type" content="article">
+<meta property="og:title" content="为什么专家不再关心技术细节.md">
+<meta property="og:url" content="http://example.com/2021/11/24/%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%93%E5%AE%B6%E4%B8%8D%E5%86%8D%E5%85%B3%E5%BF%83%E6%8A%80%E6%9C%AF%E7%BB%86%E8%8A%82/index.html">
+<meta property="og:site_name" content="石哥的博客">
+<meta property="og:description" content="1. 引言本周的精读是有感而发。 笔者接触前端已有七年，观察了不少前端大牛的发展路径，发现成功的人都具有相似的经历： 初期技术热情极大 -&gt; 大量标志性技术项目 -&gt; 转向综合性思考 -&gt; 带团队&#x2F;关注方法论 也就是专家们变得越来越不关心技术细节。需要说明是的，这里说的专家不再关心细节，不代表成为专家后学不会细节，也不代表专家不了解细节。 早期挺难理解这种转变的，笔者在">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-11-24T12:11:33.000Z">
+<meta property="article:modified_time" content="2022-07-26T03:43:12.319Z">
+<meta property="article:author" content="石哥">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2021/11/24/%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%93%E5%AE%B6%E4%B8%8D%E5%86%8D%E5%85%B3%E5%BF%83%E6%8A%80%E6%9C%AF%E7%BB%86%E8%8A%82/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2021/11/24/%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%93%E5%AE%B6%E4%B8%8D%E5%86%8D%E5%85%B3%E5%BF%83%E6%8A%80%E6%9C%AF%E7%BB%86%E8%8A%82/","path":"2021/11/24/为什么专家不再关心技术细节/","title":"为什么专家不再关心技术细节.md"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>为什么专家不再关心技术细节.md | 石哥的博客</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">石哥的博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E5%BC%95%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">1. 引言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E7%B2%BE%E8%AF%BB"><span class="nav-number">2.</span> <span class="nav-text">2. 精读</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-%E6%8A%80%E6%9C%AF%E7%BB%86%E8%8A%82%E5%AF%B9%E4%B8%AA%E4%BA%BA%E7%9A%84%E9%87%8D%E8%A6%81%E6%80%A7%E6%98%AF%E5%9C%A8%E5%8F%98%E5%8C%96%E7%9A%84"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 技术细节对个人的重要性是在变化的</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8%E6%89%BE%E5%B7%A5%E4%BD%9C%E5%88%9D%E6%9C%9F%EF%BC%8C%E6%8A%80%E6%9C%AF%E7%BB%86%E8%8A%82%E6%98%AF%E9%87%8D%E8%A6%81%E7%9A%84%E6%95%B2%E9%97%A8%E7%A0%96"><span class="nav-number">2.1.1.</span> <span class="nav-text">在找工作初期，技术细节是重要的敲门砖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8A%80%E6%9C%AF%E4%B8%8D%E6%98%AF%E7%A7%91%E5%AD%A6%EF%BC%8C%E6%99%AE%E9%80%9A%E4%BA%BA%E4%B8%8B%E5%8A%9F%E5%A4%AB%E5%8F%AF%E4%BB%A5%E5%AD%A6%E4%BC%9A"><span class="nav-number">2.1.2.</span> <span class="nav-text">技术不是科学，普通人下功夫可以学会</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%81%9A%E6%88%90%E4%BA%8B%E4%B8%8D%E4%B8%80%E5%AE%9A%E8%A6%81%E6%90%9E%E6%87%82%E7%BB%86%E8%8A%82"><span class="nav-number">2.1.3.</span> <span class="nav-text">做成事不一定要搞懂细节</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-%E6%90%9E%E6%B8%85%E6%A5%9A%E4%B8%9A%E5%8A%A1%E5%AF%B9%E6%8A%80%E6%9C%AF%E7%9A%84%E7%9C%9F%E5%AE%9E%E8%AF%89%E6%B1%82"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 搞清楚业务对技术的真实诉求</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%9A%E5%8A%A1%E6%80%9D%E7%BB%B4%E6%98%AF%E8%A7%A3%E5%86%B3%E9%97%AE%E9%A2%98%EF%BC%8C%E6%8A%80%E6%9C%AF%E6%80%9D%E7%BB%B4%E6%98%AF%E5%88%9B%E9%80%A0%E9%97%AE%E9%A2%98"><span class="nav-number">2.2.1.</span> <span class="nav-text">业务思维是解决问题，技术思维是创造问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%A4%E4%B8%AA%E4%BC%9A%E5%86%99%E6%A1%86%E6%9E%B6%E7%9A%84%E4%BA%BA%EF%BC%8C%E4%B8%8D%E5%A6%82%E4%B8%80%E4%B8%AA%E8%83%BD%E5%86%B3%E7%AD%96%E7%9A%84%E4%BA%BA"><span class="nav-number">2.2.2.</span> <span class="nav-text">两个会写框架的人，不如一个能决策的人</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%BD%E5%B9%BF%E7%9A%84%E6%8A%80%E6%9C%AF%E8%A7%86%E9%87%8E%E6%9B%B4%E5%AE%B9%E6%98%93%E5%80%9F%E5%8A%9B"><span class="nav-number">2.2.3.</span> <span class="nav-text">宽广的技术视野更容易借力</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-%E4%BB%85%E4%BB%85%E6%8A%80%E6%9C%AF%E5%A5%BD%E6%98%AF%E6%97%A0%E6%B3%95%E6%88%90%E4%B8%BA%E4%B8%93%E5%AE%B6%E7%9A%84"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 仅仅技术好是无法成为专家的</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE%E5%90%8E%E6%9C%9F%E8%A6%81%E5%AF%BB%E6%89%BE%E5%8D%8F%E4%BD%9C%E8%80%85%EF%BC%9F"><span class="nav-number">2.3.1.</span> <span class="nav-text">为什么开源项目后期要寻找协作者？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%83%BD%E5%A4%9F%E8%B0%83%E7%94%A8%E8%B5%84%E6%BA%90%E6%89%8D%E8%83%BD%E6%88%90%E4%B8%BA%E4%B8%93%E5%AE%B6"><span class="nav-number">2.3.2.</span> <span class="nav-text">能够调用资源才能成为专家</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E6%80%BB%E7%BB%93"><span class="nav-number">3.</span> <span class="nav-text">3. 总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">石哥</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/24/%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%93%E5%AE%B6%E4%B8%8D%E5%86%8D%E5%85%B3%E5%BF%83%E6%8A%80%E6%9C%AF%E7%BB%86%E8%8A%82/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="石哥">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="石哥的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="为什么专家不再关心技术细节.md | 石哥的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          为什么专家不再关心技术细节.md
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-11-24 20:11:33" itemprop="dateCreated datePublished" datetime="2021-11-24T20:11:33+08:00">2021-11-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2021-11-24 20:11:33" itemprop="dateModified" datetime="2021-11-24T20:11:33+08:00">2021-11-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h1><p>本周的精读是有感而发。</p>
+<p>笔者接触前端已有七年，观察了不少前端大牛的发展路径，发现成功的人都具有相似的经历：</p>
+<p>初期技术热情极大 -&gt; 大量标志性技术项目 -&gt; 转向综合性思考 -&gt; 带团队&#x2F;关注方法论</p>
+<p>也就是专家们变得越来越不关心技术细节。需要说明是的，这里说的专家不再关心细节，不代表成为专家后学不会细节，也不代表专家不了解细节。</p>
+<p>早期挺难理解这种转变的，笔者在学校里的知名度来自于前端做得精深，一根筋钻研技术的人眼里是容不下沙子的，所以当初为一些前辈转到管理特别不理解，认为他们背叛了前端。</p>
+<span id="more"></span>
+<p>不过笔者的观念也在逐渐发生转变，渐渐自己也在朝着当初反感的方向发展，觉得这一定不是偶然，所以就整理了一下感悟，希望可以证明这个发展路径的必然性。</p>
+<h1 id="2-精读"><a href="#2-精读" class="headerlink" title="2. 精读"></a>2. 精读</h1><blockquote>
+<p>Warn：本文所说的技术专家，仅针对研究上层技术的专家，不包括底层技术专家。<br>在 Google 底层专家人数极少，大部分专家都要走业务技术的路线。</p>
+</blockquote>
+<p>首先我们要明确技术员与科学家的区别，为业务提供技术支持都是技术员，所以前端是一门技术，不是科学。</p>
+<p>另外，技术的发展需要商业推动，没有使用场景的国家是很难推动技术进步的，科学除外。</p>
+<p>所以业务技术是具备可持续发展的路线，毕竟大家都要吃饭，有业务价值的项目会活下来，附着在业务上的技术才能活下来，才有可能开枝散叶。</p>
+<p>本文将从三个点去解释，为什么专家看上去越来越远离技术细节。</p>
+<h2 id="2-1-技术细节对个人的重要性是在变化的"><a href="#2-1-技术细节对个人的重要性是在变化的" class="headerlink" title="2.1 技术细节对个人的重要性是在变化的"></a>2.1 技术细节对个人的重要性是在变化的</h2><p>随着工作年限增加，技术细节重要性在慢慢降低，反之技术视野重要性在慢慢增加。</p>
+<h3 id="在找工作初期，技术细节是重要的敲门砖"><a href="#在找工作初期，技术细节是重要的敲门砖" class="headerlink" title="在找工作初期，技术细节是重要的敲门砖"></a>在找工作初期，技术细节是重要的敲门砖</h3><p>大学毕业的那段时间，技术细节是一块重要的敲门砖，只有掌握好技术，才会有公司愿意要你。</p>
+<p>这也是为什么说毕业生不要一进公司就谈战略，因为时机不对。</p>
+<h3 id="技术不是科学，普通人下功夫可以学会"><a href="#技术不是科学，普通人下功夫可以学会" class="headerlink" title="技术不是科学，普通人下功夫可以学会"></a>技术不是科学，普通人下功夫可以学会</h3><p>学习技术不需要很聪明的头脑，只要肯下功夫，拥有不错的理解能力，任何人都可以把技术细节搞清楚。</p>
+<p><strong>也就是学习技术细节是没有技术门槛，随着年龄的增加，如果只累积了大家都能学会的内容，那么当旧知识被淘汰后，学习新知识的速度又不如年轻人快，会逐渐失去经验优势。</strong></p>
+<p>那么如何利用无门槛的特征，将其变为门槛呢？任何年龄段学习技术细节都很容易，应该在你需要深入细节的时候再深入进去，不需要深入的时候把时间花在了解宏观架构上。</p>
+<p>就是培养高效的学习能力，能准确判断某个技术细节是否有必要掌握，如需要该如何快速掌握核心内容，并在掌握之后不留恋，可以快速抽身出来继续全局性思考。这种思维是有门槛的，技术专家都可以做到这一点。</p>
+<h3 id="做成事不一定要搞懂细节"><a href="#做成事不一定要搞懂细节" class="headerlink" title="做成事不一定要搞懂细节"></a>做成事不一定要搞懂细节</h3><p>乍一看有点匪夷所思：不了解细节怎么能做成事？</p>
+<p>虽然理解技术细节可以做成事，但做成事不一定需要理解业务细节。</p>
+<p>这要看怎么理解业务与技术的关系，比如建设 “数据联邦”，光是了解各个不同的存储系统技术细节可能就要花很久，而实际上是没必要将所有技术细节都弄懂的，只要定好一个通用交互规范，各存储系统各自封装一套符合这个规范的交互接口即可。</p>
+<p>做成事往往需要宏观的技术思维，需要将许多技术点链接在一起。举个例子，做成事就类似于军官指挥作战，做成的目的是通过制定打法赢得战争，而不是自己冲锋陷阵并测量敌人壕沟的宽度。关心技术细节只是最终落实到每个人具体实施项中的一部分，技术细节的目标累加起来才能做成事。</p>
+<h2 id="2-2-搞清楚业务对技术的真实诉求"><a href="#2-2-搞清楚业务对技术的真实诉求" class="headerlink" title="2.2 搞清楚业务对技术的真实诉求"></a>2.2 搞清楚业务对技术的真实诉求</h2><p>业务期望通过技术实现功能，所以技术专家要做的是如何更好的实现业务需求，这就意味着理解业务需求是第一重要的能力。试想一个不能理解业务要做什么的人，即便懂得再多技术细节，对业务也是没有价值的。</p>
+<h3 id="业务思维是解决问题，技术思维是创造问题"><a href="#业务思维是解决问题，技术思维是创造问题" class="headerlink" title="业务思维是解决问题，技术思维是创造问题"></a>业务思维是解决问题，技术思维是创造问题</h3><p>拥有技术思维的人，容易沉迷于解决不切实际的问题，或者是别人解决过的问题。这种思维对技术学习是非常有帮助的，但如果长期不能转变这种思维，对公司来说是无法创造什么价值的。</p>
+<p>拥有业务思维的人，首先要懂业务，只有懂业务，跟着对的业务，才能对未来有信心，知道自己的付出可以换来回报。</p>
+<p>懂业务后，才知道如何通过技术帮助业务获得成功。</p>
+<p>比如在一家创业公司，老板的眼光很准，进入的时机较早，市场是一片蓝海。你通过分析后，发现要帮助业务占领市场，只要利用某个成熟技术框架快速迭代，就可以在短期帮助业务赢得市场。但是这个框架定制能力不强，如果新需求来了可能需要花时间重构掉。此时技术思维的人只会考虑代码维护性，提出自研一套框架，而拥有业务思维的技术专家会决定先用成熟的技术快速作出原型，等业务稳定后再重构掉。</p>
+<p>当然现在互联网市场竞争很激烈，低技术门槛的蓝海基本已都变成了红海，上面提到的场景可能比较少见，我们更多需要决策的是未来几年内业务的收益是否值得现在投入的研发资源。</p>
+<h3 id="两个会写框架的人，不如一个能决策的人"><a href="#两个会写框架的人，不如一个能决策的人" class="headerlink" title="两个会写框架的人，不如一个能决策的人"></a>两个会写框架的人，不如一个能决策的人</h3><p>另一个简单的例子就是，假如技术专家只会一头扎在技术细节里，对各种前端框架的实现了如指掌，大家都能造出优雅、易用、可维护，而且还带有各自 “特色优势” 的框架或者轮子，那么团队很容易陷入两个专家屁股决定脑袋的技术纷争中。这种情况下，两名技术专家的产出甚至不如一个实习生大，毕竟实习生直接拿来开源框架上手，99% 的情况可靠性比前端专家自己造的轮子更好。</p>
+<p>从另一个方面来说，现阶段前端界能写出 React、Vue 框架的人太多了，已经写出来的类 React、Vue 的框架也数不过来。去掉为了练手而做的项目，真正希望推广出去给别人用的还占绝大多数，这是开源界典型的问题：重复低水平造轮子不需要理由，推广给你用也不需要负责任。由于框架属于互联网虚拟资产，边界成本为零，这决定了框架市场一定是个大寡头市场，不可能有类似的项目通过一些不痛不痒的特色分一杯羹。那么就算招 10 个会写框架的人进入公司架构组，最后只有两种可能：要么架构臃肿，每个人都把自己的一部分功劳加入进去；要么就是选择一个更不好的方案，这样不会损害任何一位架构师的利益。</p>
+<p>所以现在公司更倾向于内部培养人才，因为内部的人了解业务需要什么，创造的价值往往比空降的架构师更大。</p>
+<h3 id="宽广的技术视野更容易借力"><a href="#宽广的技术视野更容易借力" class="headerlink" title="宽广的技术视野更容易借力"></a>宽广的技术视野更容易借力</h3><p>现在技术点越来越多，如果什么技术细节都要详细了解，最终一定不能有很好的全局视野。比较好的状态是找几个重点深入了解，其他的技术点在掌握了全局技术视野后再考虑深入。</p>
+<p>在互联网初期，很多技术框架还不完善，技术借力的意义不大，毕竟也没有多少东西可用。</p>
+<p>但是现在无论前端还是后端的技术、轮子已经眼花缭乱了，能掌握这些已有技术的人，价值已经逐渐大于会完整了解某些技术细节的人。一个优秀的专家应该能快速定位要解决的业务问题是否有成熟的技术方案，如何以最小的投入产出比实现，同时保持良好的维护性应变业务维护。</p>
+<h2 id="2-3-仅仅技术好是无法成为专家的"><a href="#2-3-仅仅技术好是无法成为专家的" class="headerlink" title="2.3 仅仅技术好是无法成为专家的"></a>2.3 仅仅技术好是无法成为专家的</h2><p>技术专家真的代表技术壁垒很强的人吗？是的，但只有技术能力是不够的。</p>
+<h3 id="为什么开源项目后期要寻找协作者？"><a href="#为什么开源项目后期要寻找协作者？" class="headerlink" title="为什么开源项目后期要寻找协作者？"></a>为什么开源项目后期要寻找协作者？</h3><p>我做开源项目的初期，所有框架和源码都事必躬亲，觉得自己有更好的点子可以胜过其他框架。初期很少有贡献者参与，当然我也不愿意其他贡献者参与，毕竟他们不了解设计理念，只有我自己的修改可以让我满意。</p>
+<p>还有谁比作者更了解他的开源项目呢？那为什么一个大型开源项目运作到后期，基本都是协作者在维护？</p>
+<p>因为开源是一件系统化的事情，如果你想长期维护他，必须建立好文档系统，让你的思路可复制，让他人可参与。如果开源项目只有你一个人懂，那么同时维护两个、四个、六个的时候，你定会发现力不从心。</p>
+<p>至于一些开源大神一人维护几百甚至上千 Repo，背后一定有更多的贡献者支持，一个人就算辞职在家专职做开源，也很难同时维护超过 10 个开源项目。你需要拥有开放的心态让更多人加入进来，将成就感和荣誉感分一些给贡献者，他们才会持续为项目贡献。</p>
+<h3 id="能够调用资源才能成为专家"><a href="#能够调用资源才能成为专家" class="headerlink" title="能够调用资源才能成为专家"></a>能够调用资源才能成为专家</h3><p>开源界就是项目抢占关注度的游戏。假设开源社区总人数为 100，你的项目能够吸引到 10 个人浏览，5 个人使用，2 个人贡献，基本就能存活下来。而开源社区至少有 100 个项目，社区总人数不足以支持每一个项目，只有获得足够关注度的项目才能保持长青。</p>
+<p>公司内也是如此，专家级以上的 Title 会要求协作能力，可以调动身边甚至其他部门资源的人才能在公司发挥更大的价值。</p>
+<p>CEO 通过顶层设计调动了全公司资源，而业务线总裁通过任务拆解调动了整个业务线的人，通过层层目标拆解，并保证每一层都能充分调动下一层所有资源，公司才能高效的运转。</p>
+<p>如果一直关心技术细节，你永远是一个孤立节点，在任何维度的组织中都是最底层，就算 24 小时不睡觉，也最多算两个人力资源。想要突破一天 24 小时的限制，就要花时间让别人认同你的设计，并朝着一个方向努力，你的节点才能上移，但随之而来的是承担更多风险，比如分配给别人的任务给弄砸了，为公司带来了不良影响，那么负责人就要背锅。</p>
+<h1 id="3-总结"><a href="#3-总结" class="headerlink" title="3. 总结"></a>3. 总结</h1><p>总结一下，本文的观点是：</p>
+<ol>
+<li>技术细节学习难度不大，在需要深入的时候再深入了解最佳。</li>
+<li>想要做成事，需要更宏观的技术思维，所以专家渐渐变得眼光宽阔，格局很大。</li>
+<li>专家拥有快速学习技术细节的能力，只是这已不是其核心竞争力，所以与其写技术细节的文章，不如写方法论的思考带来的价值更大。</li>
+<li>指引方向比走路更重要，专家都要逐渐成为引路人。</li>
+<li>技术最终为业务服务，懂技术细节和让业务先赢没有必然的关系，所以在深入技术细节之前，要先理解业务，把握方向，防止技术细节出现路线问题。</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/08/23/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%20-%20Observer%20%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/" rel="prev" title="设计模式 - Observer 观察者模式">
+                  <i class="fa fa-chevron-left"></i> 设计模式 - Observer 观察者模式
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">石哥</span>
+  <span>微信: fs821031547</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/love.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript" opacity='0.7' zIndex="-2" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+</body>
+</html>

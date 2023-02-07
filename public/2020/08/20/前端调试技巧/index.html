@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.12.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="本期精读的文章是：debugging-tips-tricks 编码只是开发过程中的一小部分，为了使我们工作更加高效，我们必须学会调试，并擅长调试。 1 引言  梵高这幅画远景漆黑一片，近景的咖啡店色彩却反差很大，他只是望着黑夜中温暖的咖啡馆，交织着矛盾与孤独。代码不可能没有 BUG，调试与开发也始终交织在一起，我们在这两种矛盾中不断成长。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端调试技巧">
+<meta property="og:url" content="http://example.com/2020/08/20/%E5%89%8D%E7%AB%AF%E8%B0%83%E8%AF%95%E6%8A%80%E5%B7%A7/index.html">
+<meta property="og:site_name" content="石哥的博客">
+<meta property="og:description" content="本期精读的文章是：debugging-tips-tricks 编码只是开发过程中的一小部分，为了使我们工作更加高效，我们必须学会调试，并擅长调试。 1 引言  梵高这幅画远景漆黑一片，近景的咖啡店色彩却反差很大，他只是望着黑夜中温暖的咖啡馆，交织着矛盾与孤独。代码不可能没有 BUG，调试与开发也始终交织在一起，我们在这两种矛盾中不断成长。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img.alicdn.com/imgextra/i2/O1CN01JC1TZ51Nxn24teojP_!!6000000001637-2-tps-1024-1296.png">
+<meta property="og:image" content="https://img.alicdn.com/imgextra/i4/O1CN01xsKHb822gkXhDDcCA_!!6000000007150-2-tps-417-516.png">
+<meta property="article:published_time" content="2020-08-19T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-07-24T18:04:01.143Z">
+<meta property="article:author" content="石哥">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img.alicdn.com/imgextra/i2/O1CN01JC1TZ51Nxn24teojP_!!6000000001637-2-tps-1024-1296.png">
+
+
+<link rel="canonical" href="http://example.com/2020/08/20/%E5%89%8D%E7%AB%AF%E8%B0%83%E8%AF%95%E6%8A%80%E5%B7%A7/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2020/08/20/%E5%89%8D%E7%AB%AF%E8%B0%83%E8%AF%95%E6%8A%80%E5%B7%A7/","path":"2020/08/20/前端调试技巧/","title":"前端调试技巧"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>前端调试技巧 | 石哥的博客</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">石哥的博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E5%BC%95%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">1 引言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E5%86%85%E5%AE%B9%E6%A6%82%E8%A6%81"><span class="nav-number">2.</span> <span class="nav-text">2 内容概要</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Debugger"><span class="nav-number">2.0.1.</span> <span class="nav-text">Debugger</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Console-dir"><span class="nav-number">2.0.2.</span> <span class="nav-text">Console.dir</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E8%BE%85%E5%8A%A9%E5%B7%A5%E5%85%B7%EF%BC%8C%E8%AF%AD%E6%B3%95%E9%AB%98%E4%BA%AE%E3%80%81linting"><span class="nav-number">2.0.3.</span> <span class="nav-text">使用辅助工具，语法高亮、linting</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8B%93%E5%B1%95"><span class="nav-number">2.0.4.</span> <span class="nav-text">浏览器拓展</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%80%9F%E5%8A%A9-DevTools"><span class="nav-number">2.0.5.</span> <span class="nav-text">借助 DevTools</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A7%BB%E5%8A%A8%E7%AB%AF%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7"><span class="nav-number">2.0.6.</span> <span class="nav-text">移动端调试工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E6%97%B6%E8%B0%83%E8%AF%95"><span class="nav-number">2.0.7.</span> <span class="nav-text">实时调试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E6%9E%84%E5%8C%96%E6%89%93%E5%8D%B0%E5%AF%B9%E8%B1%A1%E7%9E%AC%E6%97%B6%E7%8A%B6%E6%80%81"><span class="nav-number">2.0.8.</span> <span class="nav-text">结构化打印对象瞬时状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E7%BB%84%E8%B0%83%E8%AF%95"><span class="nav-number">2.0.9.</span> <span class="nav-text">数组调试</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E7%B2%BE%E8%AF%BB"><span class="nav-number">3.</span> <span class="nav-text">3 精读</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A7%BB%E5%8A%A8%E7%AB%AF%E7%9C%9F%E6%9C%BA%E6%B5%8B%E8%AF%95"><span class="nav-number">3.0.1.</span> <span class="nav-text">移动端真机测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%8E%A7%E5%88%B6%E5%8F%B0"><span class="nav-number">3.0.2.</span> <span class="nav-text">移动端控制台</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%B7%E6%B1%82%E4%BB%A3%E7%90%86"><span class="nav-number">3.0.3.</span> <span class="nav-text">请求代理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E5%88%B6-Chrome-%E6%8B%93%E5%B1%95"><span class="nav-number">3.0.4.</span> <span class="nav-text">定制 Chrome 拓展</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8%E7%94%A8%E6%88%B7%E8%AE%BE%E5%A4%87%E8%B0%83%E8%AF%95"><span class="nav-number">3.0.5.</span> <span class="nav-text">在用户设备调试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DOM-%E6%96%AD%E7%82%B9%E3%80%81%E4%BA%8B%E4%BB%B6%E6%96%AD%E7%82%B9"><span class="nav-number">3.0.6.</span> <span class="nav-text">DOM 断点、事件断点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E9%94%99%E8%AF%AF%E8%BF%BD%E8%B8%AA%E5%B9%B3%E5%8F%B0"><span class="nav-number">3.0.7.</span> <span class="nav-text">使用错误追踪平台</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%BB%91%E7%9B%92%E8%B0%83%E8%AF%95"><span class="nav-number">3.0.8.</span> <span class="nav-text">黑盒调试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E6%97%A0%E7%94%A8%E7%9A%84-css"><span class="nav-number">3.0.9.</span> <span class="nav-text">删除无用的 css</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8-Chrome-%E5%BF%AB%E9%80%9F%E6%9F%A5%E6%89%BE%E5%85%83%E7%B4%A0"><span class="nav-number">3.0.10.</span> <span class="nav-text">在 Chrome 快速查找元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Console-table"><span class="nav-number">3.0.11.</span> <span class="nav-text">Console.table</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%91%E5%90%AC%E7%89%B9%E5%AE%9A%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8"><span class="nav-number">3.0.12.</span> <span class="nav-text">监听特定函数调用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E6%8B%9F%E5%8F%91%E9%80%81%E8%AF%B7%E6%B1%82%E5%88%A9%E5%99%A8-PostMan"><span class="nav-number">3.0.13.</span> <span class="nav-text">模拟发送请求利器 PostMan</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%BE%E5%88%B0%E6%8E%A7%E5%88%B6%E5%8F%B0%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E5%AF%B9%E8%B1%A1"><span class="nav-number">3.0.14.</span> <span class="nav-text">找到控制台最后一个对象</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E6%80%BB%E7%BB%93"><span class="nav-number">4.</span> <span class="nav-text">3 总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">石哥</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/08/20/%E5%89%8D%E7%AB%AF%E8%B0%83%E8%AF%95%E6%8A%80%E5%B7%A7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="石哥">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="石哥的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="前端调试技巧 | 石哥的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          前端调试技巧
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-08-20 00:00:00" itemprop="dateCreated datePublished" datetime="2020-08-20T00:00:00+08:00">2020-08-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2020-08-20 00:00:00" itemprop="dateModified" datetime="2020-08-20T00:00:00+08:00">2020-08-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>本期精读的文章是：<a target="_blank" rel="noopener" href="https://css-tricks.com/debugging-tips-tricks/?utm_source=javascriptweekly&utm_medium=email">debugging-tips-tricks</a></p>
+<p>编码只是开发过程中的一小部分，为了使我们工作更加高效，我们必须学会调试，并擅长调试。</p>
+<h1 id="1-引言"><a href="#1-引言" class="headerlink" title="1 引言"></a>1 引言</h1><img src="https://img.alicdn.com/imgextra/i2/O1CN01JC1TZ51Nxn24teojP_!!6000000001637-2-tps-1024-1296.png" width="500" alt="logo" />
+
+<p>梵高这幅画远景漆黑一片，近景的咖啡店色彩却反差很大，他只是望着黑夜中温暖的咖啡馆，交织着矛盾与孤独。代码不可能没有 BUG，调试与开发也始终交织在一起，我们在这两种矛盾中不断成长。</p>
+<span id="more"></span>
+<h1 id="2-内容概要"><a href="#2-内容概要" class="headerlink" title="2 内容概要"></a>2 内容概要</h1><p>文中列举了常用调试技巧，如下：</p>
+<h3 id="Debugger"><a href="#Debugger" class="headerlink" title="Debugger"></a>Debugger</h3><p>在代码中插入 <code>debugger</code> 可以在其位置触发断点调试。</p>
+<h3 id="Console-dir"><a href="#Console-dir" class="headerlink" title="Console.dir"></a>Console.dir</h3><p>使用 <code>console.dir</code> 命令，可以打印出对象的结构，而 <code>console.log</code> 仅能打印返回值，在打印 <code>document</code> 属性时尤为有用。</p>
+<blockquote>
+<p>ps: 大部分时候，对象返回值就是其结构</p>
+</blockquote>
+<h3 id="使用辅助工具，语法高亮、linting"><a href="#使用辅助工具，语法高亮、linting" class="headerlink" title="使用辅助工具，语法高亮、linting"></a>使用辅助工具，语法高亮、linting</h3><p>它可以帮助我们快速定位问题，其实 flow 与 typescript 也起到了很好的调试作用。</p>
+<h3 id="浏览器拓展"><a href="#浏览器拓展" class="headerlink" title="浏览器拓展"></a>浏览器拓展</h3><p>使用类似 <a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi">ReactDTools</a> <a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd">VueDTools</a> 调试对应框架。</p>
+<h3 id="借助-DevTools"><a href="#借助-DevTools" class="headerlink" title="借助 DevTools"></a>借助 DevTools</h3><p>Chrome Dev Tools 非常强大，<a target="_blank" rel="noopener" href="https://umaar.com/dev-tips/">dev-tips</a> 列出了 100 多条它可以做的事。</p>
+<h3 id="移动端调试工具"><a href="#移动端调试工具" class="headerlink" title="移动端调试工具"></a>移动端调试工具</h3><p>最靠谱的应该是 <a target="_blank" rel="noopener" href="http://eruda.liriliri.io/">eruda</a>，可以内嵌在任何 h5 页面，充当 DevTools 控制台的作用。</p>
+<h3 id="实时调试"><a href="#实时调试" class="headerlink" title="实时调试"></a>实时调试</h3><p>不需要预先埋点，比如 <code>document.activeElement</code> 可以打印最近 focus 过的元素，因为打开控制台导致失去焦点，但我们可以通过此 api 获取它。</p>
+<h3 id="结构化打印对象瞬时状态"><a href="#结构化打印对象瞬时状态" class="headerlink" title="结构化打印对象瞬时状态"></a>结构化打印对象瞬时状态</h3><p><code>JSON.stringify(obj, null, 2)</code> 可以结构化打印出对象，因为是字符串，不用担心引用问题。</p>
+<h3 id="数组调试"><a href="#数组调试" class="headerlink" title="数组调试"></a>数组调试</h3><p>通过 <code>Array.prototype.find</code> 快速寻找某个元素。</p>
+<h1 id="3-精读"><a href="#3-精读" class="headerlink" title="3 精读"></a>3 精读</h1><p>本精读由 <a target="_blank" rel="noopener" href="https://github.com/rccoder">rccoder</a> <a target="_blank" rel="noopener" href="https://github.com/ascoders">ascoders</a> <a target="_blank" rel="noopener" href="https://github.com/NE-SmallTown">NE-SmallTown</a> <a target="_blank" rel="noopener" href="https://github.com/BlackGanglion">BlackGanglion</a> <a target="_blank" rel="noopener" href="https://github.com/jasonslyvia">jasonslyvia</a> <a target="_blank" rel="noopener" href="https://github.com/alcat2008">alcat2008</a> <a target="_blank" rel="noopener" href="https://github.com/DanielWLam">DanielWLam</a> <a target="_blank" rel="noopener" href="https://github.com/HsuanXyz">HsuanXyz</a> <a target="_blank" rel="noopener" href="https://github.com/huxiaoyun">huxiaoyun</a> <a target="_blank" rel="noopener" href="https://github.com/vagusX">vagusX</a> 讨论而出。</p>
+<h3 id="移动端真机测试"><a href="#移动端真机测试" class="headerlink" title="移动端真机测试"></a>移动端真机测试</h3><p>由于 webview 不一定支持连接 chrome 控制台调试，只有真机测试才能复现真实场景。</p>
+<p><a target="_blank" rel="noopener" href="https://www.browserstack.com/">browserstack</a> <a target="_blank" rel="noopener" href="https://www.dynatrace.com/platform/offerings/customer-experience-monitoring/">dynatrace</a> 都是真机测试平台，公司内部应该也会搭建这种平台。</p>
+<h3 id="移动端控制台"><a href="#移动端控制台" class="headerlink" title="移动端控制台"></a>移动端控制台</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://developers.google.com/web/tools/chrome-devtools/remote-debugging/webviews">Chrome 远程调试</a> app 支持后，连接 usb 或者局域网，即可通过 Dev Tools 调试 webview 页面。</li>
+<li><a target="_blank" rel="noopener" href="http://people.apache.org/~pmuellr/weinre/docs/latest/Home.html">Weinre</a> 通过页面加载脚本，与 pc 端调试器通信。</li>
+<li>通过内嵌控制台解决，比如 <a target="_blank" rel="noopener" href="http://eruda.liriliri.io/">eruda</a> <a target="_blank" rel="noopener" href="https://github.com/WechatFE/vConsole">VConsole</a> </li>
+<li><a target="_blank" rel="noopener" href="http://alloyteam.github.io/Rosin/">Rosin</a> fiddler 的一个插件，协助移动页面调试。</li>
+<li><a target="_blank" rel="noopener" href="https://jsconsole.com/">jsconsole</a> 在本地部署后，手机访问对应 ip，可以测试对应浏览器的控制台。</li>
+</ul>
+<h3 id="请求代理"><a href="#请求代理" class="headerlink" title="请求代理"></a>请求代理</h3><p><a target="_blank" rel="noopener" href="http://www.charlesproxy.com/">charles</a> <a target="_blank" rel="noopener" href="http://www.telerik.com/fiddler">Fiddler</a> 可以抓包，更重要是可以代理请求。假数据、边界值测试、开发环境代码加载，每一项都非常有用。</p>
+<h3 id="定制-Chrome-拓展"><a href="#定制-Chrome-拓展" class="headerlink" title="定制 Chrome 拓展"></a>定制 Chrome 拓展</h3><p>对于特定业务场景也可以通过开发 chrome 插件来做，比如分析自己网站的结构、版本、代码开发责任人、一键切换开发环境。</p>
+<h3 id="在用户设备调试"><a href="#在用户设备调试" class="headerlink" title="在用户设备调试"></a>在用户设备调试</h3><p>把控制台输出信息打到服务器，本地通过与服务器建立 socket 链接实时查看控制台信息。要知道实时根据用户 id 开启调试信息，并看用户真是环境的控制台打印信息是非常有用的，能解决很多难以复现问题。</p>
+<p>代码中可以使用封装过的 <code>console.log</code>，当服务端开启调试状态后，对应用户网页会源源不断打出 log。</p>
+<h3 id="DOM-断点、事件断点"><a href="#DOM-断点、事件断点" class="headerlink" title="DOM 断点、事件断点"></a>DOM 断点、事件断点</h3><ul>
+<li>DOM 断点，在 dom 元素右键，选择 （Break on subtree modifications），可以在此 dom 被修改时触发断点，在不确定 dom 被哪段 js 脚本修改时可能有用。</li>
+<li>Event Listener Breakpoints，神器之一，对于任何事件都能进入断点，比如 click，touch，script 事件统统能监听。</li>
+</ul>
+<h3 id="使用错误追踪平台"><a href="#使用错误追踪平台" class="headerlink" title="使用错误追踪平台"></a>使用错误追踪平台</h3><p>对错误信息采集、分析、报警是很必要的，这里有一些对外服务：<a target="_blank" rel="noopener" href="https://sentry.io/welcome/">sentry</a> <a target="_blank" rel="noopener" href="https://trackjs.com/">trackjs</a></p>
+<h3 id="黑盒调试"><a href="#黑盒调试" class="headerlink" title="黑盒调试"></a>黑盒调试</h3><p>SourceMap 可以精准定位到代码，但有时候报错是由某处代码统一抛出的，比如 <a target="_blank" rel="noopener" href="https://github.com/zertosh/invariant">invariant</a> 让人又爱又恨的库，所有定位全部跑到这个库里了（要你有何用），这时候，可以在 DevTools 源码中右键，选中 <code>BlackBox Script</code>，它就变成黑盒了，下次 log 的定位将会是准确的。</p>
+<p><a target="_blank" rel="noopener" href="https://hacks.mozilla.org/2013/08/new-features-of-firefox-developer-tools-episode-25/">FireFox</a>、<a target="_blank" rel="noopener" href="https://umaar.com/dev-tips/128-blackboxing/">Chrome</a>。</p>
+<h3 id="删除无用的-css"><a href="#删除无用的-css" class="headerlink" title="删除无用的 css"></a>删除无用的 css</h3><p>Css 不像 Js 一样方便分析规则是否存在冗余，Chrome 帮我们做了这件事：<a target="_blank" rel="noopener" href="https://umaar.com/dev-tips/126-css-tracker/">CSS Tracker</a>。</p>
+<h3 id="在-Chrome-快速查找元素"><a href="#在-Chrome-快速查找元素" class="headerlink" title="在 Chrome 快速查找元素"></a>在 Chrome 快速查找元素</h3><p>Chrome 会记录最后插入的 5 个元素，分别以 <code>$0</code> ~ <code>$4</code> 的方式在控制台直接输出。</p>
+<img src="https://img.alicdn.com/imgextra/i4/O1CN01xsKHb822gkXhDDcCA_!!6000000007150-2-tps-417-516.png" width="500" alt="last-items" />
+
+<h3 id="Console-table"><a href="#Console-table" class="headerlink" title="Console.table"></a>Console.table</h3><p>以表格形式打印，对于对象数组尤为合适。</p>
+<h3 id="监听特定函数调用"><a href="#监听特定函数调用" class="headerlink" title="监听特定函数调用"></a>监听特定函数调用</h3><p><code>monitor</code> 有点像 <code>proxy</code>，用 <code>monitor</code> 包裹住的 function，在其调用后，会在控制台输出其调用信息。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="keyword">function</span> <span class="title function_">func</span>(<span class="params">num</span>)&#123;&#125;</span><br><span class="line">&gt; <span class="title function_">monitor</span>(func)</span><br><span class="line">&gt; <span class="title function_">func</span>(<span class="number">3</span>)</span><br><span class="line"><span class="comment">// &lt; function func called with arguments: 3</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="模拟发送请求利器-PostMan"><a href="#模拟发送请求利器-PostMan" class="headerlink" title="模拟发送请求利器 PostMan"></a>模拟发送请求利器 PostMan</h3><p><a target="_blank" rel="noopener" href="https://www.getpostman.com/products">PostMan</a>, FireFox 控制台 Network 也支持此功能。</p>
+<h3 id="找到控制台最后一个对象"><a href="#找到控制台最后一个对象" class="headerlink" title="找到控制台最后一个对象"></a>找到控制台最后一个对象</h3><p>有了 <code>$_</code>，我们就不需要定义新的对象来打印值了，比如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]</span><br><span class="line">&lt; [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]</span><br><span class="line">&gt; $_.<span class="property">length</span></span><br><span class="line"><span class="comment">// &lt; 4</span></span><br></pre></td></tr></table></figure>
+
+<p>更多控制台相关技巧可以查看：<a target="_blank" rel="noopener" href="https://developers.google.com/web/tools/chrome-devtools/console/command-line-reference?utm_source=dcc&utm_medium=redirect&utm_campaign=2016q3">command-line-reference</a>。</p>
+<h1 id="3-总结"><a href="#3-总结" class="headerlink" title="3 总结"></a>3 总结</h1><p>虽然在抛砖引玉，但整理完之后发现仍然是块砖头，调试技巧繁多，里面包含了通用的、不通用的，精读不可能一一列举。希望大家能根据自己的业务场景，掌握相关的调试技巧，让工作更加高效。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/03/21/%E6%B5%8F%E8%A7%88%E5%99%A8%E8%A7%A3%E6%9E%90%E5%9F%9F%E5%90%8D/" rel="prev" title="浏览器解析域名">
+                  <i class="fa fa-chevron-left"></i> 浏览器解析域名
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/04/16/%E7%B2%BE%E8%AF%BB%E3%80%8ANuxtjs%E3%80%8B/" rel="next" title="精读《Nuxtjs》.md">
+                  精读《Nuxtjs》.md <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">石哥</span>
+  <span>微信: fs821031547</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/love.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript" opacity='0.7' zIndex="-2" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+</body>
+</html>

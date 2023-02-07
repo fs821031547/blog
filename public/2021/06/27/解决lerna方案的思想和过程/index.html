@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.12.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="背景相信大家多多多少都接触过或听过monorepo这个东西，为了方便多个项目进行调试、复用和管理，采取一种单git仓库管理多个项目方式，市面上流行的库vue、react、babel等都采用monorepo方式进行管理。带来便利的同时，也带来了很多挑战。 我们应该以何种方式统一管理这些包呢？包版本升级的时候、发布的时候、依赖冗余这些问题都摆在我们面前。市面上也有很多成熟的解决方案，我司则是选择了ya">
+<meta property="og:type" content="article">
+<meta property="og:title" content="解构lerna方案的思想和过程">
+<meta property="og:url" content="http://example.com/2021/06/27/%E8%A7%A3%E5%86%B3lerna%E6%96%B9%E6%A1%88%E7%9A%84%E6%80%9D%E6%83%B3%E5%92%8C%E8%BF%87%E7%A8%8B/index.html">
+<meta property="og:site_name" content="石哥的博客">
+<meta property="og:description" content="背景相信大家多多多少都接触过或听过monorepo这个东西，为了方便多个项目进行调试、复用和管理，采取一种单git仓库管理多个项目方式，市面上流行的库vue、react、babel等都采用monorepo方式进行管理。带来便利的同时，也带来了很多挑战。 我们应该以何种方式统一管理这些包呢？包版本升级的时候、发布的时候、依赖冗余这些问题都摆在我们面前。市面上也有很多成熟的解决方案，我司则是选择了ya">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5964abf28db54305be07b11c7f04d728~tplv-k3u1fbpfcp-zoom-in-crop-mark:3024:0:0:0.awebp?">
+<meta property="og:image" content="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a3a247d895d548e8bf42df9c465b67b6~tplv-k3u1fbpfcp-zoom-in-crop-mark:3024:0:0:0.awebp?">
+<meta property="article:published_time" content="2021-06-27T13:13:11.000Z">
+<meta property="article:modified_time" content="2022-07-26T02:48:50.483Z">
+<meta property="article:author" content="石哥">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5964abf28db54305be07b11c7f04d728~tplv-k3u1fbpfcp-zoom-in-crop-mark:3024:0:0:0.awebp?">
+
+
+<link rel="canonical" href="http://example.com/2021/06/27/%E8%A7%A3%E5%86%B3lerna%E6%96%B9%E6%A1%88%E7%9A%84%E6%80%9D%E6%83%B3%E5%92%8C%E8%BF%87%E7%A8%8B/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2021/06/27/%E8%A7%A3%E5%86%B3lerna%E6%96%B9%E6%A1%88%E7%9A%84%E6%80%9D%E6%83%B3%E5%92%8C%E8%BF%87%E7%A8%8B/","path":"2021/06/27/解决lerna方案的思想和过程/","title":"解构lerna方案的思想和过程"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>解构lerna方案的思想和过程 | 石哥的博客</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">石哥的博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pnpm%E3%80%81yarn%E3%80%81npm"><span class="nav-number">2.</span> <span class="nav-text">pnpm、yarn、npm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E4%BD%8D"><span class="nav-number">3.</span> <span class="nav-text">定位</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%B1%95%E8%83%8C%E6%99%AF"><span class="nav-number">4.</span> <span class="nav-text">开展背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90%E5%9B%BE%E8%B0%B1"><span class="nav-number">5.</span> <span class="nav-text">分析图谱</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%BC%8F"><span class="nav-number">6.</span> <span class="nav-text">模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4"><span class="nav-number">7.</span> <span class="nav-text">命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#version-%E5%91%BD%E4%BB%A4"><span class="nav-number">8.</span> <span class="nav-text">version 命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sync-%E6%A8%A1%E5%BC%8F"><span class="nav-number">9.</span> <span class="nav-text">sync 模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#diff-%E6%A8%A1%E5%BC%8F"><span class="nav-number">10.</span> <span class="nav-text">diff 模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#publish%E5%91%BD%E4%BB%A4"><span class="nav-number">11.</span> <span class="nav-text">publish命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%92%E6%9B%B2"><span class="nav-number">12.</span> <span class="nav-text">插曲</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tag-%E5%91%BD%E4%BB%A4"><span class="nav-number">13.</span> <span class="nav-text">tag 命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#init-%E5%91%BD%E4%BB%A4"><span class="nav-number">14.</span> <span class="nav-text">init 命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%91%BD%E4%BB%A4"><span class="nav-number">15.</span> <span class="nav-text">自定义命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E5%85%88%E6%8E%92%E5%BA%8F"><span class="nav-number">15.1.</span> <span class="nav-text">优先排序</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE"><span class="nav-number">16.</span> <span class="nav-text">配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#pkgs-json"><span class="nav-number">16.1.</span> <span class="nav-text">pkgs.json</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pnpm-workspace-yaml"><span class="nav-number">17.</span> <span class="nav-text">pnpm-workspace.yaml</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%84%E5%BB%BA"><span class="nav-number">18.</span> <span class="nav-text">构建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%9D%E8%B5%96%E5%BE%AA%E7%8E%AF"><span class="nav-number">18.1.</span> <span class="nav-text">依赖循环</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#esbuild"><span class="nav-number">18.2.</span> <span class="nav-text">esbuild</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95"><span class="nav-number">19.</span> <span class="nav-text">测试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7"><span class="nav-number">19.1.</span> <span class="nav-text">测试工具</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%91%E5%B8%83"><span class="nav-number">20.</span> <span class="nav-text">发布</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TODO"><span class="nav-number">21.</span> <span class="nav-text">TODO</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%84%E5%BB%BA%E7%89%A9%E8%BF%87%E5%A4%A7"><span class="nav-number">21.1.</span> <span class="nav-text">构建物过大</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8A%B6%E6%80%81%E5%88%86%E6%9E%90"><span class="nav-number">21.2.</span> <span class="nav-text">状态分析</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">石哥</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/27/%E8%A7%A3%E5%86%B3lerna%E6%96%B9%E6%A1%88%E7%9A%84%E6%80%9D%E6%83%B3%E5%92%8C%E8%BF%87%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="石哥">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="石哥的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="解构lerna方案的思想和过程 | 石哥的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          解构lerna方案的思想和过程
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-06-27 21:13:11" itemprop="dateCreated datePublished" datetime="2021-06-27T21:13:11+08:00">2021-06-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2021-06-27 21:13:11" itemprop="dateModified" datetime="2021-06-27T21:13:11+08:00">2021-06-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>相信大家多多多少都接触过或听过monorepo这个东西，为了方便多个项目进行调试、复用和管理，采取一种单git仓库管理多个项目方式，<br>市面上流行的库vue、react、babel等都采用monorepo方式进行管理。带来便利的同时，也带来了很多挑战。</p>
+<p>我们应该以何种方式统一管理这些包呢？包版本升级的时候、发布的时候、依赖冗余这些问题都摆在我们面前。市面上也有很多成熟的解决方案，<br>我司则是选择了yarn+lerna做monorepo管理。</p>
+<span id="more"></span>
+<h2 id="pnpm、yarn、npm"><a href="#pnpm、yarn、npm" class="headerlink" title="pnpm、yarn、npm"></a>pnpm、yarn、npm</h2><p>node_modules一直是前端人的头痛，一个依赖黑洞魔物。为了解决依赖黑洞问题，yarn和npm采取平铺方式，去复用部分依赖，<br>但其中还是存在着不少问题：依赖非法访问、依赖分身等问题，面对多包管理的场景，这种问题尤为突出。</p>
+<p>这时候，pnpm英雄登场，pnpm下载的文件会统一存储到文件中心，项目里面node_modules会硬链接到存储中心，<br>以一种特殊快捷方式存在，而不是直接在磁盘上创建一个全新的副本，节省空间。</p>
+<p>还会通过软链链接依赖的依赖，有效的解决依赖分身这个问题。而且硬链接还有一个特性，当存储中心建立起硬链接的文件链接数为0时，<br>还会自动清除该文件，及时回收磁盘空间，跟WeakSet这些弱引用效果一样。</p>
+<h2 id="定位"><a href="#定位" class="headerlink" title="定位"></a>定位</h2><p>上面说到了包管理器，大家也看到了pnpm的优势，所以我这边决定给它来个大革新，yarn换成pnpm,而lerna已经不维护了，而且我个人更喜欢包管理器<br>就做包管理器的事，monorepo就做monorepo该做的事，大部分功能重合，这并不是什么好事，容易带来混乱。同一件事，有的人用a来做，也可以用b来做，<br>也许可以制定规则去规范大家，但是从一开始就不存在这些事情的话，不是更好吗。</p>
+<h2 id="开展背景"><a href="#开展背景" class="headerlink" title="开展背景"></a>开展背景</h2><p>上面给出的定位是只做本分，所以现在要实现的功能有两个：version和publish。但是在实现这部分功能之前，我们要分析这个项目的包结构，为后续功能做一个支撑</p>
+<h2 id="分析图谱"><a href="#分析图谱" class="headerlink" title="分析图谱"></a>分析图谱</h2><p>假定一个项目的结构如下👇🏻，接下来要为项目生成一个分析图谱对象</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 假设下面的包是有依赖关系，并且b依赖a，c依赖b跟a</span><br><span class="line">- packages</span><br><span class="line">  - a </span><br><span class="line">    - package.json</span><br><span class="line">  - b</span><br><span class="line">    - package.json</span><br><span class="line">  - c</span><br><span class="line">    - package.json</span><br><span class="line">- package.json</span><br></pre></td></tr></table></figure>
+
+<p>通过globby把里面所有的packages路径拿到手，然后调用fs-extra读取packages.json，将这些信息转换成下面的 contextAnalysisDiagram</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">// 每个包的具体格式</span><br><span class="line">interface AnalysisBlockObject &#123;</span><br><span class="line">  packageJson: IPackageJson // package.json</span><br><span class="line">  filePath: string // pacakge.json文件路径</span><br><span class="line">  dir: string // 包的路径</span><br><span class="line">  relyMyDir: string[] // 依赖该包的包路径</span><br><span class="line">  myRelyDir: string[] // 该包依赖的包路径</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 项目整体格式</span><br><span class="line">type ContextAnalysisDiagram = Record&lt;string, AnalysisBlockObject&gt;</span><br><span class="line"></span><br><span class="line">// 例子：b包的AnalysisBlockObject</span><br><span class="line">&#123;</span><br><span class="line">  packageJson: &#123;</span><br><span class="line">    &quot;name&quot;: &quot;@test/b&quot;</span><br><span class="line">    &quot;version&quot;: &quot;0.0.0&quot;, </span><br><span class="line">    &quot;dependencies&quot;: &#123;</span><br><span class="line">      &quot;@test/a&quot;: &quot;workspace:~0.0.0&quot;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  filePath: &quot;packages/b/package.json&quot;,</span><br><span class="line">  dir: &quot;packages/b&quot;,</span><br><span class="line">  relyMyDir: [ “packages/c” ] // c依赖了b</span><br><span class="line">  myRelyDir: [ “packages/a” ] // b依赖了a</span><br><span class="line">&#125;</span><br><span class="line">// 然后ContextAnalysisDiagram是以dir作为key，去对应每个包的AnalysisBlockObject</span><br><span class="line">contextAnalysisDiagram = &#123;</span><br><span class="line">  &quot;&quot;: 根目录的AnalysisBlockObject,</span><br><span class="line">  &quot;packages/a&quot;: a包的AnalysisBlockObject,</span><br><span class="line">  &quot;packages/b&quot;: b包的AnalysisBlockObject,</span><br><span class="line">  &quot;packages/c&quot;: c包的AnalysisBlockObject,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中转换比较特别点的是 relyMyDir 和 myRelyDir</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 读取项目每个包的package.json以下属性，把包依赖关系都提取出来</span><br><span class="line">const RELY_KEYS = [</span><br><span class="line">  &#x27;bundleDependencies&#x27;,</span><br><span class="line">  &#x27;bundledDependencies&#x27;,</span><br><span class="line">  &#x27;optionalDependencies&#x27;,</span><br><span class="line">  &#x27;peerDependencies&#x27;,</span><br><span class="line">  &#x27;devDependencies&#x27;,</span><br><span class="line">  &#x27;dependencies&#x27;,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>正如上面所说， relyMyDir 是用来保存所有依赖该包的包路径数组，麻烦的是，它不像 myRelyDir 可以在当前package.json里面全部找出来。</p>
+<p>常规的方法是对包循环的时候，再在里面加一个循环来找当前包的依赖，但是这种做法会使时间复杂度达到O(n ^ 2)。</p>
+<p>所以我这边做了一个优化，通过一个对象数组，以每个包的name作为key，对应的值为数组，在每次循环的时候都对当前包的依赖搜索一遍，<br>发现匹配到包name，就将当前dir push进去，这样就实现了一次循环，把所有依赖都保存起来</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">// 对象数组</span><br><span class="line">const relyMyMap = &#123;</span><br><span class="line">  &quot;root&quot;: [],</span><br><span class="line">  &quot;@test/a&quot;: [],</span><br><span class="line">  &quot;@test/b&quot;: [],</span><br><span class="line">  &quot;@test/c&quot;: [],</span><br><span class="line">&#125;</span><br><span class="line">// dirs：包的路径数组。</span><br><span class="line">dirs.forEach((dir, index) =&gt; &#123;</span><br><span class="line">  **伪代码**</span><br><span class="line">  // 用来获取当前dir的packageJson依赖，把命中的依赖放到relyMyMap对应的数组</span><br><span class="line">  setRelyMyDirhMap(dir, packageJson, relyMyMap)</span><br><span class="line">  **伪代码**</span><br><span class="line">  this.contextAnalysisDiagram[dir] = &#123;</span><br><span class="line">    packageJson,</span><br><span class="line">    dir,</span><br><span class="line">    filePath: filesPath[index],</span><br><span class="line">    // 赋值到relyMyDir，因为是引用类型，后续命中的依赖都会出现在对应的relyMyDir</span><br><span class="line">    relyMyDir: relyMyMap[packageJson.name],</span><br><span class="line">    myRelyDir,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h2><p>lerna 有固定模式和独立模式，而我这边对应的是sync 模式和diff模式，大同小异。</p>
+<h2 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// lerna的使用方法</span><br><span class="line">lerna version</span><br><span class="line">lerna publish</span><br><span class="line">// 我为当前工具起了个pkgs命令名</span><br><span class="line">pkgs version</span><br><span class="line">pkgs publish</span><br></pre></td></tr></table></figure>
+
+<p>如何定义一个命令行工具呢</p>
+<p>1.创建一个bin目录，在里面创建一个index.js。第一句的意思是告诉系统用node去执行这个文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/env node</span><br><span class="line">console.log(&#x27;abmao&#x27;)</span><br></pre></td></tr></table></figure>
+
+<p>2.在package.json定义bin</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// package.json</span><br><span class="line">&#123;</span><br><span class="line">  &quot;bin&quot;: &#123;</span><br><span class="line">    &quot;pkgs&quot;: &quot;bin/index.js&quot; // 指向bin目录</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>属于你的命令实现了</p>
+<p>我先摊牌，下面是已经实现了的命令函数，使用commander处理复杂命令和友好提示</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/env node</span><br><span class="line">const &#123; program &#125; = require(&#x27;commander&#x27;)</span><br><span class="line">const &#123;</span><br><span class="line">  executeCommand,</span><br><span class="line">  executeCommandTag,</span><br><span class="line">  executeCommandInit,</span><br><span class="line">  executeCommandRun,</span><br><span class="line">&#125; = require(&#x27;../dist/pkgs.cjs.min&#x27;) // 打包好的构建物</span><br><span class="line">const pkg = require(&#x27;../package.json&#x27;)</span><br><span class="line">function handleExecuteCommand (type, cmd) &#123;</span><br><span class="line">  executeCommand(type, &#123;</span><br><span class="line">    [type]: cmd,</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line">program</span><br><span class="line">  .version(pkg.version)</span><br><span class="line">  .description(&#x27;Simple monorepo combined with pnpm&#x27;)</span><br><span class="line">program</span><br><span class="line">  .command(&#x27;version&#x27;)</span><br><span class="line">  .description(&#x27;version package&#x27;)</span><br><span class="line">  .option(&#x27;--mode &lt;type&gt;&#x27;, &#x27;sync | diff&#x27;)</span><br><span class="line">  .option(&#x27;-m, --message &lt;message&gt;&#x27;, &#x27;commit message&#x27;)</span><br><span class="line">  .action(cmd =&gt; &#123;</span><br><span class="line">    // pkgs version</span><br><span class="line">    handleExecuteCommand(&#x27;version&#x27;, cmd)</span><br><span class="line">  &#125;)</span><br><span class="line">program</span><br><span class="line">  .command(&#x27;publish&#x27;)</span><br><span class="line">  .description(&#x27;publish package&#x27;)</span><br><span class="line">  .option(&#x27;--mode &lt;type&gt;&#x27;, &#x27;sync | diff&#x27;)</span><br><span class="line">  .option(&#x27;--tag &lt;type&gt;&#x27;, &#x27;npm publish --tag &lt;type&gt;&#x27;)</span><br><span class="line">  .option(&#x27;-m, --message &lt;message&gt;&#x27;, &#x27;commit message&#x27;)</span><br><span class="line">  .action(cmd =&gt; &#123;</span><br><span class="line">    // pkgs publish</span><br><span class="line">    handleExecuteCommand(&#x27;publish&#x27;, cmd)</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">program</span><br><span class="line">  .command(&#x27;tag&#x27;)</span><br><span class="line">  .description(&#x27;pkgs tag, diff mode: Compare according to tag&#x27;)</span><br><span class="line">  .option(&#x27;-p&#x27;, &#x27;publish tag&#x27;)</span><br><span class="line">  .option(&#x27;-v&#x27;, &#x27;version tag&#x27;)</span><br><span class="line">  .action(cmd =&gt; &#123;</span><br><span class="line">    // pkgs tag</span><br><span class="line">    executeCommandTag(cmd)</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">program</span><br><span class="line">  .command(&#x27;init&#x27;)</span><br><span class="line">  .description(&#x27;create pkgs file&#x27;)</span><br><span class="line">  .action(() =&gt; &#123;</span><br><span class="line">    // pkgs init</span><br><span class="line">    executeCommandInit()</span><br><span class="line">  &#125;)</span><br><span class="line">program</span><br><span class="line">  .command(&#x27;run &lt;cmd&gt; [mode]&#x27;)</span><br><span class="line">  .description(&#x27;run diff scripts.\n mode: work | stage | repository, default: work&#x27;)</span><br><span class="line">  .option(&#x27;-r &lt;boolean&gt;&#x27;, &#x27;Include rootPackage&#x27;, &#x27;true&#x27;)</span><br><span class="line">  .action((cmd, mode, option) =&gt; &#123;</span><br><span class="line">    // pkgs run &lt;cmd&gt;</span><br><span class="line">    executeCommandRun(cmd, mode, option.r !== &#x27;false&#x27;)</span><br><span class="line">  &#125;)</span><br><span class="line">program.parse(process.argv)</span><br></pre></td></tr></table></figure>
+
+<h2 id="version-命令"><a href="#version-命令" class="headerlink" title="version 命令"></a>version 命令</h2><p>version 命令是用来升级各个包的版本。一开始我是用了antfu大佬的bumpp来做命令行交互，但是这个库每次选择完版本都会写进package.json文件，<br>我更想要的是在内存里面获取到newVersion，然后等所有包都选择完版本后，再一次过写进去。<br>因此我提交pr的同时也publish了一个新库，今天看了下，pr还没人理，估计没怎么关注这个库了</p>
+<img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5964abf28db54305be07b11c7f04d728~tplv-k3u1fbpfcp-zoom-in-crop-mark:3024:0:0:0.awebp?" width="500" alt="logo" />
+
+<h2 id="sync-模式"><a href="#sync-模式" class="headerlink" title="sync 模式"></a>sync 模式</h2><p>sync模式是提供给组织性质比较强的项目使用，同时迭代，同时发布。调用命令的时候，只会选择一次版本，然后同步所有包的package.json，最后git commit并打上git tab</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pkgs version</span><br><span class="line">// 默认是sync，可以省略后面这段</span><br><span class="line">pkgs version --mode sync</span><br></pre></td></tr></table></figure>
+
+<h2 id="diff-模式"><a href="#diff-模式" class="headerlink" title="diff 模式"></a>diff 模式</h2><p>diff模式只会对修改过和被修改影响到的包触发，对每个需要版本升级的包都单独选择一次版本，然后分别写到对应的package.json</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pkgs version --mode diff</span><br></pre></td></tr></table></figure>
+
+<p>问：那么它是如何找到上述包进行版本升级呢？</p>
+<p>答：首先它会根据git提交的最新记录和最近的一个gitTab，拿到之间修改过的文件，<br>再通过bump当前包获取到newVersion，再与contextAnalysisDiagram分析relyMyDir里面的依赖关系，<br>根据版本语义化*、^、~等进行判断是否要升级该依赖，是的话，会调用bump，如此类推。<br>当然，还要把已经升级过的包储存到一个Set里面，防止多次调用bump。最后git commit并打上git tab</p>
+<h2 id="publish命令"><a href="#publish命令" class="headerlink" title="publish命令"></a>publish命令</h2><p>对于需要发布到npm上的包，提供了publish命令，用于包发布</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pkgs publish</span><br><span class="line">// 添加npm标签</span><br><span class="line">pkgs publish --tag beta</span><br></pre></td></tr></table></figure>
+
+<p>对@开头的组织包，还会在末尾自动添加上–access public</p>
+<p>如果是0.0.8-beta.1这种带标签的版本号，会自动为其添加标签。当然你可以通过–tag手动添加</p>
+<p>同时publish命令也是有sync模式和diff模式，sync模式对于publish来说比较鸡肋，所以一般都是diff，或者是配合sync的version一起使用。<br>而publish的diff没有version那么复杂，只需要拿到最新commit和第一个git tag就可以，并不需要计算影响这一步。</p>
+<h2 id="插曲"><a href="#插曲" class="headerlink" title="插曲"></a>插曲</h2><p>了解过lerna的小伙伴可能意识到，这不就是lerna的实现原理吗？雀实，我有个坏习惯，对于不熟悉的领域我都喜欢撸了再说，我比较喜欢那种两倍痛苦带来的两倍快乐，<br>我事先是闭门造车的思考了这套方案，等我实现了的时候，发现跟 lerna 一模一样，是坏消息的同时也是好消息。</p>
+<p>其实一不一样我都是可以接受，不一样，可以得到两套思想的碰撞💥，你可以非常非常地深入到两种思想中，探讨其中的优劣，如果能得出更好的方案，更是一种思考上的升华。<br>一样的话，是不是可以证明，已经达到了一定的水平了呢？（自吹自擂ing</p>
+<h2 id="tag-命令"><a href="#tag-命令" class="headerlink" title="tag 命令"></a>tag 命令</h2><p>问：为什么会有 tag 这个命令呢?</p>
+<p>答：上述的 version 和 publish 命令的 diff 模式都是基于git tag打上跟 pkgs 定义好的tag实现的，<br>为了让 lerna 之类的项目无痛迁移到 pkgs，保证正确的 diff，放出了 tag 命令，先对项目使用 tag 命令，就可以保证后面正确的 diff</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git tag // 打上publish标签和version标签</span><br><span class="line">git tag -p // 打上pbulish标签</span><br><span class="line">git tag -v // 打上version标签</span><br></pre></td></tr></table></figure>
+
+<h2 id="init-命令"><a href="#init-命令" class="headerlink" title="init 命令"></a>init 命令</h2><p>创建pkgs相关模板，如下。当然，创建的时候先检察当前文件目录是否已经存在，存在会跳过当前文件目录的创建</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pkgs init</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- packages</span><br><span class="line">- package.json</span><br><span class="line">- pkgs.json</span><br></pre></td></tr></table></figure>
+
+<h2 id="自定义命令"><a href="#自定义命令" class="headerlink" title="自定义命令"></a>自定义命令</h2><p>一个经常有的场景，修改了包后，其他很多包依赖着这个包，运行测试的时候有两种</p>
+<p>1.全部运行npm run test<br>2.指定某些包npm run test<br>这两种方法都不好，浪费、繁杂、并且人工指定容易出错。</p>
+<p>如果有一个功能，继承了上面说的 diff 功能，并且可以对工作区、暂存区和版本区进行分析，只对修改过和被影响的包运行npm命令，这听起来是不是很棒(๑•̀ㅂ•́)و✧</p>
+<p>有没有一种可能，pkgs 已经实现了。是的，已经提供了该功能啦~👇</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// 可以看成是monorepo版本的`npm run`</span><br><span class="line">pkgs run &lt;cmd&gt;</span><br><span class="line">// 测试</span><br><span class="line">pkgs run test</span><br><span class="line">// 默认是工作区，可以忽略wokr</span><br><span class="line">pkgs run test work</span><br><span class="line">// 暂存区</span><br><span class="line">pkgs run test stage</span><br><span class="line">// 版本区</span><br><span class="line">pkgs run test repository</span><br></pre></td></tr></table></figure>
+
+<h3 id="优先排序"><a href="#优先排序" class="headerlink" title="优先排序"></a>优先排序</h3><p>还有一种场景，a包依赖b包，那么build的时候，正确的顺序是等b包完成构建才到a包构建，为了实现这个功能，要对contextAnalysisDiagram的myRelyDir进行分析：</p>
+<p>1.找到当前包依赖的包，然后将当前包塞进去stack，同时还要创建一个result数组，用来保存包的顺序</p>
+<p>2.对依赖包循环，找到该依赖包是否也有依赖，如此类推，有依赖，则继续递归</p>
+<p>3.那么如何才停止递归呢？只需要判断该依赖是否在stack或者result里面，如果是在stack里面，则弹出一个，放到result里面，<br>如果result已经保存有，则忽略。同时会跳过对该依赖的搜索。</p>
+<p>这样就拿到所有包的运行顺序，解决了上述场景的问题</p>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>为了减少命令行输入的参数，一般都会有一个对应的配置文件，把参数都预先都写上去</p>
+<h3 id="pkgs-json"><a href="#pkgs-json" class="headerlink" title="pkgs.json"></a>pkgs.json</h3><p>放到根目录即可</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  rootPackage: true, // 自定义命令是否包括根目录</span><br><span class="line">  mode: &#x27;sync&#x27;, // sync | diff 模式</span><br><span class="line">  version: &#123;</span><br><span class="line">    mode: undefined, // sync | diff 模式，更高的优先级</span><br><span class="line">    message: &#x27;chore: version&#x27;, // version命令后的commit message</span><br><span class="line">  &#125;,</span><br><span class="line">  publish: &#123;</span><br><span class="line">    mode: undefined, // sync | diff 模式，更高的优先级</span><br><span class="line">    tag: &#x27;&#x27;, // npm包标签</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="pnpm-workspace-yaml"><a href="#pnpm-workspace-yaml" class="headerlink" title="pnpm-workspace.yaml"></a>pnpm-workspace.yaml</h2><p>pkgs会读取pnpm-workspace.yaml文件的工作区，默认是packages&#x2F;**</p>
+<h2 id="构建"><a href="#构建" class="headerlink" title="构建"></a>构建</h2><p>使用rollup进行打包，因为用的是ts，所以一开始是使用了esno进行运行</p>
+<h3 id="依赖循环"><a href="#依赖循环" class="headerlink" title="依赖循环"></a>依赖循环</h3><p>在构建过程中发现很多cjs的老牌包存在依赖循环的包，因为涉及的场景太多了，提pr改的话是不会采纳的，我是直接fork出来，调整重新发包</p>
+<h3 id="esbuild"><a href="#esbuild" class="headerlink" title="esbuild"></a>esbuild</h3><p>用了esbuild是真的快，而且还可以运行ts。上手成本非常低，但是效果杠杠的</p>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>其实一开始测试这种类型我是懵逼的，如何测试git？如何测试命令行？在我观摩了多个相关开源项目的测试后总结的一种方式：</p>
+<p>测试git：为了保证不污染环境，使用node的临时目录，在其创建项目模板，使用process.chdir切换工作目录到临时目录上，就ok了</p>
+<p>测试命令行：总不能测试的时候，要命令行交互选择版本号吧，给npm那边publish吧。<br>查看了bumpp测试代码，发现可以直接输入版本号，绕过命令行交互形式。<br>publish的话，我则是直接修改源码，判断当前环境是否测试，是的话，就不走命令，而是返回命令的字符串，我再进行对比。</p>
+<h3 id="测试工具"><a href="#测试工具" class="headerlink" title="测试工具"></a>测试工具</h3><p>一开始用的是老牌测试框架jest，但是对ts的支持还是试验性，用起来非常的麻烦。正好最近关注vitest，就直接拿来用，因为语法一样，切换成本也是非常的低，而且开箱就支持了ts，妙啊</p>
+<img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a3a247d895d548e8bf42df9c465b67b6~tplv-k3u1fbpfcp-zoom-in-crop-mark:3024:0:0:0.awebp?" width="500" alt="logo" />
+
+<p>除了那些不必要的分支，基本都覆盖到所有功能了。</p>
+<h2 id="发布"><a href="#发布" class="headerlink" title="发布"></a>发布</h2><p>pkgs的版本管理和发布，都是用了本身的version和publish逻辑去管理，而pkgs并不是一个多包项目，所以这个库是无论你是多包还是单包，都可以使用。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">// release.ts</span><br><span class="line">import &#123; execSync &#125; from &#x27;child_process&#x27;</span><br><span class="line">import colors from &#x27;colors&#x27;</span><br><span class="line">import &#123; executeCommand &#125; from &#x27;../index&#x27;</span><br><span class="line">console.log(`$&#123;colors.cyan.bold(&#x27;release: start&#x27;)&#125; 🏗`);</span><br><span class="line">(async function () &#123;</span><br><span class="line">  // 运行测试</span><br><span class="line">  execSync(&#x27;npm run test&#x27;, &#123; stdio: &#x27;inherit&#x27; &#125;)</span><br><span class="line">  // 打包</span><br><span class="line">  execSync(&#x27;npm run build&#x27;, &#123; stdio: &#x27;inherit&#x27; &#125;)</span><br><span class="line">  // 版本选择，相当于pkgs version</span><br><span class="line">  await executeCommand(&#x27;version&#x27;)</span><br><span class="line">  // 发布，相当于pkgs publish</span><br><span class="line">  await executeCommand(&#x27;publish&#x27;)</span><br><span class="line">&#125;)()</span><br><span class="line">console.log(`$&#123;colors.cyan.bold(&#x27;release: success&#x27;)&#125; 🎉🎉🎉🎉🎊`)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 这样就可以开始发布啦</span><br><span class="line">npm run release</span><br><span class="line">// 安装</span><br><span class="line">npm i -g @abmao/pkgs</span><br></pre></td></tr></table></figure>
+
+<h2 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h2><p>接下来记录下想解决的事，或者说大伙有啥想法的不？</p>
+<h3 id="构建物过大"><a href="#构建物过大" class="headerlink" title="构建物过大"></a>构建物过大</h3><p>真的非常大，而且还存在着依赖循环问题，愁啊，有空看下解决，依赖大估计是fs-extra的问题</p>
+<h3 id="状态分析"><a href="#状态分析" class="headerlink" title="状态分析"></a>状态分析</h3><p>后面想要实现一个state的功能，查看包之间的状态</p>
+<p>来源： pkgs-github：<a target="_blank" rel="noopener" href="https://github.com/hengshanMWC/pkgs">https://github.com/hengshanMWC/pkgs</a></p>
+<p>作者：科目三后吃饭<br><a target="_blank" rel="noopener" href="https://juejin.cn/post/7084596115177209886">https://juejin.cn/post/7084596115177209886</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/04/20/%E5%89%8D%E7%AB%AF%E6%B7%B1%E6%B0%B4%E5%8C%BA/" rel="prev" title="前端深水区">
+                  <i class="fa fa-chevron-left"></i> 前端深水区
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/07/16/%E7%B2%BE%E8%AF%BB%E3%80%8APick,Awaited,Exclude...%E3%80%8B/" rel="next" title="精读《Pick,Awaited,Exclude...》.md">
+                  精读《Pick,Awaited,Exclude...》.md <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">石哥</span>
+  <span>微信: fs821031547</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/love.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript" opacity='0.7' zIndex="-2" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+</body>
+</html>

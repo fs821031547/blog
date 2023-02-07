@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.12.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="本期精读的文章是：evolutionOfJsModularity。 1 引言 &gt; 如今，Javascript 模块化规范非常方便，自然，但这个新规范仅执行了2年，就在4年前，js的模块化还停留在运行时支持，10年前，通过后端模版定义、注释定义模块依赖。对经历过的人来说， 历史的模块化方式还停留在脑海中，反而新上手的同学会更快接受现代的模块化规范。  但为什么要了解Javascript模块化发展的历">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js模块化发展">
+<meta property="og:url" content="http://example.com/2019/06/21/js%20%E6%A8%A1%E5%9D%97%E5%8C%96%E5%8F%91%E5%B1%95/index.html">
+<meta property="og:site_name" content="石哥的博客">
+<meta property="og:description" content="本期精读的文章是：evolutionOfJsModularity。 1 引言 &gt; 如今，Javascript 模块化规范非常方便，自然，但这个新规范仅执行了2年，就在4年前，js的模块化还停留在运行时支持，10年前，通过后端模版定义、注释定义模块依赖。对经历过的人来说， 历史的模块化方式还停留在脑海中，反而新上手的同学会更快接受现代的模块化规范。  但为什么要了解Javascript模块化发展的历">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img.alicdn.com/imgextra/i4/O1CN01mvDKCM1owPSsLDBmI_!!6000000005289-2-tps-475-297.png">
+<meta property="article:published_time" content="2019-06-21T09:51:24.000Z">
+<meta property="article:modified_time" content="2022-07-26T06:51:58.544Z">
+<meta property="article:author" content="石哥">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img.alicdn.com/imgextra/i4/O1CN01mvDKCM1owPSsLDBmI_!!6000000005289-2-tps-475-297.png">
+
+
+<link rel="canonical" href="http://example.com/2019/06/21/js%20%E6%A8%A1%E5%9D%97%E5%8C%96%E5%8F%91%E5%B1%95/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2019/06/21/js%20%E6%A8%A1%E5%9D%97%E5%8C%96%E5%8F%91%E5%B1%95/","path":"2019/06/21/js 模块化发展/","title":"js模块化发展"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>js模块化发展 | 石哥的博客</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">石哥的博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E5%BC%95%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">1 引言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E5%86%85%E5%AE%B9%E6%A6%82%E8%A6%81"><span class="nav-number">2.</span> <span class="nav-text">2 内容概要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B2%BE%E8%AF%BB"><span class="nav-number">3.</span> <span class="nav-text">精读</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8E%E8%AF%AD%E8%A8%80%E5%B1%82%E9%9D%A2%E5%88%B0%E6%96%87%E4%BB%B6%E5%B1%82%E9%9D%A2%E7%9A%84%E6%A8%A1%E5%9D%97%E5%8C%96"><span class="nav-number">3.0.1.</span> <span class="nav-text">从语言层面到文件层面的模块化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E4%B8%89%E5%89%91%E5%AE%A2%E7%9A%84%E6%A8%A1%E5%9D%97%E5%8C%96%E5%B1%95%E6%9C%9B"><span class="nav-number">3.0.2.</span> <span class="nav-text">前端三剑客的模块化展望</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9D%97%E5%8C%96%E6%A0%87%E5%87%86%E6%8E%A8%E5%B1%95%E8%BF%9B%E5%BA%A6%E4%BB%8D%E7%84%B6%E7%BC%93%E6%85%A2"><span class="nav-number">3.0.3.</span> <span class="nav-text">模块化标准推展进度仍然缓慢</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#http2-0%E5%AF%B9js%E6%A8%A1%E5%9D%97%E5%8C%96%E7%9A%84%E6%8E%A8%E5%8A%A8"><span class="nav-number">3.0.4.</span> <span class="nav-text">http2.0对js模块化的推动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Http-2-0-%E5%90%8E%E5%B0%B1%E4%B8%8D%E9%9C%80%E8%A6%81%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7%E4%BA%86%E5%90%97%EF%BC%9F"><span class="nav-number">3.0.5.</span> <span class="nav-text">Http 2.0 后就不需要构建工具了吗？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9D%97%E5%8C%96%E6%98%AF%E5%A4%A7%E5%9E%8B%E9%A1%B9%E7%9B%AE%E7%9A%84%E9%93%B6%E5%BC%B9%E5%90%97%EF%BC%9F"><span class="nav-number">3.0.6.</span> <span class="nav-text">模块化是大型项目的银弹吗？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%A5%E5%85%85%E9%98%85%E8%AF%BB"><span class="nav-number">3.0.7.</span> <span class="nav-text">补充阅读</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">3.0.8.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">石哥</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/06/21/js%20%E6%A8%A1%E5%9D%97%E5%8C%96%E5%8F%91%E5%B1%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="石哥">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="石哥的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="js模块化发展 | 石哥的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          js模块化发展
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-06-21 17:51:24" itemprop="dateCreated datePublished" datetime="2019-06-21T17:51:24+08:00">2019-06-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2019-06-21 17:51:24" itemprop="dateModified" datetime="2019-06-21T17:51:24+08:00">2019-06-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>本期精读的文章是：<a target="_blank" rel="noopener" href="https://github.com/myshov/history-of-javascript/tree/master/4_evolution_of_js_modularity">evolutionOfJsModularity</a>。</p>
+<h1 id="1-引言"><a href="#1-引言" class="headerlink" title="1 引言"></a>1 引言</h1><img src="https://img.alicdn.com/imgextra/i4/O1CN01mvDKCM1owPSsLDBmI_!!6000000005289-2-tps-475-297.png" alt="logo" width="500" />
+> 如今，Javascript 模块化规范非常方便，自然，但这个新规范仅执行了2年，就在4年前，js的模块化还停留在运行时支持，10年前，通过后端模版定义、注释定义模块依赖。对经历过的人来说，
+历史的模块化方式还停留在脑海中，反而新上手的同学会更快接受现代的模块化规范。
+
+<p>但为什么要了解Javascript模块化发展的历史呢？ 因为凡事都有两面性，了解Javascript模块化规范，有利于我们思考出更好的模块化方案，纵观历史，从1999年开始，模块化方案最多维持两年，就出现了新的替代方案，比原有<br>的模块化更清晰、强壮，我们不能被现代模块化方式限制住思维，因为现在的ES2015模块化方案距离发布也仅仅过了两年。</p>
+<span id="more"></span>
+<h1 id="2-内容概要"><a href="#2-内容概要" class="headerlink" title="2 内容概要"></a>2 内容概要</h1><p><strong>直接定义依赖（1999）</strong>: 由于当时js文件非常简单，模块化方式非常简单粗暴 – 通过全局方法定义、引用模块。这种定义方式与现在的commonjs非常神似，区别是commonjs以文件作为模块，而这种方法可以在任何文件中定义模块，模块不与文件关联。</p>
+<p><strong>闭包模块化模式（2003）</strong>： 用闭包方式解决了变量污染问题，闭包内返回模块对象，只需对外暴露一个全局变量。</p>
+<!-- more -->
+<p><strong>模块依赖定义（2006）</strong>： 这时候开始流行后端模板语法，通过后端语法聚合js文件，从而实现依赖加载，说实话，现在go语言等模板语法也很流行这种方式，写后端代码的时候不觉得，回头看看，还是挂在代码的可维护性上。</p>
+<p><strong>Sandbox 模式 (2009)</strong>: 这种模块化方式很简单，暴力，将所有模块塞到一个 <code>sandbox</code> 变量中，硬伤是无法解决命名冲突问题，毕竟都塞到一个 <code>sandbox</code> 对象里，而 <code>Sandbox</code> 对象也需要定义在全局，存在被覆盖的风险。模块化需要保证全局变量尽量干净，目前为止的模块化方案都没有很好的做到这一点。</p>
+<p><strong>依赖注入（2009）</strong>：就是大家熟知的angular1.0,依赖注入的思想现在已广泛运用在react、vue等流行框架中。但依赖注入和解决模块化问题还差得远。</p>
+<p><strong>CommonJs(2009)</strong>: 真正解决模块化问题，从node端逐渐发力到前端，前端需要使用构建工具模拟。</p>
+<p><strong>Amd(2009)</strong>: 都是同一时期的产物，这个方案主要解决前端动态加载依赖，相比commonjs，体积更小，按需加载</p>
+<p><strong>Umd(2011)</strong>: 兼容了CommonJs与Amd，其核心思想是，如果在commonjs环境（存在<code>module.exports</code>,不存在<code>define</code>）,将函数执行结果交给<code>module.exports</code>实现CommonJs，否则用Amd环境的<code>defIne</code>,实现Amd.</p>
+<p><strong>YMoudules(2013)</strong>: 既然都出了Commonjs Amd，文章还列出了此方案，一定有其独到之处。其核心思想在于使用<code>provide</code>取代<code>return</code>，可以控制模块结束时机，处理异步结果；拿到第二个参数<code>module</code>,修改其他模块的定义<br>（虽然很有拓展性，但用在项目里是个搅屎棍）。</p>
+<p><strong>ES2015 Modules(2015)</strong>: 就是我们现在的模块化方案，还没有被浏览器实现，大部分项目已通过<code>babel</code>或<code>typescript</code>提前体验。</p>
+<h1 id="精读"><a href="#精读" class="headerlink" title="精读"></a>精读</h1><h3 id="从语言层面到文件层面的模块化"><a href="#从语言层面到文件层面的模块化" class="headerlink" title="从语言层面到文件层面的模块化"></a>从语言层面到文件层面的模块化</h3><blockquote>
+<p>从1999年开始，模块化探索都是基于语言层面优化，真正的革命从2009年CommonJs的引入开始，前端开始大量使用预编译。</p>
+</blockquote>
+<p>这篇文章所提供的模块化历史的方案都是逻辑模块化。<strong>从 CommonJs 方案开始前端把服务器的解决方案搬过来之后，算是看到标准物理与逻辑统一的模块化</strong>。但之后前端工程不得不引入模块化构建这一步。正式这一步给前端开发无疑带来了诸多的不便，尤其是现在我们开发过程中经常为了优化这个工具带了很多额外的成本。</p>
+<p>从CommonJS 之前其实都只是封装，并没有一套模块化规范，这个就有像类与包的概念。我在10年左右用的最多的还是YUI2，YUI2是用的namespace来做模块化的，但有很多问题没有解决，比如很多版本共存，因此后来YUI3出来了。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">YUI</span>().<span class="title function_">use</span>(<span class="string">&#x27;node&#x27;</span>, <span class="string">&#x27;event&#x27;</span>, <span class="keyword">function</span> (<span class="params">Y</span>) &#123;</span><br><span class="line">    <span class="comment">// The Node and Event modules are loaded and ready to use.</span></span><br><span class="line">    <span class="comment">// Your code goes here!</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>YUI3的sandbox 像极了差不多同时出现的AMD规范，但早起yahoo在前端圈的影响力还是很大的，而requirejs到2011年才诞生，因此圈子不是用着YUI 要不就自己封装一套sandbox，内部使用jquery.</p>
+<p>为什么模块化方案这么晚才定性，可能早起应用的复杂度都在后端，前端都是非常简单逻辑。后来Ajax火了之后，web app概念的开始流行，前端的复杂度也呈指数级上涨，到今天几乎和后端接近一个量级。<br><strong>工程发展到一定阶段，要出现的必然会出现。</strong></p>
+<h3 id="前端三剑客的模块化展望"><a href="#前端三剑客的模块化展望" class="headerlink" title="前端三剑客的模块化展望"></a>前端三剑客的模块化展望</h3><blockquote>
+<p>从js模块化发展史，我们还看到了css html模块化方面的严重落后，如今依赖编译工具的模块化增强在未来会被标准所替代。</p>
+</blockquote>
+<p>原生支持的模块化，<strong>解决html与css模块化问题正式以后的方向。</strong><br>再回到JS模块化这个主题，开头也说到是为了构建scope，实则提供了业务规范标准的输入输出的方式。但文章中的JS的模块化还不等于前端工程的模块化，web界面是由HTML、CSS和JS三种语言实现，不论是CommonJS还是AMD包括之后的方案都无法解决CSS与HTML模块的问题。</p>
+<p>对于CSS本身他就是global scope，因此开发样式可以说是喜忧参半。近几年也涌现把HTML、CSS和JS合并作模块化的方案，其中react&#x2F;css-modules和vue都为人熟知。当然，这一点还是非常依赖于webpack&#x2F;rollup等构建工具，<br>让我们意识到在browser端还有很多本质的问题需要推进。</p>
+<p>对于css模块化，目前不依赖预编译的方式是<code>styled-component</code>，通过js动态创建class。而目前css也引入了【与js痛心的机制与原生变量支持】<br>(<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/Using_CSS_variables)%E3%80%82%E6%9C%AA%E6%9D%A5">https://developer.mozilla.org/zh-CN/docs/Web/CSS/Using_CSS_variables)。未来</a> css 模块化也很可能是运行时的，所以目前比较看好 <code>styled-component</code> 的方向。</p>
+<p>对于html模块化，最近爆出与chrome小组调研html Modules,如果html得到了浏览器，编辑器的模块化支持，未来可能会取代jsx成为最大的模块化、模板语言。<br>对于js模块化，最近出现的<code>&lt;script type=&quot;module&quot;&gt;&lt;/script&gt;</code>方式，虽然还没有得到浏览器原生支持，但也是我比较看好的未来趋势，这样就连webpack的拆包都不需要了，直接把源代码传到服务器，<br>配合http2.0完美抛开预编译的枷锁。</p>
+<p>上述三种方案都不依赖预编译，分别实现了 html、css、js 模块化，相信这就是未来。</p>
+<h3 id="模块化标准推展进度仍然缓慢"><a href="#模块化标准推展进度仍然缓慢" class="headerlink" title="模块化标准推展进度仍然缓慢"></a>模块化标准推展进度仍然缓慢</h3><blockquote>
+<p>2015年提出的标准，在2017年依然没有实现，即便在node.js端。</p>
+</blockquote>
+<p>这几年TC39对语言终于重视起来了，慢慢有动作了，但针对模块化标准指定的速度，与落实都非常缓慢。与javascript越来越流行逐渐脱节。nodejs至今也没有实现ES2015模块化规范，所有jser都处在构建工具的阴影下。</p>
+<h3 id="http2-0对js模块化的推动"><a href="#http2-0对js模块化的推动" class="headerlink" title="http2.0对js模块化的推动"></a>http2.0对js模块化的推动</h3><blockquote>
+<p>js模块化定义的再美好，浏览器端的支持粒度永远是瓶颈。http2.0正是考虑到了这个因素，大力支持了ES2015模块化规范。</p>
+</blockquote>
+<p>幸运的是，模块化构建可能不再需要，随着HTTP2流行起来，请求和相应可以并行，一次可以允许多个请求，对于前端来说可以不再需要在开发和上线时再做编译这个动作。</p>
+<p>几年前，模块化几乎是每个流行库必造的轮子（YUI、Dojo、angular）,大牛们自己爽的同时其实造成了社区的分裂，很难积累。有了 ES2015 Modules 之后，JS 开发者终于可以像 Java 开发者十年前一样使用一致的方式愉快的互相引用模块。</p>
+<p>不过ES2015的模块化特性也只是解决了开发的问题，由于浏览器的特性，还是需要经过繁琐打包的过程，等Import、exports和http2.0被主流浏览器支持后，那时候才是彻底的模块化。</p>
+<h3 id="Http-2-0-后就不需要构建工具了吗？"><a href="#Http-2-0-后就不需要构建工具了吗？" class="headerlink" title="Http 2.0 后就不需要构建工具了吗？"></a>Http 2.0 后就不需要构建工具了吗？</h3><blockquote>
+<p>看到大家基本都提到了http&#x2F;2，对这项技术解决前端模块化及资源打包等工程问题抱有非常大的期待。很多人也认为HTTP&#x2F;2普及后，基本就没有webpack什么事情了。</p>
+</blockquote>
+<p>不过webpack作者@sokra在他的文章【webpack &amp; http&#x2F;2】(<a target="_blank" rel="noopener" href="https://medium.com/webpack/webpack-http-2)%E9%87%8C%E6%8F%90%E5%88%B0%E4%BA%86%E4%B8%80%E4%B8%AA%E6%96%B0%E7%9A%84webpack%E6%8F%92%E4%BB%B6%60AggressiveSplittingPlugin%60%E3%80%82%E7%AE%80%E5%8D%95%E7%9A%84%E8%AF%B4%EF%BC%8C%E8%BF%99%E6%AC%BE%E6%8F%92%E4%BB%B6%E5%B0%B1%E6%98%AF%E5%85%85%E5%88%86%E5%88%A9%E7%94%A8HTTP/2%E7%9A%84%E6%96%87%E4%BB%B6%E7%BC%93%E5%AD%98%E8%83%BD%E5%8A%9B%EF%BC%8C%E5%B0%86%E4%BD%A0%E7%9A%84%E4%B8%9A%E5%8A%A1%E4%BB%A3%E7%A0%81%E8%87%AA%E5%8A%A8%E6%8B%86%E5%88%86%E6%88%90%E8%8B%A5%E5%B9%B2%E4%B8%AA%E6%95%B0%E5%8D%81KB%E7%9A%84%E5%B0%8F%E6%96%87%E4%BB%B6%E3%80%82%E5%90%8E%E7%BB%AD%E8%8B%A5%E5%85%B6%E4%B8%AD%E4%BB%BB%E6%84%8F%E4%B8%80%E4%B8%AA%E6%96%87%E4%BB%B6%E5%8F%91%E7%94%9F%E5%8F%98%E5%8C%96%EF%BC%8C%E5%8F%AF%E4%BB%A5%E4%BF%9D%E8%AF%81%E5%85%B6%E4%BB%96%E7%9A%84%E5%B0%8Fchunk%E4%B8%8D%E9%9C%80%E8%A6%81%E9%87%8D%E6%96%B0%E4%B8%8B%E8%BD%BD%E3%80%82">https://medium.com/webpack/webpack-http-2)里提到了一个新的webpack插件`AggressiveSplittingPlugin`。简单的说，这款插件就是充分利用HTTP/2的文件缓存能力，将你的业务代码自动拆分成若干个数十KB的小文件。后续若其中任意一个文件发生变化，可以保证其他的小chunk不需要重新下载。</a></p>
+<p>可见，<strong>即使不断的有新技术出现，也依然需要配套的工具来将前端工程问题解决方案推向极致。</strong></p>
+<h3 id="模块化是大型项目的银弹吗？"><a href="#模块化是大型项目的银弹吗？" class="headerlink" title="模块化是大型项目的银弹吗？"></a>模块化是大型项目的银弹吗？</h3><blockquote>
+<p>只要遵循了最新模块化规范，就可以使项目具有最好的可维护性吗？ Js 模块化的目的是支持前端日益上升的复杂度，但绝不是唯一的解决方案。</p>
+</blockquote>
+<p>分析下 JavaScript 为什么没有模块化，为什么又需要模块化：这个 95 年被设计出来的时候，语言的开发者根本没有想到它会如此的大放异彩，也没有将它设计成一种模块化语言。按照文中的说法，99 年也就是 4 年后开始出现了模块化的需求。如果只有几行代码用模块化是扯，初始的 web 开发业务逻辑都写在 server 端，js 的作用小之又小。而现在 spa 都出现了，几乎所有的渲染逻辑都在前端，如果还是没有模块化的组织，开发过程会越来越难，维护也是更痛苦。</p>
+<p>文中已经详细说明了模块化的发展和优劣，这里不准备做过多的讨论。我想说的是，<strong>在模块化之后还有一个模块间耦合的问题，如果模块间耦合度大也会降低代码的可重用性或者说复用性</strong>。所以也出现了降低耦合的观察者模式或者发布&#x2F;订阅模式。这对于提升代码重用，复用性和避免单点故障等都很重要。说到这里，还想顺便提一下最近流行起来的响应式编程（RxJS），响应式编程中有一个很核心的概念就是 observable，也就是 Rx 中的流（stream）。它可以被 subscribe，其实也就是观察者设计模式。</p>
+<h3 id="补充阅读"><a href="#补充阅读" class="headerlink" title="补充阅读"></a>补充阅读</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://huangxuan.me/2015/07/09/js-module-7day/">JavaScript 模块化七日谈</a></li>
+<li><a target="_blank" rel="noopener" href="https://yuguo.us/weblog/javascript-module-development-history/">JavaScript 模块化编程简史（2009-2016）</a></li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>未来前端复杂度不断增加已成定论，睡着后端成熟，自然会降焦点转移到前端领域，而且服务化，用户体验越来越重要，前端体验早不是当初能看就行，任何网页的异常，视觉的差异或文案的模糊，都会导致用户流失，支付中断。<br>前端对公司营收的影响，渐渐与后端服务宕机同等严重，所以前端会越来越重，异常监控，性能检测，工具链，可视化等等都是这几年大家逐渐重视起来的。</p>
+<p>我们早已不能将javascript早期玩具性质的模块化方案用于现代越来越重要的系统中，前端界必然会出现同等重量级的模块化管理方案，感谢tc39制定的ES2015模块化规范，我们已经离不开它，哪怕所有人都必须使用babel.</p>
+<p>话说回来，标准推进的太慢，我们还是把编译工具当作常态，抱着哪怕支持了ES2015所有特性，babel依然还有用的心态，将预编译进行到底。一句话，模块化仍在路上。js模块化的矛头已经对准了css与html.这两位元老也该想前卫的js学习学习了。</p>
+<p>未来css、html的模块化会自立门户，还是赋予js更强的能力，让两者的模块化依附于js的能力呢？目前html有自立门户的苗头（htmlModules），而css迟迟没有改变，社区出现的<code>styled-component</code>已经用js将css模块化得很好了，<br>最新css规范也支持了与Js的变量通信，难道希望依附于js吗？这里希望得到大家更广泛的讨论。</p>
+<p>我也认同，毕竟压缩、混淆、md5、或者利用【nonce】(<a target="_blank" rel="noopener" href="https://www.thepolyglotdeveloper.com/2015/03/create-a-random-nonce-string-using-javascript/)%E5%B1%9E%E6%80%A7%E5%AF%B9script%E6%A0%87%E7%AD%BE%E5%8A%A0%E5%AF%86%EF%BC%8C%E9%83%BD%E7%A6%BB%E4%B8%8D%E5%BC%80%E6%9C%AC%E5%9C%B0%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7%E3%80%82">https://www.thepolyglotdeveloper.com/2015/03/create-a-random-nonce-string-using-javascript/)属性对script标签加密，都离不开本地构建工具。</a></p>
+<p>据说http2的优化中，有个最佳文件大小与数量的比例，那么还是脱离不了构建工具，前端未来会越来越复杂，同时也越来越好。</p>
+<p>至此。对于javascript模块化讨论已接近尾声，对其优缺点也基本达成了一致。前端复杂度不断提高，促使着模块化的改进，代理（浏览器、node）的支持程度，与前端特殊性（流量、缓存）可能前端永远也离不开构建工具。<br>新的标准会让这些工作做的更好，同时取代、增强部分特征，前端的未来是更加美好的，复杂度也更高。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/02/23/Web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83/" rel="next" title="Web前端开发规范.md">
+                  Web前端开发规范.md <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">石哥</span>
+  <span>微信: fs821031547</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/love.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript" opacity='0.7' zIndex="-2" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+</body>
+</html>

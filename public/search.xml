@@ -1,0 +1,790 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>Web前端开发规范.md</title>
+    <url>/2020/02/23/Web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83/</url>
+    <content><![CDATA[<h1 id="Web前端开发规范"><a href="#Web前端开发规范" class="headerlink" title="Web前端开发规范"></a>Web前端开发规范</h1><h2 id="开发规范"><a href="#开发规范" class="headerlink" title="开发规范"></a>开发规范</h2><h3 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h3><ul>
+<li><code>node</code> 版本：采用<code>v14.x.x</code>版本或最新稳定版本</li>
+<li><code>npm</code> 版本：采用最新版本</li>
+<li><code>vue-cli</code> 版本：采用最新稳定版本</li>
+<li><code>vue</code> 版本： 采用<code>3.x.x</code>版本</li>
+</ul>
+<h3 id="项目配置"><a href="#项目配置" class="headerlink" title="项目配置"></a>项目配置</h3><h4 id="editorconfig"><a href="#editorconfig" class="headerlink" title="editorconfig"></a>editorconfig</h4><span id="more"></span>
+<p><code>.editorconfig</code> 文件有助于为不同 IDE 编辑器上处理同一项目的多个开发人员维护一致的编码风格。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># http://editorconfig.org</span><br><span class="line"># 告诉EditorConfig插件，这是根文件，不用继续往上查找</span><br><span class="line">root = true</span><br><span class="line"></span><br><span class="line"># 匹配全部文件</span><br><span class="line">[*]</span><br><span class="line"># 设置字符集</span><br><span class="line">charset = utf-8</span><br><span class="line"># 缩进风格，可选space、tab</span><br><span class="line">indent_style = tab</span><br><span class="line"># 缩进的空格数</span><br><span class="line">indent_size = 2</span><br><span class="line"># 结尾换行符，可选lf、cr、crlf</span><br><span class="line">end_of_line = lf</span><br><span class="line"># 在文件结尾插入新行</span><br><span class="line">insert_final_newline = true</span><br><span class="line"># 删除一行中的前后空格</span><br><span class="line">trim_trailing_whitespace = true</span><br><span class="line"></span><br><span class="line"># 匹配md结尾的文件</span><br><span class="line">[*.md]</span><br><span class="line">insert_final_newline = false</span><br><span class="line">trim_trailing_whitespace = false</span><br></pre></td></tr></table></figure>
+
+<h4 id="UI框架选择"><a href="#UI框架选择" class="headerlink" title="UI框架选择"></a>UI框架选择</h4><ul>
+<li>PC端Vue项目UI框架优先选择：<code>Element UI</code></li>
+<li>移动端Vue项目UI框架：<code>Vant-ui</code></li>
+</ul>
+<h3 id="编程规范"><a href="#编程规范" class="headerlink" title="编程规范"></a>编程规范</h3><h4 id="变量方法及文件名定义"><a href="#变量方法及文件名定义" class="headerlink" title="变量方法及文件名定义"></a>变量方法及文件名定义</h4><ul>
+<li><p>定义变量时，常量使用<code>const</code>定义，全大写下划线格式命名。</p>
+</li>
+<li><p>变量定义使用小驼峰命名方式根据变量用途语义化命名。</p>
+</li>
+<li><p>方法命名同变量命名方式采用小驼峰根据用途命名。</p>
+</li>
+<li><p>文件命名同上小驼峰命名。</p>
+<ul>
+<li>页面<code>xx.vue</code>文件根据页面用途命名，文件放置该页面对应模块文件夹下。</li>
+<li>页面<code>xx.scss</code>文件同对应页面名，放于该页面对应模块样式文件夹下。</li>
+<li><code>xx.js</code>文件，同上根据用途命名，</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 文件命名示例</span><br><span class="line">|— userCenter</span><br><span class="line">	|— userCenter.vue</span><br><span class="line">	|— userCenter.js</span><br><span class="line">	|— userCenter.scss</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 常量</span></span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">USER_NAME</span> = <span class="string">&#x27;XiaoChen&#x27;</span>;</span><br><span class="line"><span class="comment">// 变量</span></span><br><span class="line"><span class="keyword">let</span> userName = <span class="string">&#x27;XiaoChen&#x27;</span>;</span><br><span class="line"><span class="comment">// 方法</span></span><br><span class="line"><span class="keyword">let</span> <span class="title function_">changeUserName</span> = (<span class="params">userName</span>) =&gt; &#123;&#125;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="页面排版规范"><a href="#页面排版规范" class="headerlink" title="页面排版规范"></a>页面排版规范</h4><ul>
+<li><p>文本输入框需设置默认提示语，文本框长度若无<code>UI</code>情况下限制不超过<code>300px</code>宽度。</p>
+</li>
+<li><p>下拉选择框（包含下拉选框、联级选框）需设置默认提示语，长度若无<code>UI</code>情况下限制不超过<code>300px</code>宽度。</p>
+</li>
+<li><p>搜索表单：置于页面内容部分上方，采用<code>inline</code>模式<code>el-form</code>排版，此时输入框、下拉框长度无需设置。</p>
+</li>
+<li><p>新增&#x2F;编辑表单：根据复杂程度及对应需求选择使用弹框形式或新页面形式展示，采用竖排样式排版，需设置文本框及下拉框长度，并统一设置<code>label</code>长度，对于表单必填项需进行参数校验。</p>
+<blockquote>
+<p>参数校验时如使用正则校验参数，如手机号，需考虑全号段情况，也可只校验长度。</p>
+</blockquote>
+</li>
+<li><p>列表详情页面：视复杂程度及对应需求要求选择使用弹框形式或新页面形式展示，如无特殊情况可与新增&#x2F;编辑页面重用。</p>
+</li>
+<li><p>在排版页面时还需考虑数据空态页面展示。</p>
+</li>
+</ul>
+<h4 id="样式规范"><a href="#样式规范" class="headerlink" title="样式规范"></a>样式规范</h4><ul>
+<li>选用 <code>sass</code> 或 <code>less</code>。</li>
+<li>公共样式文件内除特殊情况仅可进行新增操作，不可对原样式值进行修改。</li>
+<li>单个组件样式可直接写到组件下 <code>style</code> 标签下，为了防止样式污染，需添加 <code>scoped  </code> 属性，也可以通过设置作用域来防止样式污染，写样式时需使用用类选择器，尽量避免使用元素选择器。</li>
+</ul>
+<h4 id="页面编码规范"><a href="#页面编码规范" class="headerlink" title="页面编码规范"></a>页面编码规范</h4><ul>
+<li>组件名称必须以大驼峰法命名</li>
+<li>变量及方法命名需符合规范及语义化定义</li>
+<li>对于页面初始进入需请求接口等操作是应放置于生命周期 <code>mounted</code> 函数内进行</li>
+<li>代码中不可出现默认具体值出现，默认值一律为空字符串、空对象、空数组等，需要设置默认值时可另开方法操作，提测时要关闭该方法调用；本地存储相关默认值在 <code>Chrome</code> 的开发工具中 <code>Application</code> 中对应存储类型内配置默认值</li>
+<li>计算函数及侦听器需注意使用场景，<code>computed</code> 计算属性仅可用于简单运算，涉及大量运算或存在异步操作时需改用 <code>watch</code></li>
+<li>开发期所有 <code>console</code> 应添加标识位，打包上线时要关闭所有 <code>console</code> </li>
+<li>对于 <code>H5</code> 页面即需要在移动端展示的页面项目需添加 <code>vconsole</code> 依赖，便于调试，开发期可开启调试展示，打包上线时要关闭展示</li>
+<li>提交类型的按钮需要设置 <code>loading</code> 展示</li>
+<li>对于短时间多次触发接口调用的方法需要添加事件防抖机制</li>
+</ul>
+<h4 id="接口调用规范"><a href="#接口调用规范" class="headerlink" title="接口调用规范"></a>接口调用规范</h4><ul>
+<li><p>接口地址需统一于<code>/src/api/requestUrl.js</code> 文件中依据模块进行分组定义</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 命名格式： 接口名+请求方式——小驼峰 (restful接口时仅接口名定义即可)</span></span><br><span class="line"><span class="comment">// ****** 授权模块 ****** //</span></span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">AUTH_API</span> = &#123;</span><br><span class="line">  <span class="attr">loginPost</span>: <span class="string">&#x27;/auth/login&#x27;</span>,</span><br><span class="line">  <span class="attr">registerPost</span>: <span class="string">&#x27;/auth/register&#x27;</span>,</span><br><span class="line">  <span class="attr">codeGet</span>: <span class="string">&#x27;/auth/code&#x27;</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// ****** 授权模块 ****** //</span></span><br><span class="line"><span class="comment">// ****** 用户模块 ****** //</span></span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">USER_API</span> = &#123;</span><br><span class="line">  <span class="attr">listGet</span>: <span class="string">&#x27;/user/list&#x27;</span>,</span><br><span class="line">  <span class="attr">userUpdatePut</span>: <span class="string">&#x27;/user/userUpdate&#x27;</span>,</span><br><span class="line">  <span class="attr">user</span>: <span class="string">&#x27;/user&#x27;</span>, <span class="comment">// restful 风格，合并 userGet/userPost/userPut/userDelete</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// ****** 用户模块 ****** //</span></span><br><span class="line"><span class="keyword">export</span> &#123;</span><br><span class="line">	<span class="variable constant_">AUTH_API</span>,</span><br><span class="line">  <span class="variable constant_">USER_API</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>接口请求方法需于 <code>/src/api</code> 目录下依据模块新建对应文件内进行定义</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">|- src</span><br><span class="line">	|- api</span><br><span class="line">		|- requestUrl.js</span><br><span class="line">		|- auth.js</span><br><span class="line">		|- user.js</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// auth.js</span></span><br><span class="line"><span class="keyword">import</span> request <span class="keyword">from</span> <span class="string">&#x27;@/utils/request&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;<span class="variable constant_">AUTH_API</span>&#125; <span class="keyword">from</span> <span class="string">&#x27;@/api/requestUrl&#x27;</span>;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 登录</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> username &#123;String&#125;</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> password &#123;String&#125;</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> code &#123;String&#125;</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> uuid &#123;String&#125;</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@returns</span> &#123;<span class="type">Promise&lt;any&gt;</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">login</span>(<span class="params">username, password, code, uuid</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">request</span>(&#123;</span><br><span class="line">    <span class="attr">url</span>: <span class="variable constant_">AUTH_API</span>.<span class="property">loginPost</span>,</span><br><span class="line">    <span class="attr">headers</span>: &#123;</span><br><span class="line">      <span class="attr">isToken</span>: <span class="literal">false</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">method</span>: <span class="string">&#x27;post&#x27;</span>,</span><br><span class="line">    <span class="attr">data</span>: &#123; username, password, code, uuid &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>接口调用时需添加用户加载提示，适当添加<code>loading</code>展示，分页加载时：</p>
+<ul>
+<li>滑动加载，加载提示可展示在最后一项后添加。</li>
+<li>分页器分页加载时，加载提示可采用全屏<code>loading</code>形式展示。</li>
+</ul>
+<p>操作类接口调用时，在对应操作按钮上添加<code>loading</code>展示</p>
+<blockquote>
+<p>如对应操作按钮在列表中则采用全局<code>loading</code>形式展示</p>
+</blockquote>
+</li>
+<li><p>接口调用结果视情况提示用户：</p>
+<ul>
+<li>加载成功：<ul>
+<li>加载数据时可直接展示数据，无需提示</li>
+<li>操作类接口调用成功时，添加<code>操作成功</code>提示弹框，可描述为对应操作，如<code>下架成功</code>。</li>
+</ul>
+</li>
+<li>加载失败：若接口有返回错误信息时，将后台返回结果提示给用户；若无返回错误信息时提示用户<code>服务异常</code>.</li>
+</ul>
+</li>
+<li><p>接口文件定义：</p>
+<ul>
+<li><p>接口地址统一定义在接口配置文件中，使用常量命名定义；</p>
+</li>
+<li><p>接口调用统一封装至对应模块<code>xx.js</code>文件中，如<code>user</code>模块独立定义为<code>user.js</code>文件，其内包含增删改查等对应操作的接口调用封装方法，</p>
+<blockquote>
+<p>该方法应返回<code>Promise</code>对象，接口请求操作在该方法内部进行。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>接口提交数据时，对文本框输入信息进行两端去空处理。</p>
+</li>
+</ul>
+<h2 id="发版规范"><a href="#发版规范" class="headerlink" title="发版规范"></a>发版规范</h2><h3 id="仓库分支管理"><a href="#仓库分支管理" class="headerlink" title="仓库分支管理"></a>仓库分支管理</h3><p><a href="./git%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86%E8%A7%84%E8%8C%83.md">Git 分支管理规范</a></p>
+<h3 id="版本发布"><a href="#版本发布" class="headerlink" title="版本发布"></a>版本发布</h3><ul>
+<li><p>当期需求发布时需列出当期需求所有功能点即 <code>版本CheckList</code> 并与对应产品经理一一确认后才可进行发版操作。</p>
+</li>
+<li><p>发版完成后需再次与对应产品经理进行功能点确认工作，并及时联系 <code>版本负责人/项目负责人</code> 进行代码合并等操作。</p>
+</li>
+</ul>
+<h3 id="版本回滚方案"><a href="#版本回滚方案" class="headerlink" title="版本回滚方案"></a>版本回滚方案</h3><p>若当前发布版本产生重大问题或其他原因导致需要进行生产环境代码回滚时，需由 <code>版本负责人/项目负责人</code> 从 发版 <code>前一次tag</code> 派生新 <code>hotfix</code> 分支进行发布部署生产环境操作，发布完成后合并至 <code>master</code> 分支并生成 <code>新tag</code>。</p>
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>js模块化发展</title>
+    <url>/2019/06/21/js%20%E6%A8%A1%E5%9D%97%E5%8C%96%E5%8F%91%E5%B1%95/</url>
+    <content><![CDATA[<p>本期精读的文章是：<a href="https://github.com/myshov/history-of-javascript/tree/master/4_evolution_of_js_modularity">evolutionOfJsModularity</a>。</p>
+<h1 id="1-引言"><a href="#1-引言" class="headerlink" title="1 引言"></a>1 引言</h1><img src="https://img.alicdn.com/imgextra/i4/O1CN01mvDKCM1owPSsLDBmI_!!6000000005289-2-tps-475-297.png" alt="logo" width="500" />
+> 如今，Javascript 模块化规范非常方便，自然，但这个新规范仅执行了2年，就在4年前，js的模块化还停留在运行时支持，10年前，通过后端模版定义、注释定义模块依赖。对经历过的人来说，
+历史的模块化方式还停留在脑海中，反而新上手的同学会更快接受现代的模块化规范。
+
+<p>但为什么要了解Javascript模块化发展的历史呢？ 因为凡事都有两面性，了解Javascript模块化规范，有利于我们思考出更好的模块化方案，纵观历史，从1999年开始，模块化方案最多维持两年，就出现了新的替代方案，比原有<br>的模块化更清晰、强壮，我们不能被现代模块化方式限制住思维，因为现在的ES2015模块化方案距离发布也仅仅过了两年。</p>
+<span id="more"></span>
+<h1 id="2-内容概要"><a href="#2-内容概要" class="headerlink" title="2 内容概要"></a>2 内容概要</h1><p><strong>直接定义依赖（1999）</strong>: 由于当时js文件非常简单，模块化方式非常简单粗暴 – 通过全局方法定义、引用模块。这种定义方式与现在的commonjs非常神似，区别是commonjs以文件作为模块，而这种方法可以在任何文件中定义模块，模块不与文件关联。</p>
+<p><strong>闭包模块化模式（2003）</strong>： 用闭包方式解决了变量污染问题，闭包内返回模块对象，只需对外暴露一个全局变量。</p>
+<!-- more -->
+<p><strong>模块依赖定义（2006）</strong>： 这时候开始流行后端模板语法，通过后端语法聚合js文件，从而实现依赖加载，说实话，现在go语言等模板语法也很流行这种方式，写后端代码的时候不觉得，回头看看，还是挂在代码的可维护性上。</p>
+<p><strong>Sandbox 模式 (2009)</strong>: 这种模块化方式很简单，暴力，将所有模块塞到一个 <code>sandbox</code> 变量中，硬伤是无法解决命名冲突问题，毕竟都塞到一个 <code>sandbox</code> 对象里，而 <code>Sandbox</code> 对象也需要定义在全局，存在被覆盖的风险。模块化需要保证全局变量尽量干净，目前为止的模块化方案都没有很好的做到这一点。</p>
+<p><strong>依赖注入（2009）</strong>：就是大家熟知的angular1.0,依赖注入的思想现在已广泛运用在react、vue等流行框架中。但依赖注入和解决模块化问题还差得远。</p>
+<p><strong>CommonJs(2009)</strong>: 真正解决模块化问题，从node端逐渐发力到前端，前端需要使用构建工具模拟。</p>
+<p><strong>Amd(2009)</strong>: 都是同一时期的产物，这个方案主要解决前端动态加载依赖，相比commonjs，体积更小，按需加载</p>
+<p><strong>Umd(2011)</strong>: 兼容了CommonJs与Amd，其核心思想是，如果在commonjs环境（存在<code>module.exports</code>,不存在<code>define</code>）,将函数执行结果交给<code>module.exports</code>实现CommonJs，否则用Amd环境的<code>defIne</code>,实现Amd.</p>
+<p><strong>YMoudules(2013)</strong>: 既然都出了Commonjs Amd，文章还列出了此方案，一定有其独到之处。其核心思想在于使用<code>provide</code>取代<code>return</code>，可以控制模块结束时机，处理异步结果；拿到第二个参数<code>module</code>,修改其他模块的定义<br>（虽然很有拓展性，但用在项目里是个搅屎棍）。</p>
+<p><strong>ES2015 Modules(2015)</strong>: 就是我们现在的模块化方案，还没有被浏览器实现，大部分项目已通过<code>babel</code>或<code>typescript</code>提前体验。</p>
+<h1 id="精读"><a href="#精读" class="headerlink" title="精读"></a>精读</h1><h3 id="从语言层面到文件层面的模块化"><a href="#从语言层面到文件层面的模块化" class="headerlink" title="从语言层面到文件层面的模块化"></a>从语言层面到文件层面的模块化</h3><blockquote>
+<p>从1999年开始，模块化探索都是基于语言层面优化，真正的革命从2009年CommonJs的引入开始，前端开始大量使用预编译。</p>
+</blockquote>
+<p>这篇文章所提供的模块化历史的方案都是逻辑模块化。<strong>从 CommonJs 方案开始前端把服务器的解决方案搬过来之后，算是看到标准物理与逻辑统一的模块化</strong>。但之后前端工程不得不引入模块化构建这一步。正式这一步给前端开发无疑带来了诸多的不便，尤其是现在我们开发过程中经常为了优化这个工具带了很多额外的成本。</p>
+<p>从CommonJS 之前其实都只是封装，并没有一套模块化规范，这个就有像类与包的概念。我在10年左右用的最多的还是YUI2，YUI2是用的namespace来做模块化的，但有很多问题没有解决，比如很多版本共存，因此后来YUI3出来了。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="title function_">YUI</span>().<span class="title function_">use</span>(<span class="string">&#x27;node&#x27;</span>, <span class="string">&#x27;event&#x27;</span>, <span class="keyword">function</span> (<span class="params">Y</span>) &#123;</span><br><span class="line">    <span class="comment">// The Node and Event modules are loaded and ready to use.</span></span><br><span class="line">    <span class="comment">// Your code goes here!</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>YUI3的sandbox 像极了差不多同时出现的AMD规范，但早起yahoo在前端圈的影响力还是很大的，而requirejs到2011年才诞生，因此圈子不是用着YUI 要不就自己封装一套sandbox，内部使用jquery.</p>
+<p>为什么模块化方案这么晚才定性，可能早起应用的复杂度都在后端，前端都是非常简单逻辑。后来Ajax火了之后，web app概念的开始流行，前端的复杂度也呈指数级上涨，到今天几乎和后端接近一个量级。<br><strong>工程发展到一定阶段，要出现的必然会出现。</strong></p>
+<h3 id="前端三剑客的模块化展望"><a href="#前端三剑客的模块化展望" class="headerlink" title="前端三剑客的模块化展望"></a>前端三剑客的模块化展望</h3><blockquote>
+<p>从js模块化发展史，我们还看到了css html模块化方面的严重落后，如今依赖编译工具的模块化增强在未来会被标准所替代。</p>
+</blockquote>
+<p>原生支持的模块化，<strong>解决html与css模块化问题正式以后的方向。</strong><br>再回到JS模块化这个主题，开头也说到是为了构建scope，实则提供了业务规范标准的输入输出的方式。但文章中的JS的模块化还不等于前端工程的模块化，web界面是由HTML、CSS和JS三种语言实现，不论是CommonJS还是AMD包括之后的方案都无法解决CSS与HTML模块的问题。</p>
+<p>对于CSS本身他就是global scope，因此开发样式可以说是喜忧参半。近几年也涌现把HTML、CSS和JS合并作模块化的方案，其中react&#x2F;css-modules和vue都为人熟知。当然，这一点还是非常依赖于webpack&#x2F;rollup等构建工具，<br>让我们意识到在browser端还有很多本质的问题需要推进。</p>
+<p>对于css模块化，目前不依赖预编译的方式是<code>styled-component</code>，通过js动态创建class。而目前css也引入了【与js痛心的机制与原生变量支持】<br>(<a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/Using_CSS_variables)%E3%80%82%E6%9C%AA%E6%9D%A5">https://developer.mozilla.org/zh-CN/docs/Web/CSS/Using_CSS_variables)。未来</a> css 模块化也很可能是运行时的，所以目前比较看好 <code>styled-component</code> 的方向。</p>
+<p>对于html模块化，最近爆出与chrome小组调研html Modules,如果html得到了浏览器，编辑器的模块化支持，未来可能会取代jsx成为最大的模块化、模板语言。<br>对于js模块化，最近出现的<code>&lt;script type=&quot;module&quot;&gt;&lt;/script&gt;</code>方式，虽然还没有得到浏览器原生支持，但也是我比较看好的未来趋势，这样就连webpack的拆包都不需要了，直接把源代码传到服务器，<br>配合http2.0完美抛开预编译的枷锁。</p>
+<p>上述三种方案都不依赖预编译，分别实现了 html、css、js 模块化，相信这就是未来。</p>
+<h3 id="模块化标准推展进度仍然缓慢"><a href="#模块化标准推展进度仍然缓慢" class="headerlink" title="模块化标准推展进度仍然缓慢"></a>模块化标准推展进度仍然缓慢</h3><blockquote>
+<p>2015年提出的标准，在2017年依然没有实现，即便在node.js端。</p>
+</blockquote>
+<p>这几年TC39对语言终于重视起来了，慢慢有动作了，但针对模块化标准指定的速度，与落实都非常缓慢。与javascript越来越流行逐渐脱节。nodejs至今也没有实现ES2015模块化规范，所有jser都处在构建工具的阴影下。</p>
+<h3 id="http2-0对js模块化的推动"><a href="#http2-0对js模块化的推动" class="headerlink" title="http2.0对js模块化的推动"></a>http2.0对js模块化的推动</h3><blockquote>
+<p>js模块化定义的再美好，浏览器端的支持粒度永远是瓶颈。http2.0正是考虑到了这个因素，大力支持了ES2015模块化规范。</p>
+</blockquote>
+<p>幸运的是，模块化构建可能不再需要，随着HTTP2流行起来，请求和相应可以并行，一次可以允许多个请求，对于前端来说可以不再需要在开发和上线时再做编译这个动作。</p>
+<p>几年前，模块化几乎是每个流行库必造的轮子（YUI、Dojo、angular）,大牛们自己爽的同时其实造成了社区的分裂，很难积累。有了 ES2015 Modules 之后，JS 开发者终于可以像 Java 开发者十年前一样使用一致的方式愉快的互相引用模块。</p>
+<p>不过ES2015的模块化特性也只是解决了开发的问题，由于浏览器的特性，还是需要经过繁琐打包的过程，等Import、exports和http2.0被主流浏览器支持后，那时候才是彻底的模块化。</p>
+<h3 id="Http-2-0-后就不需要构建工具了吗？"><a href="#Http-2-0-后就不需要构建工具了吗？" class="headerlink" title="Http 2.0 后就不需要构建工具了吗？"></a>Http 2.0 后就不需要构建工具了吗？</h3><blockquote>
+<p>看到大家基本都提到了http&#x2F;2，对这项技术解决前端模块化及资源打包等工程问题抱有非常大的期待。很多人也认为HTTP&#x2F;2普及后，基本就没有webpack什么事情了。</p>
+</blockquote>
+<p>不过webpack作者@sokra在他的文章【webpack &amp; http&#x2F;2】(<a href="https://medium.com/webpack/webpack-http-2)%E9%87%8C%E6%8F%90%E5%88%B0%E4%BA%86%E4%B8%80%E4%B8%AA%E6%96%B0%E7%9A%84webpack%E6%8F%92%E4%BB%B6%60AggressiveSplittingPlugin%60%E3%80%82%E7%AE%80%E5%8D%95%E7%9A%84%E8%AF%B4%EF%BC%8C%E8%BF%99%E6%AC%BE%E6%8F%92%E4%BB%B6%E5%B0%B1%E6%98%AF%E5%85%85%E5%88%86%E5%88%A9%E7%94%A8HTTP/2%E7%9A%84%E6%96%87%E4%BB%B6%E7%BC%93%E5%AD%98%E8%83%BD%E5%8A%9B%EF%BC%8C%E5%B0%86%E4%BD%A0%E7%9A%84%E4%B8%9A%E5%8A%A1%E4%BB%A3%E7%A0%81%E8%87%AA%E5%8A%A8%E6%8B%86%E5%88%86%E6%88%90%E8%8B%A5%E5%B9%B2%E4%B8%AA%E6%95%B0%E5%8D%81KB%E7%9A%84%E5%B0%8F%E6%96%87%E4%BB%B6%E3%80%82%E5%90%8E%E7%BB%AD%E8%8B%A5%E5%85%B6%E4%B8%AD%E4%BB%BB%E6%84%8F%E4%B8%80%E4%B8%AA%E6%96%87%E4%BB%B6%E5%8F%91%E7%94%9F%E5%8F%98%E5%8C%96%EF%BC%8C%E5%8F%AF%E4%BB%A5%E4%BF%9D%E8%AF%81%E5%85%B6%E4%BB%96%E7%9A%84%E5%B0%8Fchunk%E4%B8%8D%E9%9C%80%E8%A6%81%E9%87%8D%E6%96%B0%E4%B8%8B%E8%BD%BD%E3%80%82">https://medium.com/webpack/webpack-http-2)里提到了一个新的webpack插件`AggressiveSplittingPlugin`。简单的说，这款插件就是充分利用HTTP/2的文件缓存能力，将你的业务代码自动拆分成若干个数十KB的小文件。后续若其中任意一个文件发生变化，可以保证其他的小chunk不需要重新下载。</a></p>
+<p>可见，<strong>即使不断的有新技术出现，也依然需要配套的工具来将前端工程问题解决方案推向极致。</strong></p>
+<h3 id="模块化是大型项目的银弹吗？"><a href="#模块化是大型项目的银弹吗？" class="headerlink" title="模块化是大型项目的银弹吗？"></a>模块化是大型项目的银弹吗？</h3><blockquote>
+<p>只要遵循了最新模块化规范，就可以使项目具有最好的可维护性吗？ Js 模块化的目的是支持前端日益上升的复杂度，但绝不是唯一的解决方案。</p>
+</blockquote>
+<p>分析下 JavaScript 为什么没有模块化，为什么又需要模块化：这个 95 年被设计出来的时候，语言的开发者根本没有想到它会如此的大放异彩，也没有将它设计成一种模块化语言。按照文中的说法，99 年也就是 4 年后开始出现了模块化的需求。如果只有几行代码用模块化是扯，初始的 web 开发业务逻辑都写在 server 端，js 的作用小之又小。而现在 spa 都出现了，几乎所有的渲染逻辑都在前端，如果还是没有模块化的组织，开发过程会越来越难，维护也是更痛苦。</p>
+<p>文中已经详细说明了模块化的发展和优劣，这里不准备做过多的讨论。我想说的是，<strong>在模块化之后还有一个模块间耦合的问题，如果模块间耦合度大也会降低代码的可重用性或者说复用性</strong>。所以也出现了降低耦合的观察者模式或者发布&#x2F;订阅模式。这对于提升代码重用，复用性和避免单点故障等都很重要。说到这里，还想顺便提一下最近流行起来的响应式编程（RxJS），响应式编程中有一个很核心的概念就是 observable，也就是 Rx 中的流（stream）。它可以被 subscribe，其实也就是观察者设计模式。</p>
+<h3 id="补充阅读"><a href="#补充阅读" class="headerlink" title="补充阅读"></a>补充阅读</h3><ul>
+<li><a href="https://huangxuan.me/2015/07/09/js-module-7day/">JavaScript 模块化七日谈</a></li>
+<li><a href="https://yuguo.us/weblog/javascript-module-development-history/">JavaScript 模块化编程简史（2009-2016）</a></li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>未来前端复杂度不断增加已成定论，睡着后端成熟，自然会降焦点转移到前端领域，而且服务化，用户体验越来越重要，前端体验早不是当初能看就行，任何网页的异常，视觉的差异或文案的模糊，都会导致用户流失，支付中断。<br>前端对公司营收的影响，渐渐与后端服务宕机同等严重，所以前端会越来越重，异常监控，性能检测，工具链，可视化等等都是这几年大家逐渐重视起来的。</p>
+<p>我们早已不能将javascript早期玩具性质的模块化方案用于现代越来越重要的系统中，前端界必然会出现同等重量级的模块化管理方案，感谢tc39制定的ES2015模块化规范，我们已经离不开它，哪怕所有人都必须使用babel.</p>
+<p>话说回来，标准推进的太慢，我们还是把编译工具当作常态，抱着哪怕支持了ES2015所有特性，babel依然还有用的心态，将预编译进行到底。一句话，模块化仍在路上。js模块化的矛头已经对准了css与html.这两位元老也该想前卫的js学习学习了。</p>
+<p>未来css、html的模块化会自立门户，还是赋予js更强的能力，让两者的模块化依附于js的能力呢？目前html有自立门户的苗头（htmlModules），而css迟迟没有改变，社区出现的<code>styled-component</code>已经用js将css模块化得很好了，<br>最新css规范也支持了与Js的变量通信，难道希望依附于js吗？这里希望得到大家更广泛的讨论。</p>
+<p>我也认同，毕竟压缩、混淆、md5、或者利用【nonce】(<a href="https://www.thepolyglotdeveloper.com/2015/03/create-a-random-nonce-string-using-javascript/)%E5%B1%9E%E6%80%A7%E5%AF%B9script%E6%A0%87%E7%AD%BE%E5%8A%A0%E5%AF%86%EF%BC%8C%E9%83%BD%E7%A6%BB%E4%B8%8D%E5%BC%80%E6%9C%AC%E5%9C%B0%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7%E3%80%82">https://www.thepolyglotdeveloper.com/2015/03/create-a-random-nonce-string-using-javascript/)属性对script标签加密，都离不开本地构建工具。</a></p>
+<p>据说http2的优化中，有个最佳文件大小与数量的比例，那么还是脱离不了构建工具，前端未来会越来越复杂，同时也越来越好。</p>
+<p>至此。对于javascript模块化讨论已接近尾声，对其优缺点也基本达成了一致。前端复杂度不断提高，促使着模块化的改进，代理（浏览器、node）的支持程度，与前端特殊性（流量、缓存）可能前端永远也离不开构建工具。<br>新的标准会让这些工作做的更好，同时取代、增强部分特征，前端的未来是更加美好的，复杂度也更高。</p>
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>前端深水区</title>
+    <url>/2021/04/20/%E5%89%8D%E7%AB%AF%E6%B7%B1%E6%B0%B4%E5%8C%BA/</url>
+    <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>其实关于前端深水区的讨论，已经有了很多，也有了很多相关的文章。我也想借这篇关于深水区的讨论文章，讲一下自己对于深水区的理解。<br>原文链接：<a href="https://www.yuque.com/sxc/front/kvokg4">技术路线：前端开发已进入深水区</a></p>
+<p>本期精读，<a href="https://github.com/camsong">@camsong</a>、<a href="https://github.com/arcthur">@arcthur</a>、<a href="https://github.com/ascoders">@ascoders</a> 都有贡献观点。</p>
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>原文对于深水区的想法，讲的很清楚，还是建议读者去读一下原文。<br>对比 2010 年，整个前端生态已经翻新了好几遍，直到近几年的 Node BFF、IDE Cloud，抑或是客户端 AI，还是 Serverless 的建设，前端想要深度参与的话，单纯依靠原来的 HTML&#x2F;CSS&#x2F;JS 三件套技能也远远不够了。再抛开技术，整个互联网创业生态也重构了好几遍。无论是技术层面还是意识层面，如今的前端开发已经进入深水区。</p>
+<ul>
+<li>深水区需要哪些技能<span id="more"></span>
+<img src="https://img.alicdn.com/tfs/TB1oovQe8r0gK0jSZFnXXbRRXXa-1832-1032.png" alt="image.png"><br>深水区需要是四个核心能力，分别是：技术、产品、业务和管理能力。</li>
+<li>面对深水压力不需紧张<br>其实何止前端开发，整个技术行业都已步入深水区，只是前端工程师的感知来的晚一些而已。只要把眼光投向深水区，问题就会一个接一个的浮上来，当越来越多问题浮起来的时候，就是你慢慢沉向深水区的时候，这时候不需要太过紧张。</li>
+</ul>
+<h2 id="精读"><a href="#精读" class="headerlink" title="精读"></a>精读</h2><p>深水区的理解首先需要达成一致，并不只是一个维度的加深，而是全方位多方面的困难同时加击，压强升高、光线减少、温度剧变等等。</p>
+<p>对应到文中总结的解法就是需要『技术创新、流程优化、团队合作、影响大盘、驱动业务、商业决策和团队管理』。但你展开想一下，把这个角色换成后端、无线端、甚至是 UED，是不是也能完美匹配。所以这些能力应该是技术人员发展到一定程度面临的普遍问题而不仅仅是前端。</p>
+<p>但这些能力是否有个更好的概括？当然有，就是明确一个方向并带领一群人完成目标并实线商业价值。这其实就是商业或者说业务的整个运作过程。</p>
+<p>这其实也在抛一个命题，前端发展到一定程度就一定要转业务吗？<br>是也不是。当然要转，但并不是全转。全转业务你过去的积累有什么用？不转业务单纯前端能发挥的影响力就会受限。所以答案是利用前端技术优势同时补充业务能力推动商业流程。</p>
+<p>所以此文并不是严格上讲前端技术的深水区，或者作者肯定认为他能接触的前端技术已经到瓶颈，且没有想到突破口。</p>
+<p>怎么去定义深水区，@流形 认为是需要建立技术壁垒或学术壁垒。当我们看待一向技术，如果在投入一到两年就可以对齐，那么显然技术本身的深度是可观的，如果是十年才能对齐，这时候除了会影响经济或政治外，不会有人会去重做，只能使用。用另一个类似的概念反摩尔定律来对应深水区说，每隔两年，技术不能显著带来效能的成倍提升。</p>
+<h3 id="深水区值得关注的方向"><a href="#深水区值得关注的方向" class="headerlink" title="深水区值得关注的方向"></a>深水区值得关注的方向</h3><h4 id="业务领导力"><a href="#业务领导力" class="headerlink" title="业务领导力"></a>业务领导力</h4><p>也就是原文提到的 “技术创新、流程优化、团队合作、影响大盘、驱动业务、商业决策、团队管理” 等能力，一个拥有领导力的人发挥的价值远超自身孤立的价值。</p>
+<h4 id="业务价值"><a href="#业务价值" class="headerlink" title="业务价值"></a>业务价值</h4><p>发挥业务价值是技术人的最终目标，比如数据库技术想发挥业务价值，就要做到高效、稳定，价值越大往往技术难度就越大。</p>
+<p>值得庆幸的是，前端的业务价值与技术难度往往不成正比，有时候将客户的业务场景固化成一套模版，整合起来赋能给更多客户，这等于将商业模型作为能力赋予了其他客户，但本身并没有用到一些高级技术。前端能做的不仅是内部提效和外部体验，因为前端是人机交互的入口，才有机会将业务思考打包到代码中，直接透出给客户。</p>
+<h4 id="端技术的发展"><a href="#端技术的发展" class="headerlink" title="端技术的发展"></a>端技术的发展</h4><ol>
+<li>数字孪生。那么在端上的仿真能力需要大幅提高，那么结合模型自动生成，不同物体的建模能力等都是很大挑战</li>
+<li>虚拟实现。这点上就不赘述，从 FB 重点发展 Oculus，微软发展 HoloLens 可以看到这个趋势，从互动的未来来看，这不是终局，但是最适合今天要突破的技术。</li>
+<li>可视分析。数据在人类面前还是过分难懂，结合数据的分析系统在各行各业正在渗透，端上结合可视化的能力就显得非常重要。</li>
+<li>更多的，像边缘计算，前端安全等领域都是非常深入的领域。<br>这些问题，已经不是一年就能完全突破的，需要 3-5 年，甚至 10 年时间。</li>
+</ol>
+<h4 id="前端深入体系"><a href="#前端深入体系" class="headerlink" title="前端深入体系"></a>前端深入体系</h4><ol>
+<li>但对于我所处的大数据环境来说，确实接触了前端技术深水区。来源于端计算能力 + 网络基建 + 大数据的爆炸式增长。<br>编辑器：复杂的开发离不开代码，前端们一直孜孜不倦的把 IDE 引入 web，VS Code 做了很成功的尝试但还是需要一层壳套着。且对于大数据处理这样的领域，需要定制的能力远超过通用的 Manaco editor 等能提供。</li>
+<li>表格类数据处理能力：比尔盖茨最引以为豪的微软软件是 Excel。你永远不知道 Excel 有多少种酷的用法来解决用户问题。能否把 Excel 引入到 web？同时对数百万条数据做交叉分析，这对性能和架构都有很大的挑战。</li>
+<li>可视化数据展现：大数据的一个典型特征就是价值稀疏性，如何把蕴含的价值展现出来，需要了解图形学、统计学、交互色彩等各种能力。大学老师教的内容终于能派生用场了。</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>在局部领域前端已经有可能深入，当然前端技能上说这些也不能用 HTML, CSS, JS 来解决，需要开发者有深入学科的背景。但今天前端面向还是产品功能的需要，在端上更强调的还是产品功能为主。我们做一款复杂产品，更多还会在工程上纠结。如果没在功能的深入性上思考更多，以对应真正技术发展，那么深水区还远。</p>
+<p>正如前面所说，深水区会压强升高、光线减少、温度剧变，需要自己发光发热和更多的坚持。</p>
+<p>跨过深水区，让其他人处在浅水区就能做事，这或许就是你走出深水区的标志。就像 Alan Perlis 说的一句话『简单不先于复杂，而是在复杂之后』，也许未来看来你今天挣扎的深水区只是个小泥坑。</p>
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>前端调试技巧</title>
+    <url>/2020/08/20/%E5%89%8D%E7%AB%AF%E8%B0%83%E8%AF%95%E6%8A%80%E5%B7%A7/</url>
+    <content><![CDATA[<p>本期精读的文章是：<a href="https://css-tricks.com/debugging-tips-tricks/?utm_source=javascriptweekly&utm_medium=email">debugging-tips-tricks</a></p>
+<p>编码只是开发过程中的一小部分，为了使我们工作更加高效，我们必须学会调试，并擅长调试。</p>
+<h1 id="1-引言"><a href="#1-引言" class="headerlink" title="1 引言"></a>1 引言</h1><img src="https://img.alicdn.com/imgextra/i2/O1CN01JC1TZ51Nxn24teojP_!!6000000001637-2-tps-1024-1296.png" width="500" alt="logo" />
+
+<p>梵高这幅画远景漆黑一片，近景的咖啡店色彩却反差很大，他只是望着黑夜中温暖的咖啡馆，交织着矛盾与孤独。代码不可能没有 BUG，调试与开发也始终交织在一起，我们在这两种矛盾中不断成长。</p>
+<span id="more"></span>
+<h1 id="2-内容概要"><a href="#2-内容概要" class="headerlink" title="2 内容概要"></a>2 内容概要</h1><p>文中列举了常用调试技巧，如下：</p>
+<h3 id="Debugger"><a href="#Debugger" class="headerlink" title="Debugger"></a>Debugger</h3><p>在代码中插入 <code>debugger</code> 可以在其位置触发断点调试。</p>
+<h3 id="Console-dir"><a href="#Console-dir" class="headerlink" title="Console.dir"></a>Console.dir</h3><p>使用 <code>console.dir</code> 命令，可以打印出对象的结构，而 <code>console.log</code> 仅能打印返回值，在打印 <code>document</code> 属性时尤为有用。</p>
+<blockquote>
+<p>ps: 大部分时候，对象返回值就是其结构</p>
+</blockquote>
+<h3 id="使用辅助工具，语法高亮、linting"><a href="#使用辅助工具，语法高亮、linting" class="headerlink" title="使用辅助工具，语法高亮、linting"></a>使用辅助工具，语法高亮、linting</h3><p>它可以帮助我们快速定位问题，其实 flow 与 typescript 也起到了很好的调试作用。</p>
+<h3 id="浏览器拓展"><a href="#浏览器拓展" class="headerlink" title="浏览器拓展"></a>浏览器拓展</h3><p>使用类似 <a href="https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi">ReactDTools</a> <a href="https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd">VueDTools</a> 调试对应框架。</p>
+<h3 id="借助-DevTools"><a href="#借助-DevTools" class="headerlink" title="借助 DevTools"></a>借助 DevTools</h3><p>Chrome Dev Tools 非常强大，<a href="https://umaar.com/dev-tips/">dev-tips</a> 列出了 100 多条它可以做的事。</p>
+<h3 id="移动端调试工具"><a href="#移动端调试工具" class="headerlink" title="移动端调试工具"></a>移动端调试工具</h3><p>最靠谱的应该是 <a href="http://eruda.liriliri.io/">eruda</a>，可以内嵌在任何 h5 页面，充当 DevTools 控制台的作用。</p>
+<h3 id="实时调试"><a href="#实时调试" class="headerlink" title="实时调试"></a>实时调试</h3><p>不需要预先埋点，比如 <code>document.activeElement</code> 可以打印最近 focus 过的元素，因为打开控制台导致失去焦点，但我们可以通过此 api 获取它。</p>
+<h3 id="结构化打印对象瞬时状态"><a href="#结构化打印对象瞬时状态" class="headerlink" title="结构化打印对象瞬时状态"></a>结构化打印对象瞬时状态</h3><p><code>JSON.stringify(obj, null, 2)</code> 可以结构化打印出对象，因为是字符串，不用担心引用问题。</p>
+<h3 id="数组调试"><a href="#数组调试" class="headerlink" title="数组调试"></a>数组调试</h3><p>通过 <code>Array.prototype.find</code> 快速寻找某个元素。</p>
+<h1 id="3-精读"><a href="#3-精读" class="headerlink" title="3 精读"></a>3 精读</h1><p>本精读由 <a href="https://github.com/rccoder">rccoder</a> <a href="https://github.com/ascoders">ascoders</a> <a href="https://github.com/NE-SmallTown">NE-SmallTown</a> <a href="https://github.com/BlackGanglion">BlackGanglion</a> <a href="https://github.com/jasonslyvia">jasonslyvia</a> <a href="https://github.com/alcat2008">alcat2008</a> <a href="https://github.com/DanielWLam">DanielWLam</a> <a href="https://github.com/HsuanXyz">HsuanXyz</a> <a href="https://github.com/huxiaoyun">huxiaoyun</a> <a href="https://github.com/vagusX">vagusX</a> 讨论而出。</p>
+<h3 id="移动端真机测试"><a href="#移动端真机测试" class="headerlink" title="移动端真机测试"></a>移动端真机测试</h3><p>由于 webview 不一定支持连接 chrome 控制台调试，只有真机测试才能复现真实场景。</p>
+<p><a href="https://www.browserstack.com/">browserstack</a> <a href="https://www.dynatrace.com/platform/offerings/customer-experience-monitoring/">dynatrace</a> 都是真机测试平台，公司内部应该也会搭建这种平台。</p>
+<h3 id="移动端控制台"><a href="#移动端控制台" class="headerlink" title="移动端控制台"></a>移动端控制台</h3><ul>
+<li><a href="https://developers.google.com/web/tools/chrome-devtools/remote-debugging/webviews">Chrome 远程调试</a> app 支持后，连接 usb 或者局域网，即可通过 Dev Tools 调试 webview 页面。</li>
+<li><a href="http://people.apache.org/~pmuellr/weinre/docs/latest/Home.html">Weinre</a> 通过页面加载脚本，与 pc 端调试器通信。</li>
+<li>通过内嵌控制台解决，比如 <a href="http://eruda.liriliri.io/">eruda</a> <a href="https://github.com/WechatFE/vConsole">VConsole</a> </li>
+<li><a href="http://alloyteam.github.io/Rosin/">Rosin</a> fiddler 的一个插件，协助移动页面调试。</li>
+<li><a href="https://jsconsole.com/">jsconsole</a> 在本地部署后，手机访问对应 ip，可以测试对应浏览器的控制台。</li>
+</ul>
+<h3 id="请求代理"><a href="#请求代理" class="headerlink" title="请求代理"></a>请求代理</h3><p><a href="http://www.charlesproxy.com/">charles</a> <a href="http://www.telerik.com/fiddler">Fiddler</a> 可以抓包，更重要是可以代理请求。假数据、边界值测试、开发环境代码加载，每一项都非常有用。</p>
+<h3 id="定制-Chrome-拓展"><a href="#定制-Chrome-拓展" class="headerlink" title="定制 Chrome 拓展"></a>定制 Chrome 拓展</h3><p>对于特定业务场景也可以通过开发 chrome 插件来做，比如分析自己网站的结构、版本、代码开发责任人、一键切换开发环境。</p>
+<h3 id="在用户设备调试"><a href="#在用户设备调试" class="headerlink" title="在用户设备调试"></a>在用户设备调试</h3><p>把控制台输出信息打到服务器，本地通过与服务器建立 socket 链接实时查看控制台信息。要知道实时根据用户 id 开启调试信息，并看用户真是环境的控制台打印信息是非常有用的，能解决很多难以复现问题。</p>
+<p>代码中可以使用封装过的 <code>console.log</code>，当服务端开启调试状态后，对应用户网页会源源不断打出 log。</p>
+<h3 id="DOM-断点、事件断点"><a href="#DOM-断点、事件断点" class="headerlink" title="DOM 断点、事件断点"></a>DOM 断点、事件断点</h3><ul>
+<li>DOM 断点，在 dom 元素右键，选择 （Break on subtree modifications），可以在此 dom 被修改时触发断点，在不确定 dom 被哪段 js 脚本修改时可能有用。</li>
+<li>Event Listener Breakpoints，神器之一，对于任何事件都能进入断点，比如 click，touch，script 事件统统能监听。</li>
+</ul>
+<h3 id="使用错误追踪平台"><a href="#使用错误追踪平台" class="headerlink" title="使用错误追踪平台"></a>使用错误追踪平台</h3><p>对错误信息采集、分析、报警是很必要的，这里有一些对外服务：<a href="https://sentry.io/welcome/">sentry</a> <a href="https://trackjs.com/">trackjs</a></p>
+<h3 id="黑盒调试"><a href="#黑盒调试" class="headerlink" title="黑盒调试"></a>黑盒调试</h3><p>SourceMap 可以精准定位到代码，但有时候报错是由某处代码统一抛出的，比如 <a href="https://github.com/zertosh/invariant">invariant</a> 让人又爱又恨的库，所有定位全部跑到这个库里了（要你有何用），这时候，可以在 DevTools 源码中右键，选中 <code>BlackBox Script</code>，它就变成黑盒了，下次 log 的定位将会是准确的。</p>
+<p><a href="https://hacks.mozilla.org/2013/08/new-features-of-firefox-developer-tools-episode-25/">FireFox</a>、<a href="https://umaar.com/dev-tips/128-blackboxing/">Chrome</a>。</p>
+<h3 id="删除无用的-css"><a href="#删除无用的-css" class="headerlink" title="删除无用的 css"></a>删除无用的 css</h3><p>Css 不像 Js 一样方便分析规则是否存在冗余，Chrome 帮我们做了这件事：<a href="https://umaar.com/dev-tips/126-css-tracker/">CSS Tracker</a>。</p>
+<h3 id="在-Chrome-快速查找元素"><a href="#在-Chrome-快速查找元素" class="headerlink" title="在 Chrome 快速查找元素"></a>在 Chrome 快速查找元素</h3><p>Chrome 会记录最后插入的 5 个元素，分别以 <code>$0</code> ~ <code>$4</code> 的方式在控制台直接输出。</p>
+<img src="https://img.alicdn.com/imgextra/i4/O1CN01xsKHb822gkXhDDcCA_!!6000000007150-2-tps-417-516.png" width="500" alt="last-items" />
+
+<h3 id="Console-table"><a href="#Console-table" class="headerlink" title="Console.table"></a>Console.table</h3><p>以表格形式打印，对于对象数组尤为合适。</p>
+<h3 id="监听特定函数调用"><a href="#监听特定函数调用" class="headerlink" title="监听特定函数调用"></a>监听特定函数调用</h3><p><code>monitor</code> 有点像 <code>proxy</code>，用 <code>monitor</code> 包裹住的 function，在其调用后，会在控制台输出其调用信息。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&gt; <span class="keyword">function</span> <span class="title function_">func</span>(<span class="params">num</span>)&#123;&#125;</span><br><span class="line">&gt; <span class="title function_">monitor</span>(func)</span><br><span class="line">&gt; <span class="title function_">func</span>(<span class="number">3</span>)</span><br><span class="line"><span class="comment">// &lt; function func called with arguments: 3</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="模拟发送请求利器-PostMan"><a href="#模拟发送请求利器-PostMan" class="headerlink" title="模拟发送请求利器 PostMan"></a>模拟发送请求利器 PostMan</h3><p><a href="https://www.getpostman.com/products">PostMan</a>, FireFox 控制台 Network 也支持此功能。</p>
+<h3 id="找到控制台最后一个对象"><a href="#找到控制台最后一个对象" class="headerlink" title="找到控制台最后一个对象"></a>找到控制台最后一个对象</h3><p>有了 <code>$_</code>，我们就不需要定义新的对象来打印值了，比如：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&gt; [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]</span><br><span class="line">&lt; [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]</span><br><span class="line">&gt; $_.<span class="property">length</span></span><br><span class="line"><span class="comment">// &lt; 4</span></span><br></pre></td></tr></table></figure>
+
+<p>更多控制台相关技巧可以查看：<a href="https://developers.google.com/web/tools/chrome-devtools/console/command-line-reference?utm_source=dcc&utm_medium=redirect&utm_campaign=2016q3">command-line-reference</a>。</p>
+<h1 id="3-总结"><a href="#3-总结" class="headerlink" title="3 总结"></a>3 总结</h1><p>虽然在抛砖引玉，但整理完之后发现仍然是块砖头，调试技巧繁多，里面包含了通用的、不通用的，精读不可能一一列举。希望大家能根据自己的业务场景，掌握相关的调试技巧，让工作更加高效。</p>
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>浏览器解析域名</title>
+    <url>/2020/03/21/%E6%B5%8F%E8%A7%88%E5%99%A8%E8%A7%A3%E6%9E%90%E5%9F%9F%E5%90%8D/</url>
+    <content><![CDATA[<h2 id="准备动作"><a href="#准备动作" class="headerlink" title="准备动作"></a>准备动作</h2><p>预先智能匹配URL，从浏览器历史记录、书签等地方找到已经输入过得URl去匹配，如果匹配到了，就会智能显示出来让你去补全，对于google浏览器，他会从缓存中把页面展示出来，也就是说，你还没有按下ENTER键搜索，页面就显示出来了</p>
+<h2 id="构建动作"><a href="#构建动作" class="headerlink" title="构建动作"></a>构建动作</h2><p>浏览器会构建请求行<br>get &#x2F; http&#x2F;1.1<br>请求方法比如get, 请求路径为根路径、HTTP协议版本是1.1</p>
+<h2 id="使用缓存"><a href="#使用缓存" class="headerlink" title="使用缓存"></a>使用缓存</h2><p>在发送请求之前，浏览器会检查请求头设置的强缓存失效时间，如果命中则直接使用，否则进入下一步。</p>
+<span id="more"></span>
+<h2 id="DNS解析"><a href="#DNS解析" class="headerlink" title="DNS解析"></a>DNS解析</h2><p>互联网每台机器的唯一ID是IP地址，但是IP地址不方便记忆，所以开发者发明了域名系统，将IP地址和域名进行一一对应。<br>得到具体IP地址的过程就叫做DNS解析<br>具体的DNS解析流程包括：</p>
+<h2 id="查找浏览器缓存"><a href="#查找浏览器缓存" class="headerlink" title="查找浏览器缓存"></a>查找浏览器缓存</h2><p>浏览器提供了DNS数据缓存功能，如果一个域名被解析过，浏览器会把结果缓存下来，在缓存失效之前，下次处理直接走缓存，不需要再经过DNS解析以提高加载速度。</p>
+<h2 id="查找系统Host文件配置"><a href="#查找系统Host文件配置" class="headerlink" title="查找系统Host文件配置"></a>查找系统Host文件配置</h2><p>浏览器在查找不到缓存后，会去本地硬盘host文件中进行查找，去看看里面有没有对应域名和IP地址的规则，如果有则使用，否则进入下一步</p>
+<h2 id="浏览器发送DNS请求到本地DNS服务器"><a href="#浏览器发送DNS请求到本地DNS服务器" class="headerlink" title="浏览器发送DNS请求到本地DNS服务器"></a>浏览器发送DNS请求到本地DNS服务器</h2><p>如果本地没有查找到相应的配置之后，浏览器会发送DNS请求到本地DNS服务器<br>本地DNS服务器在接受到请求后，会递归查找自己的缓存记录，有缓存则直接返回，否则向根DNS服务器发送请求</p>
+<h2 id="根DNS服务器"><a href="#根DNS服务器" class="headerlink" title="根DNS服务器"></a>根DNS服务器</h2><p>根DNS服务器在接受到本地DNS服务器之后，并不会直接返回域名和IP地址的对应信息，而是高速本地DNS服务器可以向域名服务器上面去查找，并给出域名的地址，这个过程是迭代的。</p>
+<p>本地DNS服务器在接受到根DNS服务器的响应之后，会向对应的域服务器发送请求，域服务器接收到请求后，也不会直接返回域名和IP地址之间的对应关心，而是高速DNS服务器，你请求的域名的解析服务器地址。   </p>
+<h2 id="本地DNs服务器向解析服务器发送请求，"><a href="#本地DNs服务器向解析服务器发送请求，" class="headerlink" title="本地DNs服务器向解析服务器发送请求，"></a>本地DNs服务器向解析服务器发送请求，</h2><p>本地DNS服务器向解析服务器发送请求，会获取一个域名和IP地址的对应关系，然后将对应关系返回给浏览器，并缓存在本地</p>
+<p>总的来说，就是解析域名，拿到对应的IP地址，中间过程会从历史记录、书签等地方智能匹配过去输入的URL，然后会使用缓存，检查请求头设置的强缓存时间，<br>还会去查找浏览器DNS数据缓存功能，如果一个域名被解析过，浏览器会把结果缓存下来，在缓存失效之前，下次处理直接走缓存。<br>会去系统host文件中查找域名和IP地址的对应规则，如果有则使用，否则进入下一步。最后浏览器会从本地DNS服务器、根服务器、域服务器、解析服务器中获取到一个域名和IP地址的对应关系，并缓存在本地</p>
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>解构lerna方案的思想和过程</title>
+    <url>/2021/06/27/%E8%A7%A3%E5%86%B3lerna%E6%96%B9%E6%A1%88%E7%9A%84%E6%80%9D%E6%83%B3%E5%92%8C%E8%BF%87%E7%A8%8B/</url>
+    <content><![CDATA[<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>相信大家多多多少都接触过或听过monorepo这个东西，为了方便多个项目进行调试、复用和管理，采取一种单git仓库管理多个项目方式，<br>市面上流行的库vue、react、babel等都采用monorepo方式进行管理。带来便利的同时，也带来了很多挑战。</p>
+<p>我们应该以何种方式统一管理这些包呢？包版本升级的时候、发布的时候、依赖冗余这些问题都摆在我们面前。市面上也有很多成熟的解决方案，<br>我司则是选择了yarn+lerna做monorepo管理。</p>
+<span id="more"></span>
+<h2 id="pnpm、yarn、npm"><a href="#pnpm、yarn、npm" class="headerlink" title="pnpm、yarn、npm"></a>pnpm、yarn、npm</h2><p>node_modules一直是前端人的头痛，一个依赖黑洞魔物。为了解决依赖黑洞问题，yarn和npm采取平铺方式，去复用部分依赖，<br>但其中还是存在着不少问题：依赖非法访问、依赖分身等问题，面对多包管理的场景，这种问题尤为突出。</p>
+<p>这时候，pnpm英雄登场，pnpm下载的文件会统一存储到文件中心，项目里面node_modules会硬链接到存储中心，<br>以一种特殊快捷方式存在，而不是直接在磁盘上创建一个全新的副本，节省空间。</p>
+<p>还会通过软链链接依赖的依赖，有效的解决依赖分身这个问题。而且硬链接还有一个特性，当存储中心建立起硬链接的文件链接数为0时，<br>还会自动清除该文件，及时回收磁盘空间，跟WeakSet这些弱引用效果一样。</p>
+<h2 id="定位"><a href="#定位" class="headerlink" title="定位"></a>定位</h2><p>上面说到了包管理器，大家也看到了pnpm的优势，所以我这边决定给它来个大革新，yarn换成pnpm,而lerna已经不维护了，而且我个人更喜欢包管理器<br>就做包管理器的事，monorepo就做monorepo该做的事，大部分功能重合，这并不是什么好事，容易带来混乱。同一件事，有的人用a来做，也可以用b来做，<br>也许可以制定规则去规范大家，但是从一开始就不存在这些事情的话，不是更好吗。</p>
+<h2 id="开展背景"><a href="#开展背景" class="headerlink" title="开展背景"></a>开展背景</h2><p>上面给出的定位是只做本分，所以现在要实现的功能有两个：version和publish。但是在实现这部分功能之前，我们要分析这个项目的包结构，为后续功能做一个支撑</p>
+<h2 id="分析图谱"><a href="#分析图谱" class="headerlink" title="分析图谱"></a>分析图谱</h2><p>假定一个项目的结构如下👇🏻，接下来要为项目生成一个分析图谱对象</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 假设下面的包是有依赖关系，并且b依赖a，c依赖b跟a</span><br><span class="line">- packages</span><br><span class="line">  - a </span><br><span class="line">    - package.json</span><br><span class="line">  - b</span><br><span class="line">    - package.json</span><br><span class="line">  - c</span><br><span class="line">    - package.json</span><br><span class="line">- package.json</span><br></pre></td></tr></table></figure>
+
+<p>通过globby把里面所有的packages路径拿到手，然后调用fs-extra读取packages.json，将这些信息转换成下面的 contextAnalysisDiagram</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 每个包的具体格式</span><br><span class="line">interface AnalysisBlockObject &#123;</span><br><span class="line">  packageJson: IPackageJson // package.json</span><br><span class="line">  filePath: string // pacakge.json文件路径</span><br><span class="line">  dir: string // 包的路径</span><br><span class="line">  relyMyDir: string[] // 依赖该包的包路径</span><br><span class="line">  myRelyDir: string[] // 该包依赖的包路径</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 项目整体格式</span><br><span class="line">type ContextAnalysisDiagram = Record&lt;string, AnalysisBlockObject&gt;</span><br><span class="line"></span><br><span class="line">// 例子：b包的AnalysisBlockObject</span><br><span class="line">&#123;</span><br><span class="line">  packageJson: &#123;</span><br><span class="line">    &quot;name&quot;: &quot;@test/b&quot;</span><br><span class="line">    &quot;version&quot;: &quot;0.0.0&quot;, </span><br><span class="line">    &quot;dependencies&quot;: &#123;</span><br><span class="line">      &quot;@test/a&quot;: &quot;workspace:~0.0.0&quot;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  filePath: &quot;packages/b/package.json&quot;,</span><br><span class="line">  dir: &quot;packages/b&quot;,</span><br><span class="line">  relyMyDir: [ “packages/c” ] // c依赖了b</span><br><span class="line">  myRelyDir: [ “packages/a” ] // b依赖了a</span><br><span class="line">&#125;</span><br><span class="line">// 然后ContextAnalysisDiagram是以dir作为key，去对应每个包的AnalysisBlockObject</span><br><span class="line">contextAnalysisDiagram = &#123;</span><br><span class="line">  &quot;&quot;: 根目录的AnalysisBlockObject,</span><br><span class="line">  &quot;packages/a&quot;: a包的AnalysisBlockObject,</span><br><span class="line">  &quot;packages/b&quot;: b包的AnalysisBlockObject,</span><br><span class="line">  &quot;packages/c&quot;: c包的AnalysisBlockObject,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中转换比较特别点的是 relyMyDir 和 myRelyDir</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 读取项目每个包的package.json以下属性，把包依赖关系都提取出来</span><br><span class="line">const RELY_KEYS = [</span><br><span class="line">  &#x27;bundleDependencies&#x27;,</span><br><span class="line">  &#x27;bundledDependencies&#x27;,</span><br><span class="line">  &#x27;optionalDependencies&#x27;,</span><br><span class="line">  &#x27;peerDependencies&#x27;,</span><br><span class="line">  &#x27;devDependencies&#x27;,</span><br><span class="line">  &#x27;dependencies&#x27;,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>正如上面所说， relyMyDir 是用来保存所有依赖该包的包路径数组，麻烦的是，它不像 myRelyDir 可以在当前package.json里面全部找出来。</p>
+<p>常规的方法是对包循环的时候，再在里面加一个循环来找当前包的依赖，但是这种做法会使时间复杂度达到O(n ^ 2)。</p>
+<p>所以我这边做了一个优化，通过一个对象数组，以每个包的name作为key，对应的值为数组，在每次循环的时候都对当前包的依赖搜索一遍，<br>发现匹配到包name，就将当前dir push进去，这样就实现了一次循环，把所有依赖都保存起来</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 对象数组</span><br><span class="line">const relyMyMap = &#123;</span><br><span class="line">  &quot;root&quot;: [],</span><br><span class="line">  &quot;@test/a&quot;: [],</span><br><span class="line">  &quot;@test/b&quot;: [],</span><br><span class="line">  &quot;@test/c&quot;: [],</span><br><span class="line">&#125;</span><br><span class="line">// dirs：包的路径数组。</span><br><span class="line">dirs.forEach((dir, index) =&gt; &#123;</span><br><span class="line">  **伪代码**</span><br><span class="line">  // 用来获取当前dir的packageJson依赖，把命中的依赖放到relyMyMap对应的数组</span><br><span class="line">  setRelyMyDirhMap(dir, packageJson, relyMyMap)</span><br><span class="line">  **伪代码**</span><br><span class="line">  this.contextAnalysisDiagram[dir] = &#123;</span><br><span class="line">    packageJson,</span><br><span class="line">    dir,</span><br><span class="line">    filePath: filesPath[index],</span><br><span class="line">    // 赋值到relyMyDir，因为是引用类型，后续命中的依赖都会出现在对应的relyMyDir</span><br><span class="line">    relyMyDir: relyMyMap[packageJson.name],</span><br><span class="line">    myRelyDir,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h2><p>lerna 有固定模式和独立模式，而我这边对应的是sync 模式和diff模式，大同小异。</p>
+<h2 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// lerna的使用方法</span><br><span class="line">lerna version</span><br><span class="line">lerna publish</span><br><span class="line">// 我为当前工具起了个pkgs命令名</span><br><span class="line">pkgs version</span><br><span class="line">pkgs publish</span><br></pre></td></tr></table></figure>
+
+<p>如何定义一个命令行工具呢</p>
+<p>1.创建一个bin目录，在里面创建一个index.js。第一句的意思是告诉系统用node去执行这个文件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/usr/bin/env node</span><br><span class="line">console.log(&#x27;abmao&#x27;)</span><br></pre></td></tr></table></figure>
+
+<p>2.在package.json定义bin</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// package.json</span><br><span class="line">&#123;</span><br><span class="line">  &quot;bin&quot;: &#123;</span><br><span class="line">    &quot;pkgs&quot;: &quot;bin/index.js&quot; // 指向bin目录</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>属于你的命令实现了</p>
+<p>我先摊牌，下面是已经实现了的命令函数，使用commander处理复杂命令和友好提示</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/usr/bin/env node</span><br><span class="line">const &#123; program &#125; = require(&#x27;commander&#x27;)</span><br><span class="line">const &#123;</span><br><span class="line">  executeCommand,</span><br><span class="line">  executeCommandTag,</span><br><span class="line">  executeCommandInit,</span><br><span class="line">  executeCommandRun,</span><br><span class="line">&#125; = require(&#x27;../dist/pkgs.cjs.min&#x27;) // 打包好的构建物</span><br><span class="line">const pkg = require(&#x27;../package.json&#x27;)</span><br><span class="line">function handleExecuteCommand (type, cmd) &#123;</span><br><span class="line">  executeCommand(type, &#123;</span><br><span class="line">    [type]: cmd,</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line">program</span><br><span class="line">  .version(pkg.version)</span><br><span class="line">  .description(&#x27;Simple monorepo combined with pnpm&#x27;)</span><br><span class="line">program</span><br><span class="line">  .command(&#x27;version&#x27;)</span><br><span class="line">  .description(&#x27;version package&#x27;)</span><br><span class="line">  .option(&#x27;--mode &lt;type&gt;&#x27;, &#x27;sync | diff&#x27;)</span><br><span class="line">  .option(&#x27;-m, --message &lt;message&gt;&#x27;, &#x27;commit message&#x27;)</span><br><span class="line">  .action(cmd =&gt; &#123;</span><br><span class="line">    // pkgs version</span><br><span class="line">    handleExecuteCommand(&#x27;version&#x27;, cmd)</span><br><span class="line">  &#125;)</span><br><span class="line">program</span><br><span class="line">  .command(&#x27;publish&#x27;)</span><br><span class="line">  .description(&#x27;publish package&#x27;)</span><br><span class="line">  .option(&#x27;--mode &lt;type&gt;&#x27;, &#x27;sync | diff&#x27;)</span><br><span class="line">  .option(&#x27;--tag &lt;type&gt;&#x27;, &#x27;npm publish --tag &lt;type&gt;&#x27;)</span><br><span class="line">  .option(&#x27;-m, --message &lt;message&gt;&#x27;, &#x27;commit message&#x27;)</span><br><span class="line">  .action(cmd =&gt; &#123;</span><br><span class="line">    // pkgs publish</span><br><span class="line">    handleExecuteCommand(&#x27;publish&#x27;, cmd)</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">program</span><br><span class="line">  .command(&#x27;tag&#x27;)</span><br><span class="line">  .description(&#x27;pkgs tag, diff mode: Compare according to tag&#x27;)</span><br><span class="line">  .option(&#x27;-p&#x27;, &#x27;publish tag&#x27;)</span><br><span class="line">  .option(&#x27;-v&#x27;, &#x27;version tag&#x27;)</span><br><span class="line">  .action(cmd =&gt; &#123;</span><br><span class="line">    // pkgs tag</span><br><span class="line">    executeCommandTag(cmd)</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">program</span><br><span class="line">  .command(&#x27;init&#x27;)</span><br><span class="line">  .description(&#x27;create pkgs file&#x27;)</span><br><span class="line">  .action(() =&gt; &#123;</span><br><span class="line">    // pkgs init</span><br><span class="line">    executeCommandInit()</span><br><span class="line">  &#125;)</span><br><span class="line">program</span><br><span class="line">  .command(&#x27;run &lt;cmd&gt; [mode]&#x27;)</span><br><span class="line">  .description(&#x27;run diff scripts.\n mode: work | stage | repository, default: work&#x27;)</span><br><span class="line">  .option(&#x27;-r &lt;boolean&gt;&#x27;, &#x27;Include rootPackage&#x27;, &#x27;true&#x27;)</span><br><span class="line">  .action((cmd, mode, option) =&gt; &#123;</span><br><span class="line">    // pkgs run &lt;cmd&gt;</span><br><span class="line">    executeCommandRun(cmd, mode, option.r !== &#x27;false&#x27;)</span><br><span class="line">  &#125;)</span><br><span class="line">program.parse(process.argv)</span><br></pre></td></tr></table></figure>
+
+<h2 id="version-命令"><a href="#version-命令" class="headerlink" title="version 命令"></a>version 命令</h2><p>version 命令是用来升级各个包的版本。一开始我是用了antfu大佬的bumpp来做命令行交互，但是这个库每次选择完版本都会写进package.json文件，<br>我更想要的是在内存里面获取到newVersion，然后等所有包都选择完版本后，再一次过写进去。<br>因此我提交pr的同时也publish了一个新库，今天看了下，pr还没人理，估计没怎么关注这个库了</p>
+<img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5964abf28db54305be07b11c7f04d728~tplv-k3u1fbpfcp-zoom-in-crop-mark:3024:0:0:0.awebp?" width="500" alt="logo" />
+
+<h2 id="sync-模式"><a href="#sync-模式" class="headerlink" title="sync 模式"></a>sync 模式</h2><p>sync模式是提供给组织性质比较强的项目使用，同时迭代，同时发布。调用命令的时候，只会选择一次版本，然后同步所有包的package.json，最后git commit并打上git tab</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pkgs version</span><br><span class="line">// 默认是sync，可以省略后面这段</span><br><span class="line">pkgs version --mode sync</span><br></pre></td></tr></table></figure>
+
+<h2 id="diff-模式"><a href="#diff-模式" class="headerlink" title="diff 模式"></a>diff 模式</h2><p>diff模式只会对修改过和被修改影响到的包触发，对每个需要版本升级的包都单独选择一次版本，然后分别写到对应的package.json</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pkgs version --mode diff</span><br></pre></td></tr></table></figure>
+
+<p>问：那么它是如何找到上述包进行版本升级呢？</p>
+<p>答：首先它会根据git提交的最新记录和最近的一个gitTab，拿到之间修改过的文件，<br>再通过bump当前包获取到newVersion，再与contextAnalysisDiagram分析relyMyDir里面的依赖关系，<br>根据版本语义化*、^、~等进行判断是否要升级该依赖，是的话，会调用bump，如此类推。<br>当然，还要把已经升级过的包储存到一个Set里面，防止多次调用bump。最后git commit并打上git tab</p>
+<h2 id="publish命令"><a href="#publish命令" class="headerlink" title="publish命令"></a>publish命令</h2><p>对于需要发布到npm上的包，提供了publish命令，用于包发布</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pkgs publish</span><br><span class="line">// 添加npm标签</span><br><span class="line">pkgs publish --tag beta</span><br></pre></td></tr></table></figure>
+
+<p>对@开头的组织包，还会在末尾自动添加上–access public</p>
+<p>如果是0.0.8-beta.1这种带标签的版本号，会自动为其添加标签。当然你可以通过–tag手动添加</p>
+<p>同时publish命令也是有sync模式和diff模式，sync模式对于publish来说比较鸡肋，所以一般都是diff，或者是配合sync的version一起使用。<br>而publish的diff没有version那么复杂，只需要拿到最新commit和第一个git tag就可以，并不需要计算影响这一步。</p>
+<h2 id="插曲"><a href="#插曲" class="headerlink" title="插曲"></a>插曲</h2><p>了解过lerna的小伙伴可能意识到，这不就是lerna的实现原理吗？雀实，我有个坏习惯，对于不熟悉的领域我都喜欢撸了再说，我比较喜欢那种两倍痛苦带来的两倍快乐，<br>我事先是闭门造车的思考了这套方案，等我实现了的时候，发现跟 lerna 一模一样，是坏消息的同时也是好消息。</p>
+<p>其实一不一样我都是可以接受，不一样，可以得到两套思想的碰撞💥，你可以非常非常地深入到两种思想中，探讨其中的优劣，如果能得出更好的方案，更是一种思考上的升华。<br>一样的话，是不是可以证明，已经达到了一定的水平了呢？（自吹自擂ing</p>
+<h2 id="tag-命令"><a href="#tag-命令" class="headerlink" title="tag 命令"></a>tag 命令</h2><p>问：为什么会有 tag 这个命令呢?</p>
+<p>答：上述的 version 和 publish 命令的 diff 模式都是基于git tag打上跟 pkgs 定义好的tag实现的，<br>为了让 lerna 之类的项目无痛迁移到 pkgs，保证正确的 diff，放出了 tag 命令，先对项目使用 tag 命令，就可以保证后面正确的 diff</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git tag // 打上publish标签和version标签</span><br><span class="line">git tag -p // 打上pbulish标签</span><br><span class="line">git tag -v // 打上version标签</span><br></pre></td></tr></table></figure>
+
+<h2 id="init-命令"><a href="#init-命令" class="headerlink" title="init 命令"></a>init 命令</h2><p>创建pkgs相关模板，如下。当然，创建的时候先检察当前文件目录是否已经存在，存在会跳过当前文件目录的创建</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pkgs init</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">- packages</span><br><span class="line">- package.json</span><br><span class="line">- pkgs.json</span><br></pre></td></tr></table></figure>
+
+<h2 id="自定义命令"><a href="#自定义命令" class="headerlink" title="自定义命令"></a>自定义命令</h2><p>一个经常有的场景，修改了包后，其他很多包依赖着这个包，运行测试的时候有两种</p>
+<p>1.全部运行npm run test<br>2.指定某些包npm run test<br>这两种方法都不好，浪费、繁杂、并且人工指定容易出错。</p>
+<p>如果有一个功能，继承了上面说的 diff 功能，并且可以对工作区、暂存区和版本区进行分析，只对修改过和被影响的包运行npm命令，这听起来是不是很棒(๑•̀ㅂ•́)و✧</p>
+<p>有没有一种可能，pkgs 已经实现了。是的，已经提供了该功能啦~👇</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 可以看成是monorepo版本的`npm run`</span><br><span class="line">pkgs run &lt;cmd&gt;</span><br><span class="line">// 测试</span><br><span class="line">pkgs run test</span><br><span class="line">// 默认是工作区，可以忽略wokr</span><br><span class="line">pkgs run test work</span><br><span class="line">// 暂存区</span><br><span class="line">pkgs run test stage</span><br><span class="line">// 版本区</span><br><span class="line">pkgs run test repository</span><br></pre></td></tr></table></figure>
+
+<h3 id="优先排序"><a href="#优先排序" class="headerlink" title="优先排序"></a>优先排序</h3><p>还有一种场景，a包依赖b包，那么build的时候，正确的顺序是等b包完成构建才到a包构建，为了实现这个功能，要对contextAnalysisDiagram的myRelyDir进行分析：</p>
+<p>1.找到当前包依赖的包，然后将当前包塞进去stack，同时还要创建一个result数组，用来保存包的顺序</p>
+<p>2.对依赖包循环，找到该依赖包是否也有依赖，如此类推，有依赖，则继续递归</p>
+<p>3.那么如何才停止递归呢？只需要判断该依赖是否在stack或者result里面，如果是在stack里面，则弹出一个，放到result里面，<br>如果result已经保存有，则忽略。同时会跳过对该依赖的搜索。</p>
+<p>这样就拿到所有包的运行顺序，解决了上述场景的问题</p>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>为了减少命令行输入的参数，一般都会有一个对应的配置文件，把参数都预先都写上去</p>
+<h3 id="pkgs-json"><a href="#pkgs-json" class="headerlink" title="pkgs.json"></a>pkgs.json</h3><p>放到根目录即可</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  rootPackage: true, // 自定义命令是否包括根目录</span><br><span class="line">  mode: &#x27;sync&#x27;, // sync | diff 模式</span><br><span class="line">  version: &#123;</span><br><span class="line">    mode: undefined, // sync | diff 模式，更高的优先级</span><br><span class="line">    message: &#x27;chore: version&#x27;, // version命令后的commit message</span><br><span class="line">  &#125;,</span><br><span class="line">  publish: &#123;</span><br><span class="line">    mode: undefined, // sync | diff 模式，更高的优先级</span><br><span class="line">    tag: &#x27;&#x27;, // npm包标签</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="pnpm-workspace-yaml"><a href="#pnpm-workspace-yaml" class="headerlink" title="pnpm-workspace.yaml"></a>pnpm-workspace.yaml</h2><p>pkgs会读取pnpm-workspace.yaml文件的工作区，默认是packages&#x2F;**</p>
+<h2 id="构建"><a href="#构建" class="headerlink" title="构建"></a>构建</h2><p>使用rollup进行打包，因为用的是ts，所以一开始是使用了esno进行运行</p>
+<h3 id="依赖循环"><a href="#依赖循环" class="headerlink" title="依赖循环"></a>依赖循环</h3><p>在构建过程中发现很多cjs的老牌包存在依赖循环的包，因为涉及的场景太多了，提pr改的话是不会采纳的，我是直接fork出来，调整重新发包</p>
+<h3 id="esbuild"><a href="#esbuild" class="headerlink" title="esbuild"></a>esbuild</h3><p>用了esbuild是真的快，而且还可以运行ts。上手成本非常低，但是效果杠杠的</p>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>其实一开始测试这种类型我是懵逼的，如何测试git？如何测试命令行？在我观摩了多个相关开源项目的测试后总结的一种方式：</p>
+<p>测试git：为了保证不污染环境，使用node的临时目录，在其创建项目模板，使用process.chdir切换工作目录到临时目录上，就ok了</p>
+<p>测试命令行：总不能测试的时候，要命令行交互选择版本号吧，给npm那边publish吧。<br>查看了bumpp测试代码，发现可以直接输入版本号，绕过命令行交互形式。<br>publish的话，我则是直接修改源码，判断当前环境是否测试，是的话，就不走命令，而是返回命令的字符串，我再进行对比。</p>
+<h3 id="测试工具"><a href="#测试工具" class="headerlink" title="测试工具"></a>测试工具</h3><p>一开始用的是老牌测试框架jest，但是对ts的支持还是试验性，用起来非常的麻烦。正好最近关注vitest，就直接拿来用，因为语法一样，切换成本也是非常的低，而且开箱就支持了ts，妙啊</p>
+<img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a3a247d895d548e8bf42df9c465b67b6~tplv-k3u1fbpfcp-zoom-in-crop-mark:3024:0:0:0.awebp?" width="500" alt="logo" />
+
+<p>除了那些不必要的分支，基本都覆盖到所有功能了。</p>
+<h2 id="发布"><a href="#发布" class="headerlink" title="发布"></a>发布</h2><p>pkgs的版本管理和发布，都是用了本身的version和publish逻辑去管理，而pkgs并不是一个多包项目，所以这个库是无论你是多包还是单包，都可以使用。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// release.ts</span><br><span class="line">import &#123; execSync &#125; from &#x27;child_process&#x27;</span><br><span class="line">import colors from &#x27;colors&#x27;</span><br><span class="line">import &#123; executeCommand &#125; from &#x27;../index&#x27;</span><br><span class="line">console.log(`$&#123;colors.cyan.bold(&#x27;release: start&#x27;)&#125; 🏗`);</span><br><span class="line">(async function () &#123;</span><br><span class="line">  // 运行测试</span><br><span class="line">  execSync(&#x27;npm run test&#x27;, &#123; stdio: &#x27;inherit&#x27; &#125;)</span><br><span class="line">  // 打包</span><br><span class="line">  execSync(&#x27;npm run build&#x27;, &#123; stdio: &#x27;inherit&#x27; &#125;)</span><br><span class="line">  // 版本选择，相当于pkgs version</span><br><span class="line">  await executeCommand(&#x27;version&#x27;)</span><br><span class="line">  // 发布，相当于pkgs publish</span><br><span class="line">  await executeCommand(&#x27;publish&#x27;)</span><br><span class="line">&#125;)()</span><br><span class="line">console.log(`$&#123;colors.cyan.bold(&#x27;release: success&#x27;)&#125; 🎉🎉🎉🎉🎊`)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 这样就可以开始发布啦</span><br><span class="line">npm run release</span><br><span class="line">// 安装</span><br><span class="line">npm i -g @abmao/pkgs</span><br></pre></td></tr></table></figure>
+
+<h2 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h2><p>接下来记录下想解决的事，或者说大伙有啥想法的不？</p>
+<h3 id="构建物过大"><a href="#构建物过大" class="headerlink" title="构建物过大"></a>构建物过大</h3><p>真的非常大，而且还存在着依赖循环问题，愁啊，有空看下解决，依赖大估计是fs-extra的问题</p>
+<h3 id="状态分析"><a href="#状态分析" class="headerlink" title="状态分析"></a>状态分析</h3><p>后面想要实现一个state的功能，查看包之间的状态</p>
+<p>来源： pkgs-github：<a href="https://github.com/hengshanMWC/pkgs">https://github.com/hengshanMWC/pkgs</a></p>
+<p>作者：科目三后吃饭<br><a href="https://juejin.cn/post/7084596115177209886">https://juejin.cn/post/7084596115177209886</a></p>
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>精读《Nuxtjs》.md</title>
+    <url>/2021/04/16/%E7%B2%BE%E8%AF%BB%E3%80%8ANuxtjs%E3%80%8B/</url>
+    <content><![CDATA[<h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1 引言"></a>1 引言</h2><p><a href="https://github.com/nuxt/nuxt.js">Nuxt</a> 是基于 Vue 的前端开发框架，这次我们通过 <a href="https://www.youtube.com/watch?v=NS0io3Z75GI">Introduction toNuxtJS</a> 视频了解框架特色以及前端开发框架的基本要素。</p>
+<blockquote>
+<p>nuxt 与 <a href="https://github.com/zeit/next.js">next</a> 结构很像，可以结合在一起看</p>
+</blockquote>
+<p>视频介绍了 NuxtJs 的安装、目录结构、页面路由、导航模版、asyncData、meta、vueX。</p>
+<p>这是一个入门级视频，所以上面所列举的特征都是一个前端开发框架的最核心的基本要素。一个前端开发框架，安装、目录结构、页面路由、导航模版一定是最要下功夫认真设计的。</p>
+<p>asyncData 和 Vuex 都在解决数据问题，meta 则是通过约定语法控制网页 meta 属性，这部分值得与 React 体系做对比，在精读部分再展开。</p>
+<p>Nuxtjs 前端开发框架不仅提供了脚手架的基本功能，还对项目结构、代码做了约定，以减少代码量。从这点可以看出，脚手架永远围绕两个核心目标：<strong>让每一行源码都在描述业务逻辑；让每个项目结构都相同且易读</strong>。</p>
+<span id="more"></span>
+<p>20 年前，几百行 HTML、Css、Js 代码就能完成一个完整的项目，只需要遵守 W3C 的基本规范就足够了，每一个项目代码都简单清晰，而且由于没有复杂的业务逻辑，导致代码结构也非常简单。但现在前端项目复杂度逐渐升高，一个大型项目源码数量可能达到几十万行、几百万行，这是 W3C 规范没有设想到的，因此出现了各种工程化与模块化方案解决这个复杂度问题，也引发了各个框架间约定的割裂，且设计合理程度各不相同。</p>
+<p>Nuxtjs 等框架要做的就是定义支持现代大型项目的前端研发标准，这个规范具有网络效应，即用的人越多，价值越大。</p>
+<p>接下来我们进入正题，看看 Nuxt 脚手架定义了怎样的开发规范。</p>
+<h2 id="2-概述"><a href="#2-概述" class="headerlink" title="2 概述"></a>2 概述</h2><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>使用 <code>npx create-nuxt-app app-name</code> 创建新项目。这个命令与 <code>create-react-app</code> 一样，区别主要是模版以及配置不同。</p>
+<p>这个命令本质上是拉取一个模版到本地，并安装 <code>nuxt</code> 系列脚本作为项目依赖，并自动生成一系列 npmScripts：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;scripts&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;dev&quot;</span><span class="punctuation">:</span> <span class="string">&quot;nuxt&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;build&quot;</span><span class="punctuation">:</span> <span class="string">&quot;nuxt build&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;start&quot;</span><span class="punctuation">:</span> <span class="string">&quot;nuxt start&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;generate&quot;</span><span class="punctuation">:</span> <span class="string">&quot;nuxt generate&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;lint&quot;</span><span class="punctuation">:</span> <span class="string">&quot;eslint --ext .js,.vue --ignore-path .gitignore .&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;test&quot;</span><span class="punctuation">:</span> <span class="string">&quot;jest&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;dependencies&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;nuxt&quot;</span><span class="punctuation">:</span> <span class="string">&quot;^2.0.0&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>之后即可通过 <code>npm start</code> 等命令开发项目，对大部分项目来说，npmScripts 启动是最能达成共识的。</p>
+<p>这种安装方式另一个好处是，依赖都被安装在了本地，即开发环境 100% 内置在项目中。Nuxt 没有采用全局 cli 命令方式执行，第一是 npmScripts 更符合大家通用习惯，不需要记住不同脚手架繁琐的名称与不同约定的启动命令，第二是全局脚手架一旦进行不兼容升级，老项目就面临维护难题。</p>
+<h3 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h3><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">├── .nuxt</span><br><span class="line">├── layouts</span><br><span class="line">├── pages</span><br><span class="line">├── store</span><br><span class="line">├── assets</span><br><span class="line">├── static</span><br><span class="line">├── middleware</span><br><span class="line">├── plugins</span><br><span class="line">├── nuxt.config.js</span><br></pre></td></tr></table></figure>
+
+<p><strong>pages</strong></p>
+<p>页面文件存放的目录，路径 + 文件名即路由名，关于更多约定路由的信息，在下一节页面路由详细说明。</p>
+<p><strong>layouts</strong></p>
+<p>模版文件存放的目录，文件名即模版名，页面可以通过定义模版在选择使用的模版。</p>
+<p><strong>store</strong></p>
+<p>全局数据流目录，在 vueX 章节介绍。</p>
+<p><strong>assets</strong>、<strong>static</strong></p>
+<p>分别存放不需被编译的资源文件与非 <code>.vue</code> 的静态文件，比如 scss 文件。</p>
+<p>由于 <code>.vue</code> 文件集成了 html、js、css，因此一般不会再额外定义样式文件在 static 文件夹中。</p>
+<p>当然，这是 Vue 生态的特别之处，在 React 生态中会存在大量 <code>.scss</code> 文件混杂在各个目录中，比较影响阅读。</p>
+<p><strong>middleware</strong>、<strong>plugins</strong></p>
+<p>中间件与插件，这两个目录是可选的，作为一种定制化拓展能力。</p>
+<p><strong>.nuxt</strong></p>
+<p>为实现约定路由等便捷功能，启动项目时需要自动生成一些文件作为真正项目入口，这些文件就存储在 <code>.nuxt</code> 目录下，gitingore 且无需手动修改。</p>
+<p><strong>nuxt.config.js</strong></p>
+<p>nuxt 使用 js 文件作为配置文件，比 json 配置文件拓展性更好一些，这个文件也是整个项目唯一的配置文件。</p>
+<p>基本上 <strong>pages</strong>、<strong>layouts</strong>、<strong>store</strong>、<strong>assets</strong>、以及唯一的配置文件基本成为现代前端开发框架的标配。</p>
+<h3 id="页面路由"><a href="#页面路由" class="headerlink" title="页面路由"></a>页面路由</h3><p>nuxt 支持约定路由：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">├── pages</span><br><span class="line">│   ├── home.vue</span><br><span class="line">│   └── index.vue</span><br></pre></td></tr></table></figure>
+
+<p>上述目录结构描述了两个路由：<code>/</code> 与 <code>/home</code>。</p>
+<p>也支持参数路由，只要以下划线作为前缀命名文件，就定义了一个动态参数路由：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">├── pages</span><br><span class="line">│   ├── videos</span><br><span class="line">│   │   └── _id.vue</span><br></pre></td></tr></table></figure>
+
+<p><code>/videos/*</code> 都会指向这个文件，且可以通过 <code>$route.params.id</code> 拿到这个 url 参数。</p>
+<p>另一个特性是嵌套路由：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">├── pages</span><br><span class="line">│   ├── videos</span><br><span class="line">│   │   └── index.vue</span><br><span class="line">│   └── videos.vue</span><br></pre></td></tr></table></figure>
+
+<p><code>videos.vue</code> 与 <code>videos/index.vue</code> 都指向 <code>/videos</code> 这个路由，如果这两个文件同时存在，那么外层的 videos 就会作为外层拦截所有 <code>/videos</code> 文件夹下的路由，可以通过 <code>nuxt-child</code> 透出子元素：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"># pages/videos.vue</span><br><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    videos</span><br><span class="line">    <span class="tag">&lt;<span class="name">nuxt-child</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="导航模版"><a href="#导航模版" class="headerlink" title="导航模版"></a>导航模版</h3><p>页面公共逻辑，比如导航条可以放在模版里，模版的目录在 <code>layouts</code> 文件夹下。</p>
+<p>默认 <code>layouts/default.vue</code> 对所有页面生效，但也可以创建例如 <code>layouts/videos.vue</code> 特殊导航文件，在 <code>pages/</code> 页面文件通过如下申明指定使用这个模版：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">  <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="language-javascript">    <span class="attr">layout</span>: <span class="string">&quot;videos&quot;</span></span></span><br><span class="line"><span class="language-javascript">  &#125;;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="asyncData"><a href="#asyncData" class="headerlink" title="asyncData"></a>asyncData</h3><p><code>asyncData</code> 是 nuxt 支持的异步取数函数，可以替代 <code>data</code>。</p>
+<p><code>data</code> 函数：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">  <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="language-javascript">    <span class="title function_">data</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">return</span> &#123;&#125;;</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript">  &#125;;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>对于异步场景，可以用 <code>asyncData</code> 替代：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">  <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">async</span> <span class="title function_">asyncData</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">return</span> <span class="keyword">await</span> <span class="title function_">fetch</span>(<span class="string">&quot;/&quot;</span>);</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript">  &#125;;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="meta"><a href="#meta" class="headerlink" title="meta"></a>meta</h3><p>nuxt 允许在 <code>.vue</code> 页面文件自定义 head 标签信息：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">  <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="language-javascript">    <span class="title function_">headr</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">return</span> &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="attr">title</span>: <span class="string">&quot;&quot;</span>,</span></span><br><span class="line"><span class="language-javascript">        <span class="attr">meta</span>: &#123;</span></span><br><span class="line"><span class="language-javascript">          <span class="attr">charset</span>: <span class="string">&quot;utf-8&quot;</span></span></span><br><span class="line"><span class="language-javascript">        &#125;</span></span><br><span class="line"><span class="language-javascript">      &#125;;</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript">  &#125;;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这是开发框架提供的特性，不过在 React 体系下可以通过 <code>useTitle</code> 等自定义 Hooks 解决此问题，将框架功能降维到代码功能，会更容易理解些。</p>
+<h3 id="vueX"><a href="#vueX" class="headerlink" title="vueX"></a>vueX</h3><p>nuxt 集成了 <a href="https://github.com/vuejs/vuex">vuex</a>，在 <code>store/</code> 文件夹下创建数据模型：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="title function_">state</span> = (<span class="params"></span>) =&gt; (&#123;</span><br><span class="line">  <span class="attr">videos</span>: [],</span><br><span class="line">  <span class="attr">currentVideo</span>: &#123;&#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> mutations = &#123;</span><br><span class="line">  <span class="variable constant_">SET_VIDEOS</span> (state, videos) &#123;</span><br><span class="line">    state.<span class="property">videos</span> = videos</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="variable constant_">SET_CURRENT_VIDEO</span> (state, video) &#123;</span><br><span class="line">    state.<span class="property">currentVideo</span> = video</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接下来就能在 <code>pages</code> 文件夹下的页面组件使用了：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">  <span class="keyword">import</span> &#123; mapState &#125; <span class="keyword">from</span> <span class="string">&quot;vuex&quot;</span>;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">  <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">async</span> <span class="title function_">fetch</span>(<span class="params">&#123; $axios, params, store &#125;</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">const</span> reponse = <span class="keyword">await</span> $axios.<span class="title function_">get</span>(<span class="string">`/videos/<span class="subst">$&#123;params.id&#125;</span>`</span>);</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">const</span> video = response.<span class="property">data</span>.<span class="property">data</span>.<span class="property">arrtibutes</span>;</span></span><br><span class="line"><span class="language-javascript">      store.<span class="title function_">commit</span>(<span class="string">&quot;SET_CURRENT_VIDEO&quot;</span>, video);</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript">  &#125;;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>将 <code>return</code> 替换为 <code>store.commit</code> 即可，更多语法可以参考 <a href="https://github.com/vuejs/vuex">vuex 文档</a>。</p>
+<h2 id="3-精读"><a href="#3-精读" class="headerlink" title="3 精读"></a>3 精读</h2><p>Nuxtjs 框架做了几件事情：</p>
+<ol>
+<li>统一执行命令。</li>
+<li>统一开发框架。</li>
+<li>统一目录与代码规范。</li>
+<li>内置公共 utils 函数。</li>
+</ol>
+<h3 id="统一执行命令"><a href="#统一执行命令" class="headerlink" title="统一执行命令"></a>统一执行命令</h3><p>命令行是所有开发者每天都要用上十几次甚至几十次的场景，试想一下团队中项目分别有如下这么多不同的启动命令会怎么样？</p>
+<ol>
+<li>npm start.</li>
+<li>monkey dev.</li>
+<li>npm run ng.</li>
+<li>npm run bootstrap &amp; banana start.</li>
+<li>…</li>
+</ol>
+<p>我永远不知道下一个项目该如何启动，这大大降低了开发效率。更严重的是，有的项目可以通过 <code>npm run docs</code> 查看文档，有的项目不能；有的项目 <code>npm run build</code> 可以触发编译，有的项目却无需编译，等等，所谓的环境不一致或者说迁移成本，学习成本，都是由最开始负责搭建项目脚手架的同学对架构设计不一致导致的，<strong>然而没有必须用 <code>monkey dev</code> 才能运行起来的项目，但项目却可能因为被设计为 <code>monkey dev</code> 启动而显得与其他项目格格不入，甚至难以统一维护。</strong></p>
+<p>Nuxtjs 等前端开发框架统一执行命令就是为了解决这个问题，统一开发者习惯需要很长的时间周期，但这个趋势不可挡。</p>
+<h3 id="统一开发框架"><a href="#统一开发框架" class="headerlink" title="统一开发框架"></a>统一开发框架</h3><p><strong>虽然现在 React、Vue、Angular 框架各有利弊，但如果一个团队的项目同时使用了两个以上的框架，没有人会觉得这是一件好事。</strong></p>
+<p>诚然每个框架都有自己的特点，在不同维度都一些优势，但三大框架能并存，说明各自都没有绝对的杀手锏来消灭对方。</p>
+<p>对开源来说，多元化是活力的源动力，但对一家公司来说，多元化就是一场灾难，至今没有一个框架敢说自己的优势是 “与其他框架混合使用可以提升整体开发效率”。</p>
+<p>前端开发框架要解决的最重要问题也是这一点，无论如何只能选择一种开发框架，Nuxtjs 选择了 Vue，Nextjs 选择了 React。</p>
+<h3 id="统一目录与代码规范"><a href="#统一目录与代码规范" class="headerlink" title="统一目录与代码规范"></a>统一目录与代码规范</h3><p>目录和代码规范不会从根本上影响项目的通用性，因为不同的目录结构可以通过映射来兼容，不同的代码规范不会影响代码执行。所以目录与代码规范真正影响的是一个程序员对项目的 “解码成本”。</p>
+<p>所谓解码成本，就是程序员理解项目逻辑所需要的成本。如果你是一个销售主管，让团队周报统一用一种格式汇总绝对比 “用自己喜欢的方式汇总” 效率高，而对编程也一样，一个完全不同的目录结构和代码规范对程序员来说是巨大的阅读阻碍，甚至可能引发恶心反应。</p>
+<p>所以不同的目录结构和代码规范是没有必要的壁垒，除非你的团队已经对某种规范产生达成了牢固的共识，否则最好和其他团队共享相同的目录结构与代码规范。改变代码规范是一件很难得事情，但只要不同规范的团队间产生了长期合作关系，规范统一就势必会被提上议程，那么为何不能在公司层面早一点达成共识，提前消除这种痛苦呢？</p>
+<p>所以统一目录与代码规范是前端开发框架需要优先确定的，很多时候不要去质疑为什么目录叫 <code>layouts</code> 而不叫 <code>layout</code>，因为这个规范背后形成的协同网络规模越大，叫什么名字就越不重要。</p>
+<h3 id="内置公共-utils-函数"><a href="#内置公共-utils-函数" class="headerlink" title="内置公共 utils 函数"></a>内置公共 utils 函数</h3><p>让业务开发更聚焦，还可以通过抽取通用的逻辑的方式解决，但需要解决两个问题：</p>
+<ol>
+<li>虽然将公共函数抽成 npm 包可以解决代码复用问题，但关键是怎么保证你的代码能被别人复用？</li>
+<li>如何让业务通用的 utils 代码有效沉淀并从项目中移除？</li>
+</ol>
+<p>脚手架内置公共 utils 函数就为了解决这个问题。上面几个小节解决了通用命令、框架、规范，但实际代码中，<code>router</code> <code>history</code> <code>fetch</code> <code>store</code> 等等概念也都是可以统一的，<strong>没有一个项目必须用定制的 <code>fetch</code> 函数才能取数，但一开始就定制了 <code>fetch</code> 会导致耦合了不可预期的、没有必要的业务逻辑，成为理解与提效的阻碍。</strong></p>
+<p>所以统一这些能统一的包，是进一步提效的关键。也许有人会觉得断了自己造轮子的路，但就像我们如今都不会重写浏览器内核逻辑一样，稳定的逻辑不仅带来了全行业的提效，还催生了前端岗位带来大量的就业，同样的，统一底层通用函数，其实是断了无意义产出这条路，每个人都有追求更高价值事情的权利，不要把自己困在反复造 <code>fetch</code> 函数这个低水平的活里。</p>
+<h2 id="4-总结"><a href="#4-总结" class="headerlink" title="4 总结"></a>4 总结</h2><p>如果一个项目没有使用类似 Nuxtjs 开发框架，它面临的不仅仅是技术选型不统一的问题，久而久之这种项目势必成为 <strong>代码孤岛</strong>，当尘封在代码仓库几年后，一系列文档工具链接都失效后，就成为谁也不想碰，不敢碰的高危代码。</p>
+<p>所以我们今天不仅要看到 Nuxtjs 提供的能力对项目开发有多么便捷，更要看到这类框架带来的协同效应有多么巨大，如果它不能成为整个前端的标准，至少要成为你们公司，或者你们团队的标准。</p>
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>为什么专家不再关心技术细节.md</title>
+    <url>/2021/11/24/%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%93%E5%AE%B6%E4%B8%8D%E5%86%8D%E5%85%B3%E5%BF%83%E6%8A%80%E6%9C%AF%E7%BB%86%E8%8A%82/</url>
+    <content><![CDATA[<h1 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h1><p>本周的精读是有感而发。</p>
+<p>笔者接触前端已有七年，观察了不少前端大牛的发展路径，发现成功的人都具有相似的经历：</p>
+<p>初期技术热情极大 -&gt; 大量标志性技术项目 -&gt; 转向综合性思考 -&gt; 带团队&#x2F;关注方法论</p>
+<p>也就是专家们变得越来越不关心技术细节。需要说明是的，这里说的专家不再关心细节，不代表成为专家后学不会细节，也不代表专家不了解细节。</p>
+<p>早期挺难理解这种转变的，笔者在学校里的知名度来自于前端做得精深，一根筋钻研技术的人眼里是容不下沙子的，所以当初为一些前辈转到管理特别不理解，认为他们背叛了前端。</p>
+<span id="more"></span>
+<p>不过笔者的观念也在逐渐发生转变，渐渐自己也在朝着当初反感的方向发展，觉得这一定不是偶然，所以就整理了一下感悟，希望可以证明这个发展路径的必然性。</p>
+<h1 id="2-精读"><a href="#2-精读" class="headerlink" title="2. 精读"></a>2. 精读</h1><blockquote>
+<p>Warn：本文所说的技术专家，仅针对研究上层技术的专家，不包括底层技术专家。<br>在 Google 底层专家人数极少，大部分专家都要走业务技术的路线。</p>
+</blockquote>
+<p>首先我们要明确技术员与科学家的区别，为业务提供技术支持都是技术员，所以前端是一门技术，不是科学。</p>
+<p>另外，技术的发展需要商业推动，没有使用场景的国家是很难推动技术进步的，科学除外。</p>
+<p>所以业务技术是具备可持续发展的路线，毕竟大家都要吃饭，有业务价值的项目会活下来，附着在业务上的技术才能活下来，才有可能开枝散叶。</p>
+<p>本文将从三个点去解释，为什么专家看上去越来越远离技术细节。</p>
+<h2 id="2-1-技术细节对个人的重要性是在变化的"><a href="#2-1-技术细节对个人的重要性是在变化的" class="headerlink" title="2.1 技术细节对个人的重要性是在变化的"></a>2.1 技术细节对个人的重要性是在变化的</h2><p>随着工作年限增加，技术细节重要性在慢慢降低，反之技术视野重要性在慢慢增加。</p>
+<h3 id="在找工作初期，技术细节是重要的敲门砖"><a href="#在找工作初期，技术细节是重要的敲门砖" class="headerlink" title="在找工作初期，技术细节是重要的敲门砖"></a>在找工作初期，技术细节是重要的敲门砖</h3><p>大学毕业的那段时间，技术细节是一块重要的敲门砖，只有掌握好技术，才会有公司愿意要你。</p>
+<p>这也是为什么说毕业生不要一进公司就谈战略，因为时机不对。</p>
+<h3 id="技术不是科学，普通人下功夫可以学会"><a href="#技术不是科学，普通人下功夫可以学会" class="headerlink" title="技术不是科学，普通人下功夫可以学会"></a>技术不是科学，普通人下功夫可以学会</h3><p>学习技术不需要很聪明的头脑，只要肯下功夫，拥有不错的理解能力，任何人都可以把技术细节搞清楚。</p>
+<p><strong>也就是学习技术细节是没有技术门槛，随着年龄的增加，如果只累积了大家都能学会的内容，那么当旧知识被淘汰后，学习新知识的速度又不如年轻人快，会逐渐失去经验优势。</strong></p>
+<p>那么如何利用无门槛的特征，将其变为门槛呢？任何年龄段学习技术细节都很容易，应该在你需要深入细节的时候再深入进去，不需要深入的时候把时间花在了解宏观架构上。</p>
+<p>就是培养高效的学习能力，能准确判断某个技术细节是否有必要掌握，如需要该如何快速掌握核心内容，并在掌握之后不留恋，可以快速抽身出来继续全局性思考。这种思维是有门槛的，技术专家都可以做到这一点。</p>
+<h3 id="做成事不一定要搞懂细节"><a href="#做成事不一定要搞懂细节" class="headerlink" title="做成事不一定要搞懂细节"></a>做成事不一定要搞懂细节</h3><p>乍一看有点匪夷所思：不了解细节怎么能做成事？</p>
+<p>虽然理解技术细节可以做成事，但做成事不一定需要理解业务细节。</p>
+<p>这要看怎么理解业务与技术的关系，比如建设 “数据联邦”，光是了解各个不同的存储系统技术细节可能就要花很久，而实际上是没必要将所有技术细节都弄懂的，只要定好一个通用交互规范，各存储系统各自封装一套符合这个规范的交互接口即可。</p>
+<p>做成事往往需要宏观的技术思维，需要将许多技术点链接在一起。举个例子，做成事就类似于军官指挥作战，做成的目的是通过制定打法赢得战争，而不是自己冲锋陷阵并测量敌人壕沟的宽度。关心技术细节只是最终落实到每个人具体实施项中的一部分，技术细节的目标累加起来才能做成事。</p>
+<h2 id="2-2-搞清楚业务对技术的真实诉求"><a href="#2-2-搞清楚业务对技术的真实诉求" class="headerlink" title="2.2 搞清楚业务对技术的真实诉求"></a>2.2 搞清楚业务对技术的真实诉求</h2><p>业务期望通过技术实现功能，所以技术专家要做的是如何更好的实现业务需求，这就意味着理解业务需求是第一重要的能力。试想一个不能理解业务要做什么的人，即便懂得再多技术细节，对业务也是没有价值的。</p>
+<h3 id="业务思维是解决问题，技术思维是创造问题"><a href="#业务思维是解决问题，技术思维是创造问题" class="headerlink" title="业务思维是解决问题，技术思维是创造问题"></a>业务思维是解决问题，技术思维是创造问题</h3><p>拥有技术思维的人，容易沉迷于解决不切实际的问题，或者是别人解决过的问题。这种思维对技术学习是非常有帮助的，但如果长期不能转变这种思维，对公司来说是无法创造什么价值的。</p>
+<p>拥有业务思维的人，首先要懂业务，只有懂业务，跟着对的业务，才能对未来有信心，知道自己的付出可以换来回报。</p>
+<p>懂业务后，才知道如何通过技术帮助业务获得成功。</p>
+<p>比如在一家创业公司，老板的眼光很准，进入的时机较早，市场是一片蓝海。你通过分析后，发现要帮助业务占领市场，只要利用某个成熟技术框架快速迭代，就可以在短期帮助业务赢得市场。但是这个框架定制能力不强，如果新需求来了可能需要花时间重构掉。此时技术思维的人只会考虑代码维护性，提出自研一套框架，而拥有业务思维的技术专家会决定先用成熟的技术快速作出原型，等业务稳定后再重构掉。</p>
+<p>当然现在互联网市场竞争很激烈，低技术门槛的蓝海基本已都变成了红海，上面提到的场景可能比较少见，我们更多需要决策的是未来几年内业务的收益是否值得现在投入的研发资源。</p>
+<h3 id="两个会写框架的人，不如一个能决策的人"><a href="#两个会写框架的人，不如一个能决策的人" class="headerlink" title="两个会写框架的人，不如一个能决策的人"></a>两个会写框架的人，不如一个能决策的人</h3><p>另一个简单的例子就是，假如技术专家只会一头扎在技术细节里，对各种前端框架的实现了如指掌，大家都能造出优雅、易用、可维护，而且还带有各自 “特色优势” 的框架或者轮子，那么团队很容易陷入两个专家屁股决定脑袋的技术纷争中。这种情况下，两名技术专家的产出甚至不如一个实习生大，毕竟实习生直接拿来开源框架上手，99% 的情况可靠性比前端专家自己造的轮子更好。</p>
+<p>从另一个方面来说，现阶段前端界能写出 React、Vue 框架的人太多了，已经写出来的类 React、Vue 的框架也数不过来。去掉为了练手而做的项目，真正希望推广出去给别人用的还占绝大多数，这是开源界典型的问题：重复低水平造轮子不需要理由，推广给你用也不需要负责任。由于框架属于互联网虚拟资产，边界成本为零，这决定了框架市场一定是个大寡头市场，不可能有类似的项目通过一些不痛不痒的特色分一杯羹。那么就算招 10 个会写框架的人进入公司架构组，最后只有两种可能：要么架构臃肿，每个人都把自己的一部分功劳加入进去；要么就是选择一个更不好的方案，这样不会损害任何一位架构师的利益。</p>
+<p>所以现在公司更倾向于内部培养人才，因为内部的人了解业务需要什么，创造的价值往往比空降的架构师更大。</p>
+<h3 id="宽广的技术视野更容易借力"><a href="#宽广的技术视野更容易借力" class="headerlink" title="宽广的技术视野更容易借力"></a>宽广的技术视野更容易借力</h3><p>现在技术点越来越多，如果什么技术细节都要详细了解，最终一定不能有很好的全局视野。比较好的状态是找几个重点深入了解，其他的技术点在掌握了全局技术视野后再考虑深入。</p>
+<p>在互联网初期，很多技术框架还不完善，技术借力的意义不大，毕竟也没有多少东西可用。</p>
+<p>但是现在无论前端还是后端的技术、轮子已经眼花缭乱了，能掌握这些已有技术的人，价值已经逐渐大于会完整了解某些技术细节的人。一个优秀的专家应该能快速定位要解决的业务问题是否有成熟的技术方案，如何以最小的投入产出比实现，同时保持良好的维护性应变业务维护。</p>
+<h2 id="2-3-仅仅技术好是无法成为专家的"><a href="#2-3-仅仅技术好是无法成为专家的" class="headerlink" title="2.3 仅仅技术好是无法成为专家的"></a>2.3 仅仅技术好是无法成为专家的</h2><p>技术专家真的代表技术壁垒很强的人吗？是的，但只有技术能力是不够的。</p>
+<h3 id="为什么开源项目后期要寻找协作者？"><a href="#为什么开源项目后期要寻找协作者？" class="headerlink" title="为什么开源项目后期要寻找协作者？"></a>为什么开源项目后期要寻找协作者？</h3><p>我做开源项目的初期，所有框架和源码都事必躬亲，觉得自己有更好的点子可以胜过其他框架。初期很少有贡献者参与，当然我也不愿意其他贡献者参与，毕竟他们不了解设计理念，只有我自己的修改可以让我满意。</p>
+<p>还有谁比作者更了解他的开源项目呢？那为什么一个大型开源项目运作到后期，基本都是协作者在维护？</p>
+<p>因为开源是一件系统化的事情，如果你想长期维护他，必须建立好文档系统，让你的思路可复制，让他人可参与。如果开源项目只有你一个人懂，那么同时维护两个、四个、六个的时候，你定会发现力不从心。</p>
+<p>至于一些开源大神一人维护几百甚至上千 Repo，背后一定有更多的贡献者支持，一个人就算辞职在家专职做开源，也很难同时维护超过 10 个开源项目。你需要拥有开放的心态让更多人加入进来，将成就感和荣誉感分一些给贡献者，他们才会持续为项目贡献。</p>
+<h3 id="能够调用资源才能成为专家"><a href="#能够调用资源才能成为专家" class="headerlink" title="能够调用资源才能成为专家"></a>能够调用资源才能成为专家</h3><p>开源界就是项目抢占关注度的游戏。假设开源社区总人数为 100，你的项目能够吸引到 10 个人浏览，5 个人使用，2 个人贡献，基本就能存活下来。而开源社区至少有 100 个项目，社区总人数不足以支持每一个项目，只有获得足够关注度的项目才能保持长青。</p>
+<p>公司内也是如此，专家级以上的 Title 会要求协作能力，可以调动身边甚至其他部门资源的人才能在公司发挥更大的价值。</p>
+<p>CEO 通过顶层设计调动了全公司资源，而业务线总裁通过任务拆解调动了整个业务线的人，通过层层目标拆解，并保证每一层都能充分调动下一层所有资源，公司才能高效的运转。</p>
+<p>如果一直关心技术细节，你永远是一个孤立节点，在任何维度的组织中都是最底层，就算 24 小时不睡觉，也最多算两个人力资源。想要突破一天 24 小时的限制，就要花时间让别人认同你的设计，并朝着一个方向努力，你的节点才能上移，但随之而来的是承担更多风险，比如分配给别人的任务给弄砸了，为公司带来了不良影响，那么负责人就要背锅。</p>
+<h1 id="3-总结"><a href="#3-总结" class="headerlink" title="3. 总结"></a>3. 总结</h1><p>总结一下，本文的观点是：</p>
+<ol>
+<li>技术细节学习难度不大，在需要深入的时候再深入了解最佳。</li>
+<li>想要做成事，需要更宏观的技术思维，所以专家渐渐变得眼光宽阔，格局很大。</li>
+<li>专家拥有快速学习技术细节的能力，只是这已不是其核心竞争力，所以与其写技术细节的文章，不如写方法论的思考带来的价值更大。</li>
+<li>指引方向比走路更重要，专家都要逐渐成为引路人。</li>
+<li>技术最终为业务服务，懂技术细节和让业务先赢没有必然的关系，所以在深入技术细节之前，要先理解业务，把握方向，防止技术细节出现路线问题。</li>
+</ol>
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>设计模式 - Observer 观察者模式</title>
+    <url>/2021/08/23/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%20-%20Observer%20%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/</url>
+    <content><![CDATA[<h1 id="Observer（观察者模式）"><a href="#Observer（观察者模式）" class="headerlink" title="Observer（观察者模式）"></a>Observer（观察者模式）</h1><p>Observer（观察者模式）属于行为型模式。</p>
+<p><strong>意图：定义对象间的一种一对多的依赖关系，当一个对象的状态发生改变时，所有依赖于它的对象都得到通知并被自动更新。</strong></p>
+<p>拿项目的 npm 依赖举例子：npm 包与项目是一对多的关系（一个 npm 包被多个项目使用），当 npm 包发布新版本时，如果所有依赖于它的项目都能得到通知，并自动更新这个包的版本号，那么就解决了包版本更新的问题，这就是观察者模式要解决的基本问题。</p>
+<h2 id="举例子"><a href="#举例子" class="headerlink" title="举例子"></a>举例子</h2><p>如果看不懂上面的意图介绍，没有关系，设计模式需要在日常工作里用起来，结合例子可以加深你的理解，下面我准备了三个例子，让你体会什么场景下会用到这种设计模式。</p>
+<span id="more"></span>
+<h3 id="对象与视图双向绑定"><a href="#对象与视图双向绑定" class="headerlink" title="对象与视图双向绑定"></a>对象与视图双向绑定</h3><p>在 <a href="https://github.com/dt-fe/weekly/blob/v2/178.%E7%B2%BE%E8%AF%BB%E3%80%8A%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%20-%20Proxy%20%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F%E3%80%8B.md">精读《设计模式 - Proxy 代理模式》</a> 中我们也提到了双向绑定概念，只不过代理是实现双向绑定的一个具体方案，而观察者模式才是在描述双向绑定这个概念。</p>
+<p>观察者模式在最初提出的时候，就举了数据与 UI 相互绑定的例子。即同一份数据可以同时渲染为表格与柱状图，那么当操作表格更新数据时，如何让柱状图的数据也刷新？从这个场景引出了对观察者模式的定义，即 “数据” 与 “UI” 是一对多的关系，我们需要一种设计模式实现当 “数据” 变化时，所有依赖于它的 “UI” 都得到通知并自动更新。</p>
+<h3 id="拍卖"><a href="#拍卖" class="headerlink" title="拍卖"></a>拍卖</h3><p>拍卖由一个拍卖员与多为拍卖者组成。拍卖时，由 A 同学喊出的竞价（我出 100）就是观察者向目标发出的 <code>setState</code> 同时，此时拍卖员喊出（有人出价 100，还有更高的吗？）就是一个 <code>notify</code> 通知行为，拍卖员通知了现场竞价全员，刷新了他们对当前最高价的信息。</p>
+<h3 id="聊天室"><a href="#聊天室" class="headerlink" title="聊天室"></a>聊天室</h3><p>聊天室由一个中央服务器与多个客户端组成。客户端发送消息后，就是向中央服务器发送了 <code>setState</code> 更新请求，此时中央服务器通知所有处于同一聊天室的客户端，更新他们的信息，从而完成一次消息的发送。</p>
+<h2 id="意图解释"><a href="#意图解释" class="headerlink" title="意图解释"></a>意图解释</h2><p>数据与 UI 的例子已经详细说明了其意图含义，这里就不赘述了。</p>
+<h2 id="结构图"><a href="#结构图" class="headerlink" title="结构图"></a>结构图</h2><img width=600 src="https://img.alicdn.com/imgextra/i4/O1CN011HxE9E24luDnEQiqA_!!6000000007432-2-tps-1774-670.png">
+
+<ul>
+<li>Subject: 目标，即例子中的 “数据”。</li>
+<li>Observer: 观察者，即例子中的 “表格”、“柱状图”。</li>
+</ul>
+<p>还是以数据与 UI 同步为例，当表格发生操作修改数据时，表格这个 TableObserver 会调用 Subject（数据）的 <code>setState</code>，此时数据被更新了。然后数据这个 <code>Subject</code> 维护了所有监听（包括表格 <code>TableObserver</code> 与柱状图 <code>ColumnChartObserver</code>），此时 <code>setState</code> 内会调用 <code>notify</code> 遍历所有监听，并依次调用 <code>Update</code> 方法，每个监听的 <code>Update</code> 方法都会调用 <code>getState</code> 获取最新数据，从而实现表格更新后 -&gt; 更新数据 -&gt; 表格、柱状图同时刷新。</p>
+<p>为了更好的理解，以这张协作图为例：</p>
+<img width=600 src="https://img.alicdn.com/imgextra/i1/O1CN01QuF29i1RpKAEcCPrX_!!6000000002160-2-tps-1578-728.png">
+
+<ul>
+<li><code>aConcreteSubject</code>: 对应例子中的数据。</li>
+<li><code>aConcreteObserver</code>: 对应例子中的表格。</li>
+<li><code>anotherConcreteObserver</code>: 对应例子中的柱状图。</li>
+</ul>
+<h2 id="代码例子"><a href="#代码例子" class="headerlink" title="代码例子"></a>代码例子</h2><p>下面例子使用 typescript 编写。</p>
+<blockquote>
+<p>PS: 为了简化处理，就不定义 Subject 接口与 ConcreteSubject 了，而是直接用 Subject 类代替。Observer 也同理。</p>
+</blockquote>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 目标，管理所有观察者</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Subject</span> &#123;</span><br><span class="line">  <span class="comment">// 观察者数组</span></span><br><span class="line">  <span class="keyword">private</span> <span class="attr">observers</span>: <span class="title class_">Observer</span>[] = []</span><br><span class="line">  <span class="comment">// 状态</span></span><br><span class="line">  <span class="keyword">private</span> <span class="attr">state</span>: <span class="title class_">State</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 通知所有观察者</span></span><br><span class="line">  <span class="keyword">private</span> <span class="title function_">notify</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">observers</span>.<span class="title function_">forEach</span>(<span class="function"><span class="params">eachObserver</span> =&gt;</span> &#123;</span><br><span class="line">      eachObserver.<span class="title function_">update</span>()</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 新增观察者</span></span><br><span class="line">  <span class="keyword">public</span> <span class="title function_">addObserver</span>(<span class="params">observer: Observer</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">observers</span>.<span class="title function_">push</span>(observer)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 更新状态</span></span><br><span class="line">  <span class="keyword">public</span> <span class="title function_">setState</span>(<span class="params">state: State</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">state</span> = state</span><br><span class="line">    <span class="variable language_">this</span>.<span class="title function_">notify</span>()</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 读取状态</span></span><br><span class="line">  <span class="keyword">public</span> <span class="title function_">getState</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">state</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 观察者</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Observer</span> &#123;</span><br><span class="line">  <span class="comment">// 维护目标</span></span><br><span class="line">  <span class="keyword">private</span> <span class="attr">subject</span>: <span class="title class_">Subject</span></span><br><span class="line"></span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">subject: Subject</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">subject</span> = subject</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">subject</span>.<span class="title function_">addObserver</span>(<span class="variable language_">this</span>)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 更新</span></span><br><span class="line">  <span class="keyword">public</span> <span class="title function_">update</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="comment">// 比如渲染表格 or 渲染柱状图</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">subject</span>.<span class="title function_">getState</span>())</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 客户端调用</span></span><br><span class="line"><span class="keyword">const</span> subject = <span class="keyword">new</span> <span class="title class_">Subject</span>()</span><br><span class="line"><span class="comment">// 创建观察者</span></span><br><span class="line"><span class="keyword">const</span> observer1 = <span class="keyword">new</span> <span class="title class_">Observer</span>(subject)</span><br><span class="line"><span class="keyword">const</span> observer2 = <span class="keyword">new</span> <span class="title class_">Observer</span>(subject)</span><br><span class="line"><span class="comment">// 更新状态</span></span><br><span class="line">subject.<span class="title function_">setState</span>(<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="弊端"><a href="#弊端" class="headerlink" title="弊端"></a>弊端</h2><p>不要拘泥于实现形式，比如上面代码中的例子，<code>subject</code> 与 <code>observer1</code>、<code>observer2</code> 是一对多的关系，但不一定非要用这种代码组织形式来实现观察者效果。我们也可以利用 Proxy 很轻松的实现：</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> obj = <span class="keyword">new</span> <span class="title class_">Proxy</span>(obj, &#123;</span><br><span class="line">  <span class="title function_">get</span>(<span class="params">target,key</span>) &#123;&#125;</span><br><span class="line">  <span class="title function_">set</span>(<span class="params">target,key,value</span>) &#123;&#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="title function_">renderTable</span>(obj)</span><br><span class="line"><span class="title function_">renderChart</span>(obj)</span><br></pre></td></tr></table></figure>
+
+<p>我们可以在 <code>obj</code> 被任意一个组件访问时触发 <code>get</code>，进而对 UI 与视图进行绑定；被任意一个组件更新时触发 <code>set</code>，进而对所有使用到的视图进行刷新。使用设计模式切记不要死板，理解原理就行了，在不同平台有不同的更加优雅的实现方式。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>观察者模式是非常常用的设计模式，它描述了对象一对多依赖关系下，如何通知并更新的机制，这种机制可以用在前端的 UI 与数据映射、后端的请求与控制器映射，平台间的消息通知等大部分场景，无论现实还是程序中，存在依赖且需要通知的场景非常普遍。</p>
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>精读《Pick,Awaited,Exclude...》.md</title>
+    <url>/2021/07/16/%E7%B2%BE%E8%AF%BB%E3%80%8APick,Awaited,Exclude...%E3%80%8B/</url>
+    <content><![CDATA[<p>TS 强类型非常好用，但在实际运用中，免不了遇到一些难以描述，反复看官方文档也解决不了的问题，至今为止也没有任何一篇文档，或者一套教材可以解决所有犄角旮旯的类型问题。为什么会这样呢？因为 TS 并不是简单的注释器，而是一门图灵完备的语言，所以很多问题的解决方法藏在基础能力里，但你学会了基础能力又不一定能想到这么用。</p>
+<p>解决该问题的最好办法就是多练，通过实际案例不断刺激你的大脑，让你养成 TS 思维习惯。所以话不多说，我们今天从 <a href="https://github.com/type-challenges/type-challenges">type-challenges</a> 的 Easy 难度题目开始吧。</p>
+<span id="more"></span>
+<h2 id="精读"><a href="#精读" class="headerlink" title="精读"></a>精读</h2><h3 id="Pick"><a href="#Pick" class="headerlink" title="Pick"></a><a href="https://github.com/type-challenges/type-challenges/blob/main/questions/00004-easy-pick/README.md">Pick</a></h3><p>手动实现内置 <code>Pick&lt;T, K&gt;</code> 函数，返回一个新的类型，从对象 T 中抽取类型 K：</p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">Todo</span> &#123;</span><br><span class="line">  <span class="attr">title</span>: <span class="built_in">string</span></span><br><span class="line">  <span class="attr">description</span>: <span class="built_in">string</span></span><br><span class="line">  <span class="attr">completed</span>: <span class="built_in">boolean</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">TodoPreview</span> = <span class="title class_">MyPick</span>&lt;<span class="title class_">Todo</span>, <span class="string">&#x27;title&#x27;</span> | <span class="string">&#x27;completed&#x27;</span>&gt;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="attr">todo</span>: <span class="title class_">TodoPreview</span> = &#123;</span><br><span class="line">    <span class="attr">title</span>: <span class="string">&#x27;Clean room&#x27;</span>,</span><br><span class="line">    <span class="attr">completed</span>: <span class="literal">false</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结合例子更容易看明白，也就是 <code>K</code> 是一个字符串，我们需要返回一个新类型，仅保留 <code>K</code> 定义的 Key。</p>
+<p>第一个难点在如何限制 <code>K</code> 的取值，比如传入 <code>T</code> 中不存在的值就要报错。这个考察的是硬知识，只要你知道 <code>A extends keyof B</code> 这个语法就能联想到。</p>
+<p>第二个难点在于如何生成一个仅包含 <code>K</code> 定义 Key 的类型，你首先要知道有 <code>&#123; [A in keyof B]: B[A] &#125;</code> 这个硬知识，这样可以重新组合一个对象：</p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 代码 1</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Foo</span>&lt;T&gt; = &#123;</span><br><span class="line">  [P <span class="keyword">in</span> keyof T]: T[P]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>只懂这个语法不一定能想出思路，原因是你要打破对 TS 的刻板理解，<code>[K in keyof T]</code> 不是一个固定模板，其中 <code>keyof T</code> 只是一个指代变量，它可以被换掉，如果你换掉成另一个范围的变量，那么这个对象的 Key 值范围就变了，这正好契合本题的 <code>K</code>：</p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 代码 2（本题答案）</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">MyPick</span>&lt;T, K <span class="keyword">in</span> keyof T&gt; = &#123;</span><br><span class="line">  [P <span class="keyword">in</span> K]: T[P]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个题目别看知道答案后简单，回顾下还是有收获的。对比上面两个代码例子，你会发现，只不过是把代码 1 的 <code>keyof T</code> 从对象描述中提到了泛型定义里而已，所以功能上没有任何变化，但因为泛型可以由用户传入，所以代码 1 的 <code>P in keyof T</code> 因为没有泛型支撑，这里推导出来的就是 <code>T</code> 的所有 Keys，而代码 2 虽然把代码挪到了泛型，但因为用的是 <code>extends</code> 描述，所以表示 <code>P</code> 的类型被约束到了 <code>T</code> 的 Keys，至于具体是什么，得看用户代码怎么传。</p>
+<p>所以其实放到泛型里的 <code>K</code> 是没有默认值的，而写到对象里作为推导值就有了默认值。泛型里给默认值的方式如下：</p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 代码 3</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">MyPick</span>&lt;T, K <span class="keyword">extends</span> keyof T = keyof T&gt; = &#123;</span><br><span class="line">  [P <span class="keyword">in</span> K]: T[P]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>也就是说，这样 <code>MyPick&lt;Todo&gt;</code> 就也可以正确工作并原封不动返回 <code>Todo</code> 类型，也就是说，代码 3 在不传第二个参数时，与代码 1 的功能完全一样。仔细琢磨一下共同点与区别，为什么代码 3 可以做到和代码 1 功能一样，又有更强的拓展性，你对 TS 泛型的实战理解就上了一个台阶。</p>
+<h3 id="Readonly"><a href="#Readonly" class="headerlink" title="Readonly"></a><a href="https://github.com/type-challenges/type-challenges/blob/main/questions/00007-easy-readonly/README.md">Readonly</a></h3><p>手动实现内置 <code>Readonly&lt;T&gt;</code> 函数，将对象所有属性设置为只读：</p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">Todo</span> &#123;</span><br><span class="line">  <span class="attr">title</span>: <span class="built_in">string</span></span><br><span class="line">  <span class="attr">description</span>: <span class="built_in">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="attr">todo</span>: <span class="title class_">MyReadonly</span>&lt;<span class="title class_">Todo</span>&gt; = &#123;</span><br><span class="line">  <span class="attr">title</span>: <span class="string">&quot;Hey&quot;</span>,</span><br><span class="line">  <span class="attr">description</span>: <span class="string">&quot;foobar&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">todo.<span class="property">title</span> = <span class="string">&quot;Hello&quot;</span> <span class="comment">// Error: cannot reassign a readonly property</span></span><br><span class="line">todo.<span class="property">description</span> = <span class="string">&quot;barFoo&quot;</span> <span class="comment">// Error: cannot reassign a readonly property</span></span><br></pre></td></tr></table></figure>
+
+<p>这道题反而比第一题简单，只要我们用 <code>&#123; [A in keyof B]: B[A] &#125;</code> 重新声明对象，并在每个 Key 前面加上 <code>readonly</code> 修饰即可：</p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 本题答案</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">MyReadonly</span>&lt;T&gt; = &#123;</span><br><span class="line">  <span class="keyword">readonly</span> [K <span class="keyword">in</span> keyof T]: T[K]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>根据这个特性我们可以做很多延伸改造，比如将对象所有 Key 都设定为可选：</p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">Optional</span>&lt;T&gt; = &#123;</span><br><span class="line">  [K <span class="keyword">in</span> keyof T]?: T[K]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>&#123; [A in keyof B]: B[A] &#125;</code> 给了我们描述每一个 Key 属性细节的机会，限制我们发挥的只有想象力。</p>
+<h3 id="First-Of-Array"><a href="#First-Of-Array" class="headerlink" title="First Of Array"></a><a href="https://github.com/type-challenges/type-challenges/blob/main/questions/00014-easy-first/README.md">First Of Array</a></h3><p>实现类型 <code>First&lt;T&gt;</code>，取到数组第一项的类型：</p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> arr1 = [<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;c&#x27;</span>]</span><br><span class="line"><span class="keyword">type</span> arr2 = [<span class="number">3</span>, <span class="number">2</span>, <span class="number">1</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> head1 = <span class="title class_">First</span>&lt;arr1&gt; <span class="comment">// expected to be &#x27;a&#x27;</span></span><br><span class="line"><span class="keyword">type</span> head2 = <span class="title class_">First</span>&lt;arr2&gt; <span class="comment">// expected to be 3</span></span><br></pre></td></tr></table></figure>
+
+<p>这题比较简单，很容易想到的答案：</p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 本题答案</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">First</span>&lt;T <span class="keyword">extends</span> <span class="built_in">any</span>[]&gt; = T[<span class="number">0</span>]</span><br></pre></td></tr></table></figure>
+
+<p>但在写这个答案时，有 10% 脑细胞提醒我没有判断边界情况，果然看了下答案，有空数组的情况要考虑，空数组时返回类型 <code>never</code> 而不是 <code>undefined</code> 会更好，下面几种写法都是答案：</p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">First</span>&lt;T <span class="keyword">extends</span> <span class="built_in">any</span>[]&gt; = T <span class="keyword">extends</span> [] ? <span class="built_in">never</span> : T[<span class="number">0</span>]</span><br><span class="line"><span class="keyword">type</span> <span class="title class_">First</span>&lt;T <span class="keyword">extends</span> <span class="built_in">any</span>[]&gt; = T[<span class="string">&#x27;length&#x27;</span>] <span class="keyword">extends</span> <span class="number">0</span> ? <span class="built_in">never</span> : T[<span class="number">0</span>]</span><br><span class="line"><span class="keyword">type</span> <span class="title class_">First</span>&lt;T&gt; = T <span class="keyword">extends</span> [infer P, ...infer <span class="title class_">Rest</span>] ? P : <span class="built_in">never</span></span><br></pre></td></tr></table></figure>
+
+<p>第一种写法通过 <code>extends []</code> 判断 <code>T</code> 是否为空数组，是的话返回 <code>never</code>。</p>
+<p>第二种写法通过长度为 0 判断空数组，此时需要理解两点：1. 可以通过 <code>T[&#39;length&#39;]</code> 让 TS 访问到值长度（类型的），2. <code>extends 0</code> 表示是否匹配 0，即 <code>extends</code> 除了匹配类型，还能直接匹配值。</p>
+<p>第三种写法是最省心的，但也使用了 <code>infer</code> 关键字，即使你充分知道 <code>infer</code> 怎么用（<a href="https://github.com/ascoders/weekly/blob/master/%E5%89%8D%E6%B2%BF%E6%8A%80%E6%9C%AF/207.%E7%B2%BE%E8%AF%BB%E3%80%8ATypescript%20infer%20%E5%85%B3%E9%94%AE%E5%AD%97%E3%80%8B.md">精读《Typescript infer 关键字》</a>），也很难想到它。用 <code>infer</code> 的理由是：该场景存在边界情况，最便于理解的写法是 “如果 T 形如 <code>&lt;P, ...&gt;</code>” 那我就返回类型 <code>P</code>，否则返回 <code>never</code>”，这句话用 TS 描述就是：<code>T extends [infer P, ...infer Rest] ? P : never</code>。</p>
+<h3 id="Length-of-Tuple"><a href="#Length-of-Tuple" class="headerlink" title="Length of Tuple"></a><a href="https://github.com/type-challenges/type-challenges/blob/main/questions/00018-easy-tuple-length/README.md">Length of Tuple</a></h3><p>实现类型 <code>Length&lt;T&gt;</code> 获取元组长度:</p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> tesla = [<span class="string">&#x27;tesla&#x27;</span>, <span class="string">&#x27;model 3&#x27;</span>, <span class="string">&#x27;model X&#x27;</span>, <span class="string">&#x27;model Y&#x27;</span>]</span><br><span class="line"><span class="keyword">type</span> spaceX = [<span class="string">&#x27;FALCON 9&#x27;</span>, <span class="string">&#x27;FALCON HEAVY&#x27;</span>, <span class="string">&#x27;DRAGON&#x27;</span>, <span class="string">&#x27;STARSHIP&#x27;</span>, <span class="string">&#x27;HUMAN SPACEFLIGHT&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> teslaLength = <span class="title class_">Length</span>&lt;tesla&gt;  <span class="comment">// expected 4</span></span><br><span class="line"><span class="keyword">type</span> spaceXLength = <span class="title class_">Length</span>&lt;spaceX&gt; <span class="comment">// expected 5</span></span><br></pre></td></tr></table></figure>
+
+<p>经过上一题的学习，很容易想到这个答案：</p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">Length</span>&lt;T <span class="keyword">extends</span> <span class="built_in">any</span>[]&gt; = T[<span class="string">&#x27;length&#x27;</span>]</span><br></pre></td></tr></table></figure>
+
+<p>对 TS 来说，元组和数组都是数组，但元组对 TS 来说可以观测其长度，<code>T[&#39;length&#39;]</code> 对元组来说返回的是具体值，而对数组来说返回的是 <code>number</code>。</p>
+<h3 id="Exclude"><a href="#Exclude" class="headerlink" title="Exclude"></a><a href="https://github.com/type-challenges/type-challenges/blob/main/questions/00043-easy-exclude/README.md">Exclude</a></h3><p>实现类型 <code>Exclude&lt;T, U&gt;</code>，返回 <code>T</code> 中不存在于 <code>U</code> 的部分。该功能主要用在联合类型场景，所以我们直接用 <code>extends</code> 判断就行了：</p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 本题答案</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Exclude</span>&lt;T, U&gt; = T <span class="keyword">extends</span> U ? <span class="built_in">never</span> : T</span><br></pre></td></tr></table></figure>
+
+<p>实际运行效果：</p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> C = <span class="title class_">Exclude</span>&lt;<span class="string">&#x27;a&#x27;</span> | <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;a&#x27;</span> | <span class="string">&#x27;c&#x27;</span>&gt; <span class="comment">// &#x27;b&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>看上去有点不那么好理解，这是因为 TS 对联合类型的执行是分配律的，即：</p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="title class_">Exclude</span>&lt;<span class="string">&#x27;a&#x27;</span> | <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;a&#x27;</span> | <span class="string">&#x27;c&#x27;</span>&gt;</span><br><span class="line"><span class="comment">// 等价于</span></span><br><span class="line"><span class="title class_">Exclude</span>&lt;<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;a&#x27;</span> | <span class="string">&#x27;c&#x27;</span>&gt; | <span class="title class_">Exclude</span>&lt;<span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;a&#x27;</span> | <span class="string">&#x27;c&#x27;</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Awaited"><a href="#Awaited" class="headerlink" title="Awaited"></a><a href="https://github.com/type-challenges/type-challenges/blob/main/questions/00189-easy-awaited/README.md">Awaited</a></h3><p>实现类型 <code>Awaited</code>，比如从 <code>Promise&lt;ExampleType&gt;</code> 拿到 <code>ExampleType</code>。</p>
+<p>首先 TS 永远不会执行代码，所以脑子里不要有 “await 得等一下才知道结果” 的念头。该题关键就是从 <code>Promise&lt;T&gt;</code> 中抽取类型 <code>T</code>，很适合用 <code>infer</code> 做：</p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">MyAwaited</span>&lt;T&gt; = T <span class="keyword">extends</span> <span class="title class_">Promise</span>&lt;infer U&gt; ? U : <span class="built_in">never</span></span><br></pre></td></tr></table></figure>
+
+<p>然而这个答案还不够标准，标准答案考虑了嵌套 <code>Promise</code> 的场景：</p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 该题答案</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">MyAwaited</span>&lt;T <span class="keyword">extends</span> <span class="title class_">Promise</span>&lt;<span class="built_in">unknown</span>&gt;&gt; = T <span class="keyword">extends</span> <span class="title class_">Promise</span>&lt;infer P&gt;</span><br><span class="line">  ? P <span class="keyword">extends</span> <span class="title class_">Promise</span>&lt;<span class="built_in">unknown</span>&gt; ? <span class="title class_">MyAwaited</span>&lt;P&gt; : P</span><br><span class="line">  : <span class="built_in">never</span></span><br></pre></td></tr></table></figure>
+
+<p>如果 <code>Promise&lt;P&gt;</code> 取到的 <code>P</code> 还形如 <code>Promise&lt;unknown&gt;</code>，就递归调用自己 <code>MyAwaited&lt;P&gt;</code>。这里提到了递归，也就是 TS 类型处理可以是递归的，所以才有了后面版本做尾递归优化。</p>
+<h3 id="If"><a href="#If" class="headerlink" title="If"></a><a href="https://github.com/type-challenges/type-challenges/blob/main/questions/00268-easy-if/README.md">If</a></h3><p>实现类型 <code>If&lt;Condition, True, False&gt;</code>，当 <code>C</code> 为 <code>true</code> 时返回 <code>T</code>，否则返回 <code>F</code>：</p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> A = <span class="title class_">If</span>&lt;<span class="literal">true</span>, <span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>&gt;  <span class="comment">// expected to be &#x27;a&#x27;</span></span><br><span class="line"><span class="keyword">type</span> B = <span class="title class_">If</span>&lt;<span class="literal">false</span>, <span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>&gt; <span class="comment">// expected to be &#x27;b&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>之前有提过，<code>extends</code> 还可以用来判定值，所以果断用 <code>extends true</code> 判断是否命中了 <code>true</code> 即可：</p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 本题答案</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">If</span>&lt;C, T, F&gt; = C <span class="keyword">extends</span> <span class="literal">true</span> ? T : F</span><br></pre></td></tr></table></figure>
+
+<h3 id="Concat"><a href="#Concat" class="headerlink" title="Concat"></a><a href="https://github.com/type-challenges/type-challenges/blob/main/questions/00533-easy-concat/README.md">Concat</a></h3><p>用类型系统实现 <code>Concat&lt;P, Q&gt;</code>，将两个数组类型连起来：</p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">Result</span> = <span class="title class_">Concat</span>&lt;[<span class="number">1</span>], [<span class="number">2</span>]&gt; <span class="comment">// expected to be [1, 2]</span></span><br></pre></td></tr></table></figure>
+
+<p>由于 TS 支持数组解构语法，所以可以大胆的尝试这么写：</p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">Concat</span>&lt;P <span class="keyword">extends</span> <span class="built_in">any</span>[], Q <span class="keyword">extends</span> <span class="built_in">any</span>[]&gt; = [...P, ...Q]</span><br></pre></td></tr></table></figure>
+
+<p>考虑到 <code>Concat</code> 函数应该也能接收非数组类型，所以做一个判断，为了方便书写，把 <code>extends</code> 从泛型定义位置挪到 TS 类型推断的运行时：</p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 本题答案</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Concat</span>&lt;P, Q&gt; = [</span><br><span class="line">  ...P <span class="keyword">extends</span> <span class="built_in">any</span>[] ? P : [P],</span><br><span class="line">  ...Q <span class="keyword">extends</span> <span class="built_in">any</span>[] ? Q : [Q],</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>解决这题需要信念，相信 TS 可以像 JS 一样写逻辑。这些能力都是版本升级时渐进式提供的，所以需要不断阅读最新 TS 特性，快速将其理解为固化知识，其实还是有一定难度的。</p>
+<h3 id="Includes"><a href="#Includes" class="headerlink" title="Includes"></a><a href="https://github.com/type-challenges/type-challenges/blob/main/questions/00898-easy-includes/README.md">Includes</a></h3><p>用类型系统实现 <code>Includes&lt;T, K&gt;</code> 函数：</p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> isPillarMen = <span class="title class_">Includes</span>&lt;[<span class="string">&#x27;Kars&#x27;</span>, <span class="string">&#x27;Esidisi&#x27;</span>, <span class="string">&#x27;Wamuu&#x27;</span>, <span class="string">&#x27;Santana&#x27;</span>], <span class="string">&#x27;Dio&#x27;</span>&gt; <span class="comment">// expected to be `false`</span></span><br></pre></td></tr></table></figure>
+
+<p>由于之前的经验，很容易做下面的联想：</p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 如果题目要求是这样</span></span><br><span class="line"><span class="keyword">type</span> isPillarMen = <span class="title class_">Includes</span>&lt;<span class="string">&#x27;Kars&#x27;</span> | <span class="string">&#x27;Esidisi&#x27;</span> | <span class="string">&#x27;Wamuu&#x27;</span> | <span class="string">&#x27;Santana&#x27;</span>, <span class="string">&#x27;Dio&#x27;</span>&gt;</span><br><span class="line"><span class="comment">// 那我就能用 extends 轻松解决了</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Includes</span>&lt;T, K&gt; = K <span class="keyword">extends</span> T ? <span class="literal">true</span> : <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<p>可惜第一个输入是数组类型，<code>extends</code> 可不支持判定 “数组包含” 逻辑，此时要了解一个新知识点，即 TS 判断中的 <code>[number]</code> 下标。不仅这道题，以后很多困难题都需要它作为基础知识。</p>
+<p><code>[number]</code> 下标表示任意一项，而 <code>extends T[number]</code> 就可以实现数组包含的判定，因此下面的解法是有效的：</p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">Includes</span>&lt;T <span class="keyword">extends</span> <span class="built_in">any</span>[], K&gt; = K <span class="keyword">extends</span> T[<span class="built_in">number</span>] ? <span class="literal">true</span> : <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<p>但翻答案后发现这并不是标准答案，还真找到一个反例：</p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">Includes</span>&lt;T <span class="keyword">extends</span> <span class="built_in">any</span>[], K&gt; = K <span class="keyword">extends</span> T[<span class="built_in">number</span>] ? <span class="literal">true</span> : <span class="literal">false</span></span><br><span class="line"><span class="keyword">type</span> isPillarMen = <span class="title class_">Includes</span>&lt;[<span class="built_in">boolean</span>], <span class="literal">false</span>&gt; <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<p>原因很简单，<code>true</code>、<code>false</code> 都继承自 <code>boolean</code>，所以 <code>extends</code> 判断的界限太宽了，题目要求的是精确值匹配，故上面的答案理论上是错的。</p>
+<p>标准答案是每次判断数组第一项，并递归（讲真觉得这不是 easy 题），分别有两个难点。</p>
+<p>第一如何写 Equal 函数？比较流行的方案是这个：</p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">Equal</span>&lt;X, Y&gt; =</span><br><span class="line">  (&lt;T&gt;<span class="function">() =&gt;</span> T <span class="keyword">extends</span> X ? <span class="number">1</span> : <span class="number">2</span>) <span class="keyword">extends</span></span><br><span class="line">  (&lt;T&gt;<span class="function">() =&gt;</span> T <span class="keyword">extends</span> Y ? <span class="number">1</span> : <span class="number">2</span>) ? <span class="literal">true</span> : <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<p>关于如何写 Equal 函数还引发了一次 <a href="https://github.com/microsoft/TypeScript/issues/27024#issuecomment-421529650">小讨论</a>，上面的代码构造了两个函数，这两个函数内的 <code>T</code> 属于 deferred（延迟）判断的类型，该类型判断依赖于内部 <code>isTypeIdenticalTo</code> 函数完成判断。</p>
+<p>有了 <code>Equal</code> 后就简单了，我们用解构 + <code>infer</code> + 递归的方式做就可以了：</p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 本题答案</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Includes</span>&lt;T <span class="keyword">extends</span> <span class="built_in">any</span>[], K&gt; =</span><br><span class="line">  T <span class="keyword">extends</span> [infer F, ...infer <span class="title class_">Rest</span>] ?</span><br><span class="line">    <span class="title class_">Equal</span>&lt;F, K&gt; <span class="keyword">extends</span> <span class="literal">true</span> ?</span><br><span class="line">      <span class="literal">true</span></span><br><span class="line">      : <span class="title class_">Includes</span>&lt;<span class="title class_">Rest</span>, K&gt;</span><br><span class="line">    : <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<p>每次取数组第一个值判断 <code>Equal</code>，如果不匹配则拿剩余项递归判断。这个函数组合了不少 TS 知识，比如：</p>
+<ul>
+<li>递归</li>
+<li>解构</li>
+<li><code>infer</code></li>
+<li><code>extends true</code></li>
+</ul>
+<p>可以发现，就为了解决 <code>true extends boolean</code> 为 <code>true</code> 的问题，我们绕了一大圈使用了更复杂的方式来实现，这在 TS 体操中也算是常态，解决问题需要耐心。</p>
+<h3 id="Push"><a href="#Push" class="headerlink" title="Push"></a><a href="https://github.com/type-challenges/type-challenges/blob/main/questions/03057-easy-push/README.md">Push</a></h3><p>实现 <code>Push&lt;T, K&gt;</code> 函数：</p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">Result</span> = <span class="title class_">Push</span>&lt;[<span class="number">1</span>, <span class="number">2</span>], <span class="string">&#x27;3&#x27;</span>&gt; <span class="comment">// [1, 2, &#x27;3&#x27;]</span></span><br></pre></td></tr></table></figure>
+
+<p>这道题真的很简单，用解构就行了：</p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 本题答案</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Push</span>&lt;T <span class="keyword">extends</span> <span class="built_in">any</span>[], K&gt; = [...T, K]</span><br></pre></td></tr></table></figure>
+
+<p>可见，想要轻松解决一个 TS 简单问题，首先你需要能解决一些困难问题 😁。</p>
+<h3 id="Unshift"><a href="#Unshift" class="headerlink" title="Unshift"></a><a href="https://github.com/type-challenges/type-challenges/blob/main/questions/03060-easy-unshift/README.md">Unshift</a></h3><p>实现 <code>Unshift&lt;T, K&gt;</code> 函数：</p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">Result</span> = <span class="title class_">Unshift</span>&lt;[<span class="number">1</span>, <span class="number">2</span>], <span class="number">0</span>&gt; <span class="comment">// [0, 1, 2,]</span></span><br></pre></td></tr></table></figure>
+
+<p>在 <code>Push</code> 基础上改下顺序就行了：</p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 本题答案</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Unshift</span>&lt;T <span class="keyword">extends</span> <span class="built_in">any</span>[], K&gt; = [K, ...T]</span><br></pre></td></tr></table></figure>
+
+<h3 id="Parameters"><a href="#Parameters" class="headerlink" title="Parameters"></a><a href="https://github.com/type-challenges/type-challenges/blob/main/questions/03312-easy-parameters/README.md">Parameters</a></h3><p>实现内置函数 <code>Parameters</code>：</p>
+<p><code>Parameters</code> 可以拿到函数的参数类型，直接用 <code>infer</code> 实现即可，也比较简单：</p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">Parameters</span>&lt;T&gt; = T <span class="keyword">extends</span> (...<span class="attr">args</span>: infer P) =&gt; <span class="built_in">any</span> ? P : []</span><br></pre></td></tr></table></figure>
+
+<p><code>infer</code> 可以很方便从任何具体的位置取值，属于典型难懂易用的语法。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>学会 TS 基础语法后，活用才是关键。</p>
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+</search>

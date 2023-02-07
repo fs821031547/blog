@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.12.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Web前端开发规范开发规范环境配置 node 版本：采用v14.x.x版本或最新稳定版本 npm 版本：采用最新版本 vue-cli 版本：采用最新稳定版本 vue 版本： 采用3.x.x版本  项目配置editorconfig">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Web前端开发规范.md">
+<meta property="og:url" content="http://example.com/2020/02/23/Web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83/index.html">
+<meta property="og:site_name" content="石哥的博客">
+<meta property="og:description" content="Web前端开发规范开发规范环境配置 node 版本：采用v14.x.x版本或最新稳定版本 npm 版本：采用最新版本 vue-cli 版本：采用最新稳定版本 vue 版本： 采用3.x.x版本  项目配置editorconfig">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-02-23T11:24:20.000Z">
+<meta property="article:modified_time" content="2022-07-26T03:45:51.054Z">
+<meta property="article:author" content="石哥">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2020/02/23/Web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2020/02/23/Web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83/","path":"2020/02/23/Web前端开发规范/","title":"Web前端开发规范.md"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Web前端开发规范.md | 石哥的博客</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">石哥的博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83"><span class="nav-number">1.</span> <span class="nav-text">Web前端开发规范</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83"><span class="nav-number">1.1.</span> <span class="nav-text">开发规范</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-number">1.1.1.</span> <span class="nav-text">环境配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E9%85%8D%E7%BD%AE"><span class="nav-number">1.1.2.</span> <span class="nav-text">项目配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#editorconfig"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">editorconfig</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#UI%E6%A1%86%E6%9E%B6%E9%80%89%E6%8B%A9"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">UI框架选择</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E7%A8%8B%E8%A7%84%E8%8C%83"><span class="nav-number">1.1.3.</span> <span class="nav-text">编程规范</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%98%E9%87%8F%E6%96%B9%E6%B3%95%E5%8F%8A%E6%96%87%E4%BB%B6%E5%90%8D%E5%AE%9A%E4%B9%89"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">变量方法及文件名定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%A1%B5%E9%9D%A2%E6%8E%92%E7%89%88%E8%A7%84%E8%8C%83"><span class="nav-number">1.1.3.2.</span> <span class="nav-text">页面排版规范</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A0%B7%E5%BC%8F%E8%A7%84%E8%8C%83"><span class="nav-number">1.1.3.3.</span> <span class="nav-text">样式规范</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%A1%B5%E9%9D%A2%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83"><span class="nav-number">1.1.3.4.</span> <span class="nav-text">页面编码规范</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8%E8%A7%84%E8%8C%83"><span class="nav-number">1.1.3.5.</span> <span class="nav-text">接口调用规范</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%91%E7%89%88%E8%A7%84%E8%8C%83"><span class="nav-number">1.2.</span> <span class="nav-text">发版规范</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%93%E5%BA%93%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86"><span class="nav-number">1.2.1.</span> <span class="nav-text">仓库分支管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%88%E6%9C%AC%E5%8F%91%E5%B8%83"><span class="nav-number">1.2.2.</span> <span class="nav-text">版本发布</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%88%E6%9C%AC%E5%9B%9E%E6%BB%9A%E6%96%B9%E6%A1%88"><span class="nav-number">1.2.3.</span> <span class="nav-text">版本回滚方案</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">石哥</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/02/23/Web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="石哥">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="石哥的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Web前端开发规范.md | 石哥的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Web前端开发规范.md
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-02-23 19:24:20" itemprop="dateCreated datePublished" datetime="2020-02-23T19:24:20+08:00">2020-02-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2020-02-23 19:24:20" itemprop="dateModified" datetime="2020-02-23T19:24:20+08:00">2020-02-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="Web前端开发规范"><a href="#Web前端开发规范" class="headerlink" title="Web前端开发规范"></a>Web前端开发规范</h1><h2 id="开发规范"><a href="#开发规范" class="headerlink" title="开发规范"></a>开发规范</h2><h3 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h3><ul>
+<li><code>node</code> 版本：采用<code>v14.x.x</code>版本或最新稳定版本</li>
+<li><code>npm</code> 版本：采用最新版本</li>
+<li><code>vue-cli</code> 版本：采用最新稳定版本</li>
+<li><code>vue</code> 版本： 采用<code>3.x.x</code>版本</li>
+</ul>
+<h3 id="项目配置"><a href="#项目配置" class="headerlink" title="项目配置"></a>项目配置</h3><h4 id="editorconfig"><a href="#editorconfig" class="headerlink" title="editorconfig"></a>editorconfig</h4><span id="more"></span>
+<p><code>.editorconfig</code> 文件有助于为不同 IDE 编辑器上处理同一项目的多个开发人员维护一致的编码风格。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"># http://editorconfig.org</span><br><span class="line"># 告诉EditorConfig插件，这是根文件，不用继续往上查找</span><br><span class="line">root = true</span><br><span class="line"></span><br><span class="line"># 匹配全部文件</span><br><span class="line">[*]</span><br><span class="line"># 设置字符集</span><br><span class="line">charset = utf-8</span><br><span class="line"># 缩进风格，可选space、tab</span><br><span class="line">indent_style = tab</span><br><span class="line"># 缩进的空格数</span><br><span class="line">indent_size = 2</span><br><span class="line"># 结尾换行符，可选lf、cr、crlf</span><br><span class="line">end_of_line = lf</span><br><span class="line"># 在文件结尾插入新行</span><br><span class="line">insert_final_newline = true</span><br><span class="line"># 删除一行中的前后空格</span><br><span class="line">trim_trailing_whitespace = true</span><br><span class="line"></span><br><span class="line"># 匹配md结尾的文件</span><br><span class="line">[*.md]</span><br><span class="line">insert_final_newline = false</span><br><span class="line">trim_trailing_whitespace = false</span><br></pre></td></tr></table></figure>
+
+<h4 id="UI框架选择"><a href="#UI框架选择" class="headerlink" title="UI框架选择"></a>UI框架选择</h4><ul>
+<li>PC端Vue项目UI框架优先选择：<code>Element UI</code></li>
+<li>移动端Vue项目UI框架：<code>Vant-ui</code></li>
+</ul>
+<h3 id="编程规范"><a href="#编程规范" class="headerlink" title="编程规范"></a>编程规范</h3><h4 id="变量方法及文件名定义"><a href="#变量方法及文件名定义" class="headerlink" title="变量方法及文件名定义"></a>变量方法及文件名定义</h4><ul>
+<li><p>定义变量时，常量使用<code>const</code>定义，全大写下划线格式命名。</p>
+</li>
+<li><p>变量定义使用小驼峰命名方式根据变量用途语义化命名。</p>
+</li>
+<li><p>方法命名同变量命名方式采用小驼峰根据用途命名。</p>
+</li>
+<li><p>文件命名同上小驼峰命名。</p>
+<ul>
+<li>页面<code>xx.vue</code>文件根据页面用途命名，文件放置该页面对应模块文件夹下。</li>
+<li>页面<code>xx.scss</code>文件同对应页面名，放于该页面对应模块样式文件夹下。</li>
+<li><code>xx.js</code>文件，同上根据用途命名，</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 文件命名示例</span><br><span class="line">|— userCenter</span><br><span class="line">	|— userCenter.vue</span><br><span class="line">	|— userCenter.js</span><br><span class="line">	|— userCenter.scss</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 常量</span></span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">USER_NAME</span> = <span class="string">&#x27;XiaoChen&#x27;</span>;</span><br><span class="line"><span class="comment">// 变量</span></span><br><span class="line"><span class="keyword">let</span> userName = <span class="string">&#x27;XiaoChen&#x27;</span>;</span><br><span class="line"><span class="comment">// 方法</span></span><br><span class="line"><span class="keyword">let</span> <span class="title function_">changeUserName</span> = (<span class="params">userName</span>) =&gt; &#123;&#125;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="页面排版规范"><a href="#页面排版规范" class="headerlink" title="页面排版规范"></a>页面排版规范</h4><ul>
+<li><p>文本输入框需设置默认提示语，文本框长度若无<code>UI</code>情况下限制不超过<code>300px</code>宽度。</p>
+</li>
+<li><p>下拉选择框（包含下拉选框、联级选框）需设置默认提示语，长度若无<code>UI</code>情况下限制不超过<code>300px</code>宽度。</p>
+</li>
+<li><p>搜索表单：置于页面内容部分上方，采用<code>inline</code>模式<code>el-form</code>排版，此时输入框、下拉框长度无需设置。</p>
+</li>
+<li><p>新增&#x2F;编辑表单：根据复杂程度及对应需求选择使用弹框形式或新页面形式展示，采用竖排样式排版，需设置文本框及下拉框长度，并统一设置<code>label</code>长度，对于表单必填项需进行参数校验。</p>
+<blockquote>
+<p>参数校验时如使用正则校验参数，如手机号，需考虑全号段情况，也可只校验长度。</p>
+</blockquote>
+</li>
+<li><p>列表详情页面：视复杂程度及对应需求要求选择使用弹框形式或新页面形式展示，如无特殊情况可与新增&#x2F;编辑页面重用。</p>
+</li>
+<li><p>在排版页面时还需考虑数据空态页面展示。</p>
+</li>
+</ul>
+<h4 id="样式规范"><a href="#样式规范" class="headerlink" title="样式规范"></a>样式规范</h4><ul>
+<li>选用 <code>sass</code> 或 <code>less</code>。</li>
+<li>公共样式文件内除特殊情况仅可进行新增操作，不可对原样式值进行修改。</li>
+<li>单个组件样式可直接写到组件下 <code>style</code> 标签下，为了防止样式污染，需添加 <code>scoped  </code> 属性，也可以通过设置作用域来防止样式污染，写样式时需使用用类选择器，尽量避免使用元素选择器。</li>
+</ul>
+<h4 id="页面编码规范"><a href="#页面编码规范" class="headerlink" title="页面编码规范"></a>页面编码规范</h4><ul>
+<li>组件名称必须以大驼峰法命名</li>
+<li>变量及方法命名需符合规范及语义化定义</li>
+<li>对于页面初始进入需请求接口等操作是应放置于生命周期 <code>mounted</code> 函数内进行</li>
+<li>代码中不可出现默认具体值出现，默认值一律为空字符串、空对象、空数组等，需要设置默认值时可另开方法操作，提测时要关闭该方法调用；本地存储相关默认值在 <code>Chrome</code> 的开发工具中 <code>Application</code> 中对应存储类型内配置默认值</li>
+<li>计算函数及侦听器需注意使用场景，<code>computed</code> 计算属性仅可用于简单运算，涉及大量运算或存在异步操作时需改用 <code>watch</code></li>
+<li>开发期所有 <code>console</code> 应添加标识位，打包上线时要关闭所有 <code>console</code> </li>
+<li>对于 <code>H5</code> 页面即需要在移动端展示的页面项目需添加 <code>vconsole</code> 依赖，便于调试，开发期可开启调试展示，打包上线时要关闭展示</li>
+<li>提交类型的按钮需要设置 <code>loading</code> 展示</li>
+<li>对于短时间多次触发接口调用的方法需要添加事件防抖机制</li>
+</ul>
+<h4 id="接口调用规范"><a href="#接口调用规范" class="headerlink" title="接口调用规范"></a>接口调用规范</h4><ul>
+<li><p>接口地址需统一于<code>/src/api/requestUrl.js</code> 文件中依据模块进行分组定义</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 命名格式： 接口名+请求方式——小驼峰 (restful接口时仅接口名定义即可)</span></span><br><span class="line"><span class="comment">// ****** 授权模块 ****** //</span></span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">AUTH_API</span> = &#123;</span><br><span class="line">  <span class="attr">loginPost</span>: <span class="string">&#x27;/auth/login&#x27;</span>,</span><br><span class="line">  <span class="attr">registerPost</span>: <span class="string">&#x27;/auth/register&#x27;</span>,</span><br><span class="line">  <span class="attr">codeGet</span>: <span class="string">&#x27;/auth/code&#x27;</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// ****** 授权模块 ****** //</span></span><br><span class="line"><span class="comment">// ****** 用户模块 ****** //</span></span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">USER_API</span> = &#123;</span><br><span class="line">  <span class="attr">listGet</span>: <span class="string">&#x27;/user/list&#x27;</span>,</span><br><span class="line">  <span class="attr">userUpdatePut</span>: <span class="string">&#x27;/user/userUpdate&#x27;</span>,</span><br><span class="line">  <span class="attr">user</span>: <span class="string">&#x27;/user&#x27;</span>, <span class="comment">// restful 风格，合并 userGet/userPost/userPut/userDelete</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// ****** 用户模块 ****** //</span></span><br><span class="line"><span class="keyword">export</span> &#123;</span><br><span class="line">	<span class="variable constant_">AUTH_API</span>,</span><br><span class="line">  <span class="variable constant_">USER_API</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>接口请求方法需于 <code>/src/api</code> 目录下依据模块新建对应文件内进行定义</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">|- src</span><br><span class="line">	|- api</span><br><span class="line">		|- requestUrl.js</span><br><span class="line">		|- auth.js</span><br><span class="line">		|- user.js</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// auth.js</span></span><br><span class="line"><span class="keyword">import</span> request <span class="keyword">from</span> <span class="string">&#x27;@/utils/request&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;<span class="variable constant_">AUTH_API</span>&#125; <span class="keyword">from</span> <span class="string">&#x27;@/api/requestUrl&#x27;</span>;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 登录</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> username &#123;String&#125;</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> password &#123;String&#125;</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> code &#123;String&#125;</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> uuid &#123;String&#125;</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@returns</span> &#123;<span class="type">Promise&lt;any&gt;</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">login</span>(<span class="params">username, password, code, uuid</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">request</span>(&#123;</span><br><span class="line">    <span class="attr">url</span>: <span class="variable constant_">AUTH_API</span>.<span class="property">loginPost</span>,</span><br><span class="line">    <span class="attr">headers</span>: &#123;</span><br><span class="line">      <span class="attr">isToken</span>: <span class="literal">false</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">method</span>: <span class="string">&#x27;post&#x27;</span>,</span><br><span class="line">    <span class="attr">data</span>: &#123; username, password, code, uuid &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>接口调用时需添加用户加载提示，适当添加<code>loading</code>展示，分页加载时：</p>
+<ul>
+<li>滑动加载，加载提示可展示在最后一项后添加。</li>
+<li>分页器分页加载时，加载提示可采用全屏<code>loading</code>形式展示。</li>
+</ul>
+<p>操作类接口调用时，在对应操作按钮上添加<code>loading</code>展示</p>
+<blockquote>
+<p>如对应操作按钮在列表中则采用全局<code>loading</code>形式展示</p>
+</blockquote>
+</li>
+<li><p>接口调用结果视情况提示用户：</p>
+<ul>
+<li>加载成功：<ul>
+<li>加载数据时可直接展示数据，无需提示</li>
+<li>操作类接口调用成功时，添加<code>操作成功</code>提示弹框，可描述为对应操作，如<code>下架成功</code>。</li>
+</ul>
+</li>
+<li>加载失败：若接口有返回错误信息时，将后台返回结果提示给用户；若无返回错误信息时提示用户<code>服务异常</code>.</li>
+</ul>
+</li>
+<li><p>接口文件定义：</p>
+<ul>
+<li><p>接口地址统一定义在接口配置文件中，使用常量命名定义；</p>
+</li>
+<li><p>接口调用统一封装至对应模块<code>xx.js</code>文件中，如<code>user</code>模块独立定义为<code>user.js</code>文件，其内包含增删改查等对应操作的接口调用封装方法，</p>
+<blockquote>
+<p>该方法应返回<code>Promise</code>对象，接口请求操作在该方法内部进行。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>接口提交数据时，对文本框输入信息进行两端去空处理。</p>
+</li>
+</ul>
+<h2 id="发版规范"><a href="#发版规范" class="headerlink" title="发版规范"></a>发版规范</h2><h3 id="仓库分支管理"><a href="#仓库分支管理" class="headerlink" title="仓库分支管理"></a>仓库分支管理</h3><p><a href="./git%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86%E8%A7%84%E8%8C%83.md">Git 分支管理规范</a></p>
+<h3 id="版本发布"><a href="#版本发布" class="headerlink" title="版本发布"></a>版本发布</h3><ul>
+<li><p>当期需求发布时需列出当期需求所有功能点即 <code>版本CheckList</code> 并与对应产品经理一一确认后才可进行发版操作。</p>
+</li>
+<li><p>发版完成后需再次与对应产品经理进行功能点确认工作，并及时联系 <code>版本负责人/项目负责人</code> 进行代码合并等操作。</p>
+</li>
+</ul>
+<h3 id="版本回滚方案"><a href="#版本回滚方案" class="headerlink" title="版本回滚方案"></a>版本回滚方案</h3><p>若当前发布版本产生重大问题或其他原因导致需要进行生产环境代码回滚时，需由 <code>版本负责人/项目负责人</code> 从 发版 <code>前一次tag</code> 派生新 <code>hotfix</code> 分支进行发布部署生产环境操作，发布完成后合并至 <code>master</code> 分支并生成 <code>新tag</code>。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/06/21/js%20%E6%A8%A1%E5%9D%97%E5%8C%96%E5%8F%91%E5%B1%95/" rel="prev" title="js模块化发展">
+                  <i class="fa fa-chevron-left"></i> js模块化发展
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/03/21/%E6%B5%8F%E8%A7%88%E5%99%A8%E8%A7%A3%E6%9E%90%E5%9F%9F%E5%90%8D/" rel="next" title="浏览器解析域名">
+                  浏览器解析域名 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">石哥</span>
+  <span>微信: fs821031547</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/love.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript" opacity='0.7' zIndex="-2" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+</body>
+</html>
