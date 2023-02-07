@@ -1,7 +1,8 @@
 ---
-title: Hello World
-date: 2020-06-21 17:51:24
+title: js模块化发展
+date: 2019-06-21 17:51:24
 categories: "前端"
+top: 11
 ---
 
 本期精读的文章是：[evolutionOfJsModularity](https://github.com/myshov/history-of-javascript/tree/master/4_evolution_of_js_modularity)。
@@ -14,7 +15,7 @@ categories: "前端"
 
 但为什么要了解Javascript模块化发展的历史呢？ 因为凡事都有两面性，了解Javascript模块化规范，有利于我们思考出更好的模块化方案，纵观历史，从1999年开始，模块化方案最多维持两年，就出现了新的替代方案，比原有
 的模块化更清晰、强壮，我们不能被现代模块化方式限制住思维，因为现在的ES2015模块化方案距离发布也仅仅过了两年。
-
+<!-- more -->
 # 2 内容概要 
 **直接定义依赖（1999）**: 由于当时js文件非常简单，模块化方式非常简单粗暴 -- 通过全局方法定义、引用模块。这种定义方式与现在的commonjs非常神似，区别是commonjs以文件作为模块，而这种方法可以在任何文件中定义模块，模块不与文件关联。
 
@@ -114,7 +115,7 @@ YUI3的sandbox 像极了差不多同时出现的AMD规范，但早起yahoo在前
 ### 补充阅读
 
 - [JavaScript 模块化七日谈](https://huangxuan.me/2015/07/09/js-module-7day/)
-- [JavaScript 模块化编程简史（2009-2016）](https://yuguo.us/weblog/javascript-module-development-history/)
+- [JavaScript 模块化编程简史（2009-2016）](https://yuguo.us/weblog/javascript-module-development-history/) 
 
 ### 总结
 
